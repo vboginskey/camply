@@ -91,6 +91,7 @@
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">import</span> <span class="nn">click</span>
+<span class="kn">from</span> <span class="nn">rich.logging</span> <span class="kn">import</span> <span class="n">RichHandler</span>
 
 <span class="kn">from</span> <span class="nn">camply</span> <span class="kn">import</span> <span class="n">__camply__</span><span class="p">,</span> <span class="n">__version__</span>
 <span class="kn">from</span> <span class="nn">camply.config</span> <span class="kn">import</span> <span class="n">SearchConfig</span>
@@ -379,8 +380,16 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    camply Command Line Utility Wrapper</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> [</span><span class="si">%(levelname)8s</span><span class="s2">]: </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">,</span>
-                        <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">getLevelName</span><span class="p">(</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;LOG_LEVEL&quot;</span><span class="p">,</span> <span class="s2">&quot;INFO&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()))</span>
+    <span class="n">logging_handler</span> <span class="o">=</span> <span class="n">RichHandler</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">getLevelName</span><span class="p">(</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;LOG_LEVEL&quot;</span><span class="p">,</span> <span class="s2">&quot;INFO&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()),</span>
+                                  <span class="n">rich_tracebacks</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                  <span class="n">omit_repeated_times</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                  <span class="n">show_path</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">,</span>
+                        <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">NOTSET</span><span class="p">,</span>
+                        <span class="n">datefmt</span><span class="o">=</span><span class="s2">&quot;[%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S]&quot;</span><span class="p">,</span>
+                        <span class="n">handlers</span><span class="o">=</span><span class="p">[</span>
+                            <span class="n">logging_handler</span><span class="p">,</span>
+                        <span class="p">])</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">camply</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;camply, the campsite finder ⛺️&quot;</span><span class="p">)</span>
         <span class="n">camply_command_line</span><span class="p">()</span>
