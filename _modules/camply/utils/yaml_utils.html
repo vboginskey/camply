@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>camply.utils.yaml_utils &mdash; camply 0.4.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/autodoc_pydantic.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/autoclasstoc.css" type="text/css" />
+    <link rel="shortcut icon" href="https://juftin.com/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> camply
+          </a>
+              <div class="version">
+                0.4.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Check Out The ReadTheDocs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#command-line-usage">Command Line Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#finding-recreation-areas-ids-and-campground-ids-to-search-without-using-the-command-line">Finding Recreation Areas IDs and Campground IDs To Search Without Using the Command Line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#object-oriented-usage-python">Object-Oriented Usage (Python)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#running-in-docker">Running in Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#dependencies">Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli.html">camply CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">API Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">camply</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      <li>camply.utils.yaml_utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for camply.utils.yaml_utils</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">YAML Utilities for Camply</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">re</span> <span class="kn">import</span> <span class="nb">compile</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">from</span> <span class="nn">yaml</span> <span class="kn">import</span> <span class="n">load</span><span class="p">,</span> <span class="n">SafeLoader</span>
+
+<span class="kn">from</span> <span class="nn">camply.config</span> <span class="kn">import</span> <span class="n">SearchConfig</span>
+<span class="kn">from</span> <span class="nn">camply.containers</span> <span class="kn">import</span> <span class="n">SearchWindow</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="read_yml"><a class="viewcode-back" href="../../../api/camply.utils.yaml_utils.html#camply.utils.yaml_utils.read_yml">[docs]</a><span class="k">def</span> <span class="nf">read_yml</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Read a YAML File</span>
+
+<span class="sd">    Load a yaml configuration file_path (path) or data object (data)</span>
+<span class="sd">    and resolve any environment variables. The environment</span>
+<span class="sd">    variables must be in this format to be parsed: ${VAR_NAME}.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    path: str</span>
+<span class="sd">        File Path of YAML Object to Read</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    database:</span>
+<span class="sd">        host: ${HOST}</span>
+<span class="sd">        port: ${PORT}</span>
+<span class="sd">        ${KEY}: ${VALUE}</span>
+<span class="sd">    app:</span>
+<span class="sd">        log_path: &quot;/var/${LOG_PATH}&quot;</span>
+<span class="sd">        something_else: &quot;${AWESOME_ENV_VAR}/var/${A_SECOND_AWESOME_VAR}&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="nb">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;.*?\${(\w+)}.*?&quot;</span><span class="p">)</span>
+
+    <span class="n">safe_loader</span> <span class="o">=</span> <span class="n">SafeLoader</span>
+    <span class="n">safe_loader</span><span class="o">.</span><span class="n">add_implicit_resolver</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">regexp</span><span class="o">=</span><span class="n">pattern</span><span class="p">,</span> <span class="n">first</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">env_var_constructor</span><span class="p">(</span><span class="n">safe_loader</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="nb">object</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extracts the environment variable from the node&#39;s value</span>
+
+<span class="sd">        :param yaml.Loader safe_loader: the yaml loader</span>
+<span class="sd">        :param node: the current node in the yaml</span>
+
+<span class="sd">        :return: the parsed string that contains the value of the environment</span>
+<span class="sd">        variable</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">safe_loader</span><span class="o">.</span><span class="n">construct_scalar</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">)</span>
+        <span class="n">match</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">string</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+            <span class="n">full_value</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">match</span><span class="p">:</span>
+                <span class="n">full_value</span> <span class="o">=</span> <span class="n">full_value</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+                    <span class="s2">&quot;${{</span><span class="si">{key}</span><span class="s2">}}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">item</span><span class="p">),</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">item</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">item</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">full_value</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+    <span class="n">safe_loader</span><span class="o">.</span><span class="n">add_constructor</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">constructor</span><span class="o">=</span><span class="n">env_var_constructor</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">as</span> <span class="n">conf_data</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">load</span><span class="p">(</span><span class="n">stream</span><span class="o">=</span><span class="n">conf_data</span><span class="p">,</span> <span class="n">Loader</span><span class="o">=</span><span class="n">safe_loader</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="yaml_file_to_arguments"><a class="viewcode-back" href="../../../api/camply.utils.yaml_utils.html#camply.utils.yaml_utils.yaml_file_to_arguments">[docs]</a><span class="k">def</span> <span class="nf">yaml_file_to_arguments</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">object</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">object</span><span class="p">]]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert YAML File into A Dictionary to be used as **kwargs</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    file_path: str</span>
+<span class="sd">        File Path to YAML</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    provider, provider_kwargs, search_kwargs: Tuple[str, Dict[str, object], Dict[str, object]]</span>
+<span class="sd">        Tuple containing provider string, provider **kwargs, and search **kwargs</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">yaml_search</span> <span class="o">=</span> <span class="n">read_yml</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">file_path</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;YML File Parsed: </span><span class="si">{</span><span class="n">Path</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">provider</span> <span class="o">=</span> <span class="n">yaml_search</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;provider&quot;</span><span class="p">,</span> <span class="s2">&quot;RecreationDotGov&quot;</span><span class="p">)</span>
+    <span class="n">start_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">yaml_search</span><span class="p">[</span><span class="s2">&quot;start_date&quot;</span><span class="p">]),</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">end_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">yaml_search</span><span class="p">[</span><span class="s2">&quot;end_date&quot;</span><span class="p">]),</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">nights</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">yaml_search</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;nights&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">recreation_area</span> <span class="o">=</span> <span class="n">yaml_search</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;recreation_area&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">campgrounds</span> <span class="o">=</span> <span class="n">yaml_search</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;campgrounds&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">campsites</span> <span class="o">=</span> <span class="n">yaml_search</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;campsites&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">weekends_only</span> <span class="o">=</span> <span class="n">yaml_search</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;weekends&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="n">continuous</span> <span class="o">=</span> <span class="n">yaml_search</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;continuous&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">polling_interval</span> <span class="o">=</span> <span class="n">yaml_search</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;polling_interval&quot;</span><span class="p">,</span>
+                                       <span class="n">SearchConfig</span><span class="o">.</span><span class="n">RECOMMENDED_POLLING_INTERVAL</span><span class="p">)</span>
+    <span class="n">notify_first_try</span> <span class="o">=</span> <span class="n">yaml_search</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;notify_first_try&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="n">notification_provider</span> <span class="o">=</span> <span class="n">yaml_search</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;notifications&quot;</span><span class="p">,</span> <span class="s2">&quot;silent&quot;</span><span class="p">)</span>
+    <span class="n">search_forever</span> <span class="o">=</span> <span class="n">yaml_search</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;search_forever&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">search_window</span> <span class="o">=</span> <span class="n">SearchWindow</span><span class="p">(</span><span class="n">start_date</span><span class="o">=</span><span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="o">=</span><span class="n">end_date</span><span class="p">)</span>
+
+    <span class="n">provider_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">search_window</span><span class="o">=</span><span class="n">search_window</span><span class="p">,</span>
+                           <span class="n">recreation_area</span><span class="o">=</span><span class="n">recreation_area</span><span class="p">,</span>
+                           <span class="n">campgrounds</span><span class="o">=</span><span class="n">campgrounds</span><span class="p">,</span>
+                           <span class="n">campsites</span><span class="o">=</span><span class="n">campsites</span><span class="p">,</span>
+                           <span class="n">weekends_only</span><span class="o">=</span><span class="n">weekends_only</span><span class="p">,</span>
+                           <span class="n">nights</span><span class="o">=</span><span class="n">nights</span><span class="p">)</span>
+    <span class="n">search_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">log</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">continuous</span><span class="o">=</span><span class="n">continuous</span><span class="p">,</span>
+        <span class="n">polling_interval</span><span class="o">=</span><span class="n">polling_interval</span><span class="p">,</span>
+        <span class="n">notify_first_try</span><span class="o">=</span><span class="n">notify_first_try</span><span class="p">,</span>
+        <span class="n">notification_provider</span><span class="o">=</span><span class="n">notification_provider</span><span class="p">,</span>
+        <span class="n">search_forever</span><span class="o">=</span><span class="n">search_forever</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">provider</span><span class="p">,</span> <span class="n">provider_kwargs</span><span class="p">,</span> <span class="n">search_kwargs</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Justin Flannery.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

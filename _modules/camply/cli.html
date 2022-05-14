@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>camply.cli &mdash; camply 0.4.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/autodoc_pydantic.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/autoclasstoc.css" type="text/css" />
+    <link rel="shortcut icon" href="https://juftin.com/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> camply
+          </a>
+              <div class="version">
+                0.4.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Check Out The ReadTheDocs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html#command-line-usage">Command Line Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html#finding-recreation-areas-ids-and-campground-ids-to-search-without-using-the-command-line">Finding Recreation Areas IDs and Campground IDs To Search Without Using the Command Line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html#object-oriented-usage-python">Object-Oriented Usage (Python)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html#running-in-docker">Running in Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html#dependencies">Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cli.html">camply CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/modules.html">API Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">camply</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>camply.cli</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for camply.cli</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Camply Command Line Interface</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">getenv</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">import</span> <span class="nn">click</span>
+
+<span class="kn">from</span> <span class="nn">camply</span> <span class="kn">import</span> <span class="n">__camply__</span><span class="p">,</span> <span class="n">__version__</span>
+<span class="kn">from</span> <span class="nn">camply.config</span> <span class="kn">import</span> <span class="n">SearchConfig</span>
+<span class="kn">from</span> <span class="nn">camply.containers</span> <span class="kn">import</span> <span class="n">SearchWindow</span>
+<span class="kn">from</span> <span class="nn">camply.providers</span> <span class="kn">import</span> <span class="n">RecreationDotGov</span>
+<span class="kn">from</span> <span class="nn">camply.search</span> <span class="kn">import</span> <span class="n">CAMPSITE_SEARCH_PROVIDER</span>
+<span class="kn">from</span> <span class="nn">camply.utils</span> <span class="kn">import</span> <span class="n">configure_camply</span><span class="p">,</span> <span class="n">log_camply</span><span class="p">,</span> <span class="n">make_list</span><span class="p">,</span> <span class="n">yaml_utils</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">Logger</span><span class="o">.</span><span class="n">camply</span> <span class="o">=</span> <span class="n">log_camply</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<span class="nd">@click</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">version_option</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="n">__version__</span><span class="p">,</span> <span class="n">prog_name</span><span class="o">=</span><span class="n">__camply__</span><span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">pass_context</span>
+<span class="k">def</span> <span class="nf">camply_command_line</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">click</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Context</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Welcome to camply, the campsite finder.</span>
+
+<span class="sd">    Finding reservations at sold out campgrounds can be</span>
+<span class="sd">    tough. That&#39;s where camply comes in. It searches the APIs of booking services like</span>
+<span class="sd">    https://recreation.gov (which indexes thousands of campgrounds across the USA) to continuously</span>
+<span class="sd">    check for cancellations and availabilities to pop up. Once a campsite becomes available,</span>
+<span class="sd">    camply sends you a notification to book your spot!</span>
+
+<span class="sd">    visit the camply documentation at https://github.com/juftin/camply</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ctx</span><span class="o">.</span><span class="n">ensure_object</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+
+
+<span class="nd">@camply_command_line</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">configure</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Set up camply configuration file with an interactive console</span>
+
+<span class="sd">    In order to send notifications through camply you must set up some authorization values.</span>
+<span class="sd">    Whether you need to set up pushover notifications (push notifications on your phone,</span>
+<span class="sd">    your pushover account can be set up at https://pushover.net) or Email messages, everything</span>
+<span class="sd">    can be done through the configure command. The end result is a file called .camply in your</span>
+<span class="sd">    home folder.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">configure_camply</span><span class="o">.</span><span class="n">generate_dot_camply_file</span><span class="p">()</span>
+
+
+<span class="c1"># Shared Arguments</span>
+<span class="n">search_argument</span> <span class="o">=</span> <span class="n">click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;--search&quot;</span><span class="p">,</span>
+                               <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                               <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Search for Campgrounds or Recreation Areas by search string.&quot;</span><span class="p">)</span>
+<span class="n">state_argument</span> <span class="o">=</span> <span class="n">click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;--state&quot;</span><span class="p">,</span>
+                              <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                              <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Filter by US state code.&quot;</span><span class="p">)</span>
+<span class="n">campsite_id_argument</span> <span class="o">=</span> <span class="n">click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;--campsite&quot;</span><span class="p">,</span>
+                                    <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">multiple</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Add individual Campsites by ID.&quot;</span><span class="p">)</span>
+<span class="n">rec_area_argument</span> <span class="o">=</span> <span class="n">click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;--rec-area&quot;</span><span class="p">,</span>
+                                 <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">multiple</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                 <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Add Recreation Areas (comprised of campgrounds) by ID.&quot;</span><span class="p">)</span>
+<span class="n">campground_argument</span> <span class="o">=</span> <span class="n">click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;--campground&quot;</span><span class="p">,</span>
+                                   <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">multiple</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                   <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Add individual Campgrounds by ID.&quot;</span><span class="p">)</span>
+
+
+<span class="nd">@search_argument</span>
+<span class="nd">@state_argument</span>
+<span class="nd">@camply_command_line</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">recreation_areas</span><span class="p">(</span><span class="n">search</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+                     <span class="n">state</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Search for Recreation Areas and list them</span>
+
+<span class="sd">    Search for Recreation Areas and their IDs. Recreation Areas are places like</span>
+<span class="sd">    National Parks and National Forests that can contain one or many campgrounds.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">all</span><span class="p">([</span><span class="n">search</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">,</span> <span class="n">state</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">]):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;You must add a --search or --state parameter to search &quot;</span>
+                     <span class="s2">&quot;for Recreation Areas.&quot;</span><span class="p">)</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">camp_finder</span> <span class="o">=</span> <span class="n">RecreationDotGov</span><span class="p">()</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">))</span>
+    <span class="n">camp_finder</span><span class="o">.</span><span class="n">find_recreation_areas</span><span class="p">(</span><span class="n">search_string</span><span class="o">=</span><span class="n">search</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+
+<span class="nd">@search_argument</span>
+<span class="nd">@state_argument</span>
+<span class="nd">@rec_area_argument</span>
+<span class="nd">@campground_argument</span>
+<span class="nd">@campsite_id_argument</span>
+<span class="nd">@camply_command_line</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">campgrounds</span><span class="p">(</span><span class="n">search</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">state</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">rec_area</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">campground</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">campsite</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Search for Campgrounds (inside of Recreation Areas) and list them</span>
+
+<span class="sd">    Search for Campgrounds and their IDs. Campgrounds are facilities inside of</span>
+<span class="sd">    Recreation Areas that contain campsites. Most &#39;campgrounds&#39; are areas made up of</span>
+<span class="sd">    multiple campsites, others are facilities like fire towers or cabins that might only</span>
+<span class="sd">    contain a single &#39;campsite&#39; to book.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">all</span><span class="p">([</span><span class="n">search</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">state</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="nb">len</span><span class="p">(</span><span class="n">rec_area</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="nb">len</span><span class="p">(</span><span class="n">campground</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="nb">len</span><span class="p">(</span><span class="n">campsite</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;You must add a --search, --state, --campground, --campsite, &quot;</span>
+                     <span class="s2">&quot;or --rec-area parameter to search for Campgrounds.&quot;</span><span class="p">)</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">camp_finder</span> <span class="o">=</span> <span class="n">RecreationDotGov</span><span class="p">()</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">))</span>
+    <span class="n">camp_finder</span><span class="o">.</span><span class="n">find_campgrounds</span><span class="p">(</span><span class="n">search_string</span><span class="o">=</span><span class="n">search</span><span class="p">,</span>
+                                 <span class="n">rec_area_id</span><span class="o">=</span><span class="n">make_list</span><span class="p">(</span><span class="n">rec_area</span><span class="p">,</span> <span class="n">coerce</span><span class="o">=</span><span class="nb">int</span><span class="p">),</span>
+                                 <span class="n">campground_id</span><span class="o">=</span><span class="n">make_list</span><span class="p">(</span><span class="n">campground</span><span class="p">,</span> <span class="n">coerce</span><span class="o">=</span><span class="nb">int</span><span class="p">),</span>
+                                 <span class="n">campsite_id</span><span class="o">=</span><span class="n">make_list</span><span class="p">(</span><span class="n">campsite</span><span class="p">,</span> <span class="n">coerce</span><span class="o">=</span><span class="nb">int</span><span class="p">),</span>
+                                 <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+
+<span class="c1"># `campsite` arguments</span>
+<span class="n">start_date_argument</span> <span class="o">=</span> <span class="n">click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
+    <span class="s2">&quot;--start-date&quot;</span><span class="p">,</span>
+    <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;(YYYY-MM-DD) Start of Search window. You will be arriving this day.&quot;</span><span class="p">)</span>
+<span class="n">end_date_argument</span> <span class="o">=</span> <span class="n">click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
+    <span class="s2">&quot;--end-date&quot;</span><span class="p">,</span>
+    <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;(YYYY-MM-DD) End of Search window. You will be checking out this day.&quot;</span><span class="p">)</span>
+<span class="n">weekends_argument</span> <span class="o">=</span> <span class="n">click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
+    <span class="s2">&quot;--weekends&quot;</span><span class="p">,</span>
+    <span class="n">is_flag</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">show_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Only search for weekend bookings (Fri/Sat nights).&quot;</span><span class="p">)</span>
+<span class="n">nights_argument</span> <span class="o">=</span> <span class="n">click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
+    <span class="s2">&quot;--nights&quot;</span><span class="p">,</span>
+    <span class="n">show_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Search for campsite stays with consecutive nights. &quot;</span>
+         <span class="s2">&quot;Defaults to 1 which returns all campsites found.&quot;</span><span class="p">)</span>
+<span class="n">provider_argument</span> <span class="o">=</span> <span class="n">click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
+    <span class="s2">&quot;--provider&quot;</span><span class="p">,</span>
+    <span class="n">show_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;RecreationDotGov&quot;</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Camping Search Provider. Options available are &#39;Yellowstone&#39; and &quot;</span>
+         <span class="s2">&quot;&#39;RecreationDotGov&#39;. Defaults to &#39;RecreationDotGov&#39;, not case-sensitive.&quot;</span><span class="p">)</span>
+<span class="n">continuous_argument</span> <span class="o">=</span> <span class="n">click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
+    <span class="s2">&quot;--continuous&quot;</span><span class="p">,</span>
+    <span class="n">show_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Continuously check for a campsite to become available, and quit once &quot;</span>
+         <span class="s2">&quot;at least one campsite is found.&quot;</span><span class="p">)</span>
+<span class="n">polling_interval_argument</span> <span class="o">=</span> <span class="n">click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
+    <span class="s2">&quot;--polling-interval&quot;</span><span class="p">,</span>
+    <span class="n">show_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">SearchConfig</span><span class="o">.</span><span class="n">RECOMMENDED_POLLING_INTERVAL</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;If --continuous is activated, how often to wait in between &quot;</span>
+         <span class="s2">&quot;checks (in minutes). Defaults to 10, cannot be less than 5.&quot;</span><span class="p">)</span>
+<span class="n">notifications_argument</span> <span class="o">=</span> <span class="n">click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
+    <span class="s2">&quot;--notifications&quot;</span><span class="p">,</span>
+    <span class="n">multiple</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">show_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;silent&quot;</span><span class="p">],</span>
+    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;If --continuous is activated, types of notifications to receive. &quot;</span>
+         <span class="s2">&quot;Options available are &#39;email&#39;, &#39;pushover&#39;, &quot;</span>
+         <span class="s2">&quot;&#39;pushbullet&#39;, &#39;telegram&#39;, or &#39;silent&#39;. Defaults to &#39;silent&#39; - &quot;</span>
+         <span class="s2">&quot;which just logs messages to console.&quot;</span><span class="p">)</span>
+<span class="n">notify_first_try_argument</span> <span class="o">=</span> <span class="n">click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
+    <span class="s2">&quot;--notify-first-try&quot;</span><span class="p">,</span>
+    <span class="n">is_flag</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">show_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;If --continuous is activated, whether to send all &quot;</span>
+         <span class="s2">&quot;non-silent notifications if more than 5 matching &quot;</span>
+         <span class="s2">&quot;campsites are found on the first try. Defaults to false which &quot;</span>
+         <span class="s2">&quot;only sends the first 5.&quot;</span><span class="p">)</span>
+<span class="n">search_forever_argument</span> <span class="o">=</span> <span class="n">click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
+    <span class="s2">&quot;--search-forever&quot;</span><span class="p">,</span>
+    <span class="n">is_flag</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">show_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;If --continuous is activated, this method continues to search &quot;</span>
+         <span class="s2">&quot;after the first availability has been found. The one caveat is &quot;</span>
+         <span class="s2">&quot;that it will never notify about the same identical campsite for &quot;</span>
+         <span class="s2">&quot;the same booking date.&quot;</span><span class="p">)</span>
+<span class="n">yml_config_argument</span> <span class="o">=</span> <span class="n">click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
+    <span class="s2">&quot;--yml-config&quot;</span><span class="p">,</span>
+    <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Rather than provide arguments to the command line utility, instead &quot;</span>
+         <span class="s2">&quot;pass a file path to a YAML configuration file. See the documentation &quot;</span>
+         <span class="s2">&quot;for more information on how to structure your configuration file.&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_validate_campsites</span><span class="p">(</span><span class="n">rec_area</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+                        <span class="n">campground</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+                        <span class="n">campsite</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+                        <span class="n">start_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+                        <span class="n">end_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+                        <span class="n">provider</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                        <span class="n">yml_config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+                        <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Validate the campsites portion of the CLI</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">provider</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;recreationdotgov&quot;</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span>
+            <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">rec_area</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span>
+             <span class="nb">len</span><span class="p">(</span><span class="n">campground</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span>
+             <span class="nb">len</span><span class="p">(</span><span class="n">campsite</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span>
+             <span class="n">yml_config</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">]):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;To search for Recreation.gov Campsites you must provide &quot;</span>
+                     <span class="s2">&quot;either the --rec-area, --campground, or --campsite &quot;</span>
+                     <span class="s2">&quot;parameters.&quot;</span><span class="p">)</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">mandatory_parameters</span> <span class="o">=</span> <span class="p">[</span><span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">]</span>
+    <span class="n">mandatory_string_parameters</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;--start_date&quot;</span><span class="p">,</span> <span class="s2">&quot;--end-date&quot;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">mandatory_parameters</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">field</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">yml_config</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Campsite searches require the following mandatory search parameters: &quot;</span>
+                         <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">mandatory_string_parameters</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="nd">@yml_config_argument</span>
+<span class="nd">@search_forever_argument</span>
+<span class="nd">@notify_first_try_argument</span>
+<span class="nd">@notifications_argument</span>
+<span class="nd">@polling_interval_argument</span>
+<span class="nd">@continuous_argument</span>
+<span class="nd">@provider_argument</span>
+<span class="nd">@nights_argument</span>
+<span class="nd">@weekends_argument</span>
+<span class="nd">@end_date_argument</span>
+<span class="nd">@start_date_argument</span>
+<span class="nd">@campsite_id_argument</span>
+<span class="nd">@campground_argument</span>
+<span class="nd">@rec_area_argument</span>
+<span class="nd">@camply_command_line</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">campsites</span><span class="p">(</span><span class="n">rec_area</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+              <span class="n">campground</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+              <span class="n">campsite</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+              <span class="n">start_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+              <span class="n">end_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+              <span class="n">weekends</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+              <span class="n">nights</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+              <span class="n">provider</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;RecreationDotGov&quot;</span><span class="p">,</span>
+              <span class="n">continuous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+              <span class="n">polling_interval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">SearchConfig</span><span class="o">.</span><span class="n">RECOMMENDED_POLLING_INTERVAL</span><span class="p">,</span>
+              <span class="n">notifications</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;silent&quot;</span><span class="p">],</span>
+              <span class="n">notify_first_try</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+              <span class="n">search_forever</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+              <span class="n">yml_config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+              <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Find available Campsites using search criteria</span>
+
+<span class="sd">    Search for a campsite within camply. Campsites are returned based on the search criteria</span>
+<span class="sd">    provided. Campsites contain properties like booking date, site type (tent, RV, cabin, etc),</span>
+<span class="sd">    capacity, price, and a link to make the booking. Required parameters include</span>
+<span class="sd">    `--start-date`, `--end-date`, `--rec-area` / `--campground`. Constant searching</span>
+<span class="sd">    functionality can be enabled with  `--continuous` and notifications can be enabled using</span>
+<span class="sd">    `--notifications`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_validate_campsites</span><span class="p">(</span><span class="n">rec_area</span><span class="o">=</span><span class="n">rec_area</span><span class="p">,</span> <span class="n">campground</span><span class="o">=</span><span class="n">campground</span><span class="p">,</span> <span class="n">campsite</span><span class="o">=</span><span class="n">campsite</span><span class="p">,</span>
+                        <span class="n">start_date</span><span class="o">=</span><span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="o">=</span><span class="n">end_date</span><span class="p">,</span> <span class="n">weekends</span><span class="o">=</span><span class="n">weekends</span><span class="p">,</span>
+                        <span class="n">nights</span><span class="o">=</span><span class="n">nights</span><span class="p">,</span> <span class="n">provider</span><span class="o">=</span><span class="n">provider</span><span class="p">,</span> <span class="n">continuous</span><span class="o">=</span><span class="n">continuous</span><span class="p">,</span>
+                        <span class="n">polling_interval</span><span class="o">=</span><span class="n">polling_interval</span><span class="p">,</span> <span class="n">notifications</span><span class="o">=</span><span class="n">notifications</span><span class="p">,</span>
+                        <span class="n">notify_first_try</span><span class="o">=</span><span class="n">notify_first_try</span><span class="p">,</span> <span class="n">search_forever</span><span class="o">=</span><span class="n">search_forever</span><span class="p">,</span>
+                        <span class="n">yml_config</span><span class="o">=</span><span class="n">yml_config</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">yml_config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">provider</span><span class="p">,</span> <span class="n">provider_kwargs</span><span class="p">,</span> <span class="n">search_kwargs</span> <span class="o">=</span> <span class="n">yaml_utils</span><span class="o">.</span><span class="n">yaml_file_to_arguments</span><span class="p">(</span>
+            <span class="n">file_path</span><span class="o">=</span><span class="n">yml_config</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">provider</span> <span class="o">=</span> <span class="n">provider</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="n">search_window</span> <span class="o">=</span> <span class="n">SearchWindow</span><span class="p">(</span><span class="n">start_date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">start_date</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">),</span>
+                                     <span class="n">end_date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">end_date</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">))</span>
+        <span class="n">provider_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">search_window</span><span class="o">=</span><span class="n">search_window</span><span class="p">,</span>
+                               <span class="n">recreation_area</span><span class="o">=</span><span class="n">make_list</span><span class="p">(</span><span class="n">rec_area</span><span class="p">),</span>
+                               <span class="n">campgrounds</span><span class="o">=</span><span class="n">make_list</span><span class="p">(</span><span class="n">campground</span><span class="p">),</span>
+                               <span class="n">campsites</span><span class="o">=</span><span class="n">make_list</span><span class="p">(</span><span class="n">campsite</span><span class="p">),</span>
+                               <span class="n">weekends_only</span><span class="o">=</span><span class="n">weekends</span><span class="p">,</span>
+                               <span class="n">nights</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">nights</span><span class="p">))</span>
+        <span class="n">search_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">log</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                             <span class="n">continuous</span><span class="o">=</span><span class="n">continuous</span><span class="p">,</span>
+                             <span class="n">polling_interval</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">polling_interval</span><span class="p">),</span>
+                             <span class="n">notify_first_try</span><span class="o">=</span><span class="n">notify_first_try</span><span class="p">,</span>
+                             <span class="n">notification_provider</span><span class="o">=</span><span class="n">notifications</span><span class="p">,</span>
+                             <span class="n">search_forever</span><span class="o">=</span><span class="n">search_forever</span><span class="p">)</span>
+    <span class="n">provider_class</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span> <span class="n">value</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">CAMPSITE_SEARCH_PROVIDER</span><span class="o">.</span><span class="n">items</span><span class="p">()}[</span>
+        <span class="n">provider</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
+    <span class="n">camping_finder</span> <span class="o">=</span> <span class="n">provider_class</span><span class="p">(</span><span class="o">**</span><span class="n">provider_kwargs</span><span class="p">)</span>
+    <span class="n">camping_finder</span><span class="o">.</span><span class="n">get_matching_campsites</span><span class="p">(</span><span class="o">**</span><span class="n">search_kwargs</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="cli"><a class="viewcode-back" href="../../api/camply.cli.html#camply.cli.cli">[docs]</a><span class="k">def</span> <span class="nf">cli</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    camply Command Line Utility Wrapper</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> [</span><span class="si">%(levelname)8s</span><span class="s2">]: </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">,</span>
+                        <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">getLevelName</span><span class="p">(</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;LOG_LEVEL&quot;</span><span class="p">,</span> <span class="s2">&quot;INFO&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">camply</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;camply, the campsite finder ⛺️&quot;</span><span class="p">)</span>
+        <span class="n">camply_command_line</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Handling Exit Request&quot;</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">camply</span><span class="p">(</span><span class="s2">&quot;Exiting camply 👋&quot;</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">cli</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Justin Flannery.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

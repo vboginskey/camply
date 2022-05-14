@@ -1,0 +1,18 @@
+camply.providers.xanterra package
+=================================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   camply.providers.xanterra.yellowstone_lodging
+
+Module contents
+---------------
+
+.. automodule:: camply.providers.xanterra
+   :members:
+   :undoc-members:
+   :show-inheritance:

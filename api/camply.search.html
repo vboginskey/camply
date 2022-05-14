@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>camply.search package &mdash; camply 0.4.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/autodoc_pydantic.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/autoclasstoc.css" type="text/css" />
+    <link rel="shortcut icon" href="https://juftin.com/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="camply.search.base_search module" href="camply.search.base_search.html" />
+    <link rel="prev" title="camply.providers.base_provider module" href="camply.providers.base_provider.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> camply
+          </a>
+              <div class="version">
+                0.4.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Check Out The ReadTheDocs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#command-line-usage">Command Line Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#finding-recreation-areas-ids-and-campground-ids-to-search-without-using-the-command-line">Finding Recreation Areas IDs and Campground IDs To Search Without Using the Command Line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#object-oriented-usage-python">Object-Oriented Usage (Python)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#running-in-docker">Running in Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#dependencies">Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">camply CLI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="camply.html">camply package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="camply.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="camply.config.html">camply.config package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="camply.containers.html">camply.containers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="camply.notifications.html">camply.notifications package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="camply.providers.html">camply.providers package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">camply.search package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="camply.utils.html">camply.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="camply.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="camply.html#module-camply">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">camply</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">camply</a> &raquo;</li>
+          <li><a href="camply.html">camply package</a> &raquo;</li>
+      <li>camply.search package</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="camply-search-package">
+<h1>camply.search package<a class="headerlink" href="#camply-search-package" title="Permalink to this headline"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="camply.search.base_search.html">camply.search.base_search module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="camply.search.search_recreationdotgov.html">camply.search.search_recreationdotgov module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="camply.search.search_yellowstone.html">camply.search.search_yellowstone module</a></li>
+</ul>
+</div>
+</section>
+<section id="module-camply.search">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-camply.search" title="Permalink to this headline"></a></h2>
+<p>camply search __init__ file</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="camply.search.BaseCampingSearch">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camply.search.</span></span><span class="sig-name descname"><span class="pre">BaseCampingSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">provider</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weekends_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/camply/search/base_search.html#BaseCampingSearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.search.BaseCampingSearch" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></a></p>
+<p>Camping Search Object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>weekends_only</strong> (<em>optional</em>) – <strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">False</span></code></p></li>
+<li><p><strong>nights</strong> (<em>optional</em>) – <strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">1</span></code></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="camply.search.BaseCampingSearch.get_all_campsites">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_all_campsites</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/camply/search/base_search.html#BaseCampingSearch.get_all_campsites"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.search.BaseCampingSearch.get_all_campsites" title="Permalink to this definition"></a></dt>
+<dd><p>Perform the Search and Return Matching Availabilities.</p>
+<p>This method must be implemented
+on all sub-classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="camply.html#camply.AvailableCampsite" title="camply.AvailableCampsite">AvailableCampsite</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="camply.search.BaseCampingSearch.get_matching_campsites">
+<span class="sig-name descname"><span class="pre">get_matching_campsites</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">continuous</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polling_interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notification_provider</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'silent'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notify_first_try</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_forever</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/camply/search/base_search.html#BaseCampingSearch.get_matching_campsites"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.search.BaseCampingSearch.get_matching_campsites" title="Permalink to this definition"></a></dt>
+<dd><p>Perform the Search and Return Matching Availabilities</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>log</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Whether to log found campsites
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">True</span></code></p></li>
+<li><p><strong>verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Used with <cite>log</cite> to enhance the amount of info logged to the console
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">False</span></code></p></li>
+<li><p><strong>continuous</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Whether to continue searching beyond just the first time
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">False</span></code></p></li>
+<li><p><strong>polling_interval</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – Used with <cite>continuous=True</cite>, the amount of time to wait between searches.
+Defaults to 10 if not provided, cannot be less than 5
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>notification_provider</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Used with <cite>continuous=True</cite>, Name of notification provider to use. Accepts
+“email”, “pushover”, and defaults to “silent”. Also accepts a list or commma
+separated string of these options or even a notification provider object itself
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">'silent'</span></code></p></li>
+<li><p><strong>notify_first_try</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Used with <cite>continuous=True</cite>, whether to send all non-silent notifications if more
+than 5 matching campsites are found on the first try. Defaults to false which
+only sends the first 5.
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">False</span></code></p></li>
+<li><p><strong>search_forever</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Used with <cite>continuous=True</cite>, This option searches for new campsites forever, with
+the caveat being that it will never notify about the same campsite.
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">False</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[<a class="reference internal" href="camply.html#camply.AvailableCampsite" title="camply.AvailableCampsite">AvailableCampsite</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="camply.search.BaseCampingSearch.campsites_to_df">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">campsites_to_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">campsites</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/camply/search/base_search.html#BaseCampingSearch.campsites_to_df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.search.BaseCampingSearch.campsites_to_df" title="Permalink to this definition"></a></dt>
+<dd><p>Convert Campsite Array to</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>campsites</strong> (<em>List</em><em>[</em><a class="reference internal" href="camply.html#camply.AvailableCampsite" title="camply.AvailableCampsite"><em>AvailableCampsite</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="camply.search.BaseCampingSearch.df_to_campsites">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">df_to_campsites</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">campsite_df</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/camply/search/base_search.html#BaseCampingSearch.df_to_campsites"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.search.BaseCampingSearch.df_to_campsites" title="Permalink to this definition"></a></dt>
+<dd><p>Convert Campsite DataFrame to array of AvailableCampsite objects</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>campsite_df</strong> (<em>DataFrame</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[<a class="reference internal" href="camply.html#camply.AvailableCampsite" title="camply.AvailableCampsite">AvailableCampsite</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="camply.search.BaseCampingSearch.assemble_availabilities">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">assemble_availabilities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matching_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/camply/search/base_search.html#BaseCampingSearch.assemble_availabilities"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.search.BaseCampingSearch.assemble_availabilities" title="Permalink to this definition"></a></dt>
+<dd><p>Prepare a Pandas DataFrame from Array of AvailableCampsite objects</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>matching_data</strong> (<em>List</em><em>[</em><a class="reference internal" href="camply.html#camply.AvailableCampsite" title="camply.AvailableCampsite"><em>AvailableCampsite</em></a><em>]</em>) – List of campsites to assemble</p></li>
+<li><p><strong>log</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Whether to log found campsites
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">True</span></code></p></li>
+<li><p><strong>verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Used with <cite>log</cite> to enhance the amount of info logged to the console
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">False</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>availability_df</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="camply.search.SearchYellowstone">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camply.search.</span></span><span class="sig-name descname"><span class="pre">SearchYellowstone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weekends_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">campgrounds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/camply/search/search_yellowstone.html#SearchYellowstone"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.search.SearchYellowstone" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="camply.search.base_search.html#camply.search.base_search.BaseCampingSearch" title="camply.search.base_search.BaseCampingSearch"><code class="xref py py-class docutils literal notranslate"><span class="pre">camply.search.base_search.BaseCampingSearch</span></code></a></p>
+<p>Camping Search Object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>weekends_only</strong> (<em>optional</em>) – <strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">False</span></code></p></li>
+<li><p><strong>campgrounds</strong> (<em>optional</em>) – <strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>nights</strong> (<em>optional</em>) – <strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">1</span></code></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="camply.search.SearchYellowstone.get_all_campsites">
+<span class="sig-name descname"><span class="pre">get_all_campsites</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/camply/search/search_yellowstone.html#SearchYellowstone.get_all_campsites"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.search.SearchYellowstone.get_all_campsites" title="Permalink to this definition"></a></dt>
+<dd><p>Search for all matching campsites in Yellowstone.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="camply.html#camply.AvailableCampsite" title="camply.AvailableCampsite">AvailableCampsite</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="camply.search.SearchRecreationDotGov">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camply.search.</span></span><span class="sig-name descname"><span class="pre">SearchRecreationDotGov</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recreation_area</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">campgrounds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">campsites</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weekends_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/camply/search/search_recreationdotgov.html#SearchRecreationDotGov"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.search.SearchRecreationDotGov" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="camply.search.base_search.html#camply.search.base_search.BaseCampingSearch" title="camply.search.base_search.BaseCampingSearch"><code class="xref py py-class docutils literal notranslate"><span class="pre">camply.search.base_search.BaseCampingSearch</span></code></a></p>
+<p>Camping Search Object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>recreation_area</strong> (<em>optional</em>) – <strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>campgrounds</strong> (<em>optional</em>) – <strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>campsites</strong> (<em>optional</em>) – <strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>weekends_only</strong> (<em>optional</em>) – <strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">False</span></code></p></li>
+<li><p><strong>nights</strong> (<em>optional</em>) – <strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">1</span></code></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="camply.search.SearchRecreationDotGov.get_all_campsites">
+<span class="sig-name descname"><span class="pre">get_all_campsites</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/camply/search/search_recreationdotgov.html#SearchRecreationDotGov.get_all_campsites"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.search.SearchRecreationDotGov.get_all_campsites" title="Permalink to this definition"></a></dt>
+<dd><p>Perform the Search and Return All Monthly Availabilities</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="camply.html#camply.AvailableCampsite" title="camply.AvailableCampsite">AvailableCampsite</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="camply.providers.base_provider.html" class="btn btn-neutral float-left" title="camply.providers.base_provider module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="camply.search.base_search.html" class="btn btn-neutral float-right" title="camply.search.base_search module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Justin Flannery.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

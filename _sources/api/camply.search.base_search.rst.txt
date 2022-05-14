@@ -1,0 +1,7 @@
+camply.search.base\_search module
+=================================
+
+.. automodule:: camply.search.base_search
+   :members:
+   :undoc-members:
+   :show-inheritance:

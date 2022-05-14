@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>camply.config.yellowstone_config &mdash; camply 0.4.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/autodoc_pydantic.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/autoclasstoc.css" type="text/css" />
+    <link rel="shortcut icon" href="https://juftin.com/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> camply
+          </a>
+              <div class="version">
+                0.4.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Check Out The ReadTheDocs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#command-line-usage">Command Line Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#finding-recreation-areas-ids-and-campground-ids-to-search-without-using-the-command-line">Finding Recreation Areas IDs and Campground IDs To Search Without Using the Command Line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#object-oriented-usage-python">Object-Oriented Usage (Python)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#running-in-docker">Running in Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#dependencies">Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli.html">camply CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">API Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">camply</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      <li>camply.config.yellowstone_config</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for camply.config.yellowstone_config</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Project Configuration for Yellowstone Variables</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">from</span> <span class="nn">.data_columns</span> <span class="kn">import</span> <span class="n">DataColumns</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="YellowstoneConfig"><a class="viewcode-back" href="../../../api/camply.config.yellowstone_config.html#camply.config.YellowstoneConfig">[docs]</a><span class="k">class</span> <span class="nc">YellowstoneConfig</span><span class="p">(</span><span class="n">DataColumns</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Variable Storage Class</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">API_SCHEME</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;https&quot;</span>
+    <span class="n">API_BASE_ENDPOINT</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;webapi.xanterra.net&quot;</span>
+    <span class="n">API_BASE_PATH</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;v1/api&quot;</span>
+    <span class="n">LODGING_PATH</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">API_BASE_PATH</span><span class="si">}</span><span class="s2">/availability/hotels&quot;</span>
+    <span class="n">YELLOWSTONE_PARK_PATH</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;yellowstonenationalparklodges&quot;</span>
+    <span class="n">YELLOWSTONE_LODGING_PATH</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">LODGING_PATH</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">YELLOWSTONE_PARK_PATH</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">CAMPSITE_AVAILABILITY</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_BASE_PATH</span><span class="si">}</span><span class="s2">/availability/rooms&quot;</span>
+    <span class="n">YELLOWSTONE_CAMPSITE_AVAILABILITY</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">CAMPSITE_AVAILABILITY</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">YELLOWSTONE_PARK_PATH</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">YELLOWSTONE_PROPERTY_INFO</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_BASE_PATH</span><span class="si">}</span><span class="s2">/property/rooms/</span><span class="si">{</span><span class="n">YELLOWSTONE_PARK_PATH</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">API_REFERRERS</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;Host&quot;</span><span class="p">:</span> <span class="s2">&quot;webapi.xanterra.net&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Origin&quot;</span><span class="p">:</span> <span class="s2">&quot;https://secure.yellowstonenationalparklodges.com&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Referer&quot;</span><span class="p">:</span> <span class="s2">&quot;https://secure.yellowstonenationalparklodges.com/&quot;</span>
+    <span class="p">}</span>
+
+    <span class="n">LODGING_CAMPGROUND_QUALIFIER</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;:RV&quot;</span>
+
+    <span class="c1"># JSON FILTERING</span>
+    <span class="n">BOOKING_AVAILABILITY</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;availability&quot;</span>
+
+    <span class="c1"># DATAFRAME FILTERING</span>
+    <span class="n">FACILITY_ID</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;facility_id&quot;</span>
+    <span class="n">FACILITY_STATUS</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;status&quot;</span>
+    <span class="n">FACILITY_STATUS_QUALIFIER</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;OPEN&quot;</span>
+    <span class="n">FACILITY_ROOMS</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;rooms&quot;</span>
+    <span class="n">FACILITY_AVAILABLE_QUALIFIER</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;available&quot;</span>
+    <span class="n">FACILITY_HOTEL_CODE</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;hotelCode&quot;</span>
+    <span class="n">FACILITY_ROOM_CODE</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;roomCode&quot;</span>
+    <span class="n">FACILITY_PRICE</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;price&quot;</span>
+    <span class="n">FACILITY_TYPE</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;type&quot;</span>
+
+    <span class="n">CAMPSITE_DATA_COLUMNS</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;facility_id&quot;</span><span class="p">,</span> <span class="s2">&quot;facility_name&quot;</span><span class="p">,</span> <span class="s2">&quot;booking_url&quot;</span><span class="p">]</span>
+
+    <span class="n">RATE_CODE</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;INTERNET&quot;</span>
+    <span class="n">LODGING_RATES</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;rates&quot;</span>
+    <span class="n">LODGING_TITLE</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;title&quot;</span>
+    <span class="n">LODGING_BASE_PRICES</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;mins&quot;</span>
+    <span class="n">LODGING_OCCUPANCY_BASE</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;occupancyBase&quot;</span>
+    <span class="n">LODGING_OCCUPANCY_MAX</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;occupancyMax&quot;</span>
+    <span class="n">LODGING_ERROR_MESSAGE</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;message&quot;</span>
+
+    <span class="n">MINIMUM_POLLING_INTERVAL</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">45</span>
+
+    <span class="n">WEBUI_ALIAS_ENDPOINT</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;yellowstonenationalparklodges.com&quot;</span>
+    <span class="n">WEBUI_BASE_ENDPOINT</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;secure.yellowstonenationalparklodges.com&quot;</span>
+    <span class="n">WEBUI_BOOKING_PATH</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;booking/lodging-select&quot;</span>
+
+    <span class="n">YELLOWSTONE_RECREATION_AREA_ID</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">YELLOWSTONE_RECREATION_AREA_NAME</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Yellowstone&quot;</span>
+    <span class="n">YELLOWSTONE_RECREATION_AREA_FORMAL_NAME</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Yellowstone National Park, USA&quot;</span>
+    <span class="n">YELLOWSTONE_LOOP_NAME</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;N/A&quot;</span>
+    <span class="n">CAMPSITE_AVAILABILITY_STATUS</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Available&quot;</span>
+    <span class="n">YELLOWSTONE_CAMPGROUND_NAME_REPLACE</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;CG Internet Rate&quot;</span><span class="p">,</span> <span class="s2">&quot;Campground&quot;</span><span class="p">)</span>
+
+    <span class="n">YELLOWSTONE_TIMEZONE</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;America/Denver&quot;</span>
+
+    <span class="c1"># LODGES:  https://webapi.xanterra.net/v1/api/property/hotels/yellowstonenationalparklodges</span>
+    <span class="n">YELLOWSTONE_CAMPGROUNDS</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;YLYC:RV&quot;</span><span class="p">:</span> <span class="s2">&quot;Canyon Campground&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;YLYB:RV&quot;</span><span class="p">:</span> <span class="s2">&quot;Bridge Bay Campground&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;YLYG:RV&quot;</span><span class="p">:</span> <span class="s2">&quot;Grant Campground&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;YLYM:RV&quot;</span><span class="p">:</span> <span class="s2">&quot;Madison Campground&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;YLYF:RV&quot;</span><span class="p">:</span> <span class="s2">&quot;Fishing Bridge RV Park&quot;</span>
+    <span class="p">}</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Justin Flannery.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

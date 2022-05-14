@@ -1,0 +1,7 @@
+camply.config.yellowstone\_config module
+========================================
+
+.. automodule:: camply.config.yellowstone_config
+   :members:
+   :undoc-members:
+   :show-inheritance:

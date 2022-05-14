@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>camply.config.notification_config &mdash; camply 0.4.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/autodoc_pydantic.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/autoclasstoc.css" type="text/css" />
+    <link rel="shortcut icon" href="https://juftin.com/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> camply
+          </a>
+              <div class="version">
+                0.4.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Check Out The ReadTheDocs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#command-line-usage">Command Line Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#finding-recreation-areas-ids-and-campground-ids-to-search-without-using-the-command-line">Finding Recreation Areas IDs and Campground IDs To Search Without Using the Command Line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#object-oriented-usage-python">Object-Oriented Usage (Python)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#running-in-docker">Running in Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#dependencies">Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli.html">camply CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">API Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">camply</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      <li>camply.config.notification_config</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for camply.config.notification_config</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Project Configuration for Pushover Variables</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">environ</span><span class="p">,</span> <span class="n">getenv</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span>
+
+<span class="kn">from</span> <span class="nn">camply.config.file_config</span> <span class="kn">import</span> <span class="n">FileConfig</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">load_dotenv</span><span class="p">(</span><span class="n">FileConfig</span><span class="o">.</span><span class="n">DOT_CAMPLY_FILE</span><span class="p">,</span> <span class="n">override</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="PushoverConfig"><a class="viewcode-back" href="../../../api/camply.config.notification_config.html#camply.config.PushoverConfig">[docs]</a><span class="k">class</span> <span class="nc">PushoverConfig</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pushover Notification Config Class</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">PUSHOVER_API_ENDPOINT</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;https://api.pushover.net/1/messages.json&quot;</span>
+    <span class="n">PUSHOVER_DEFAULT_API_TOKEN</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;YWpjN3M1a2hhYTRlOG1zYWhncnFnaHduZGdtbmI3&quot;</span>
+    <span class="n">API_HEADERS</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">}</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">PUSH_TOKEN</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PUSHOVER_PUSH_TOKEN&quot;</span><span class="p">]</span>
+        <span class="n">PUSH_USER</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PUSHOVER_PUSH_USER&quot;</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="n">PUSH_TOKEN</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">PUSH_USER</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="EmailConfig"><a class="viewcode-back" href="../../../api/camply.config.notification_config.html#camply.config.EmailConfig">[docs]</a><span class="k">class</span> <span class="nc">EmailConfig</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Email Notification Config Class</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">EMAIL_TO_ADDRESS</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;EMAIL_TO_ADDRESS&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">DEFAULT_FROM_ADDRESS</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;camply@juftin.com&quot;</span>
+    <span class="n">EMAIL_FROM_ADDRESS</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;EMAIL_FROM_ADDRESS&quot;</span><span class="p">,</span> <span class="n">DEFAULT_FROM_ADDRESS</span><span class="p">)</span>
+    <span class="n">DEFAULT_SUBJECT_LINE</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Camply Notification&quot;</span>
+    <span class="n">EMAIL_SUBJECT_LINE</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;EMAIL_SUBJECT_LINE&quot;</span><span class="p">,</span> <span class="n">DEFAULT_SUBJECT_LINE</span><span class="p">)</span>
+    <span class="n">DEFAULT_SMTP_SERVER</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;smtp.gmail.com&quot;</span>
+    <span class="n">EMAIL_SMTP_SERVER</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;EMAIL_SMTP_SERVER&quot;</span><span class="p">,</span> <span class="n">DEFAULT_SMTP_SERVER</span><span class="p">)</span>
+    <span class="n">EMAIL_USERNAME</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;EMAIL_USERNAME&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">EMAIL_PASSWORD</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;EMAIL_PASSWORD&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">DEFAULT_SMTP_PORT</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">465</span>
+    <span class="n">EMAIL_SMTP_PORT</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;EMAIL_SMTP_PORT&quot;</span><span class="p">,</span> <span class="n">DEFAULT_SMTP_PORT</span><span class="p">))</span>
+
+    <span class="n">ENVIRONMENT_VARIABLE_NAMES</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;EMAIL_TO_ADDRESS&quot;</span><span class="p">,</span>
+                                             <span class="s2">&quot;EMAIL_USERNAME&quot;</span><span class="p">,</span>
+                                             <span class="s2">&quot;EMAIL_PASSWORD&quot;</span><span class="p">]</span>
+    <span class="n">OPTIONAL_ENVIRONMENT_VARIABLE</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="sa">f</span><span class="s2">&quot;EMAIL_SMTP_SERVER (default: </span><span class="si">{</span><span class="n">DEFAULT_SMTP_SERVER</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;EMAIL_FROM_ADDRESS (default: </span><span class="si">{</span><span class="n">DEFAULT_FROM_ADDRESS</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s1">&#39;EMAIL_SUBJECT_LINE (default: &quot;</span><span class="si">{</span><span class="n">DEFAULT_SUBJECT_LINE</span><span class="si">}</span><span class="s1">&quot;)&#39;</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;EMAIL_SMTP_PORT (default: </span><span class="si">{</span><span class="n">DEFAULT_SMTP_PORT</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="PushbulletConfig"><a class="viewcode-back" href="../../../api/camply.config.notification_config.html#camply.config.PushbulletConfig">[docs]</a><span class="k">class</span> <span class="nc">PushbulletConfig</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pushbullet Notification Config Class</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">PUSHBULLET_API_ENDPOINT</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;https://api.pushbullet.com/v2/pushes&quot;</span>
+    <span class="n">API_HEADERS</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">}</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">API_TOKEN</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PUSHBULLET_API_TOKEN&quot;</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="n">API_TOKEN</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="TelegramConfig"><a class="viewcode-back" href="../../../api/camply.config.notification_config.html#camply.config.TelegramConfig">[docs]</a><span class="k">class</span> <span class="nc">TelegramConfig</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Telegram Notification Config Class</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">BOT_TOKEN</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">environ</span><span class="p">[</span><span class="s2">&quot;TELEGRAM_BOT_TOKEN&quot;</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="n">BOT_TOKEN</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">CHAT_ID</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">environ</span><span class="p">[</span><span class="s2">&quot;TELEGRAM_CHAT_ID&quot;</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="n">CHAT_ID</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">API_ENDPOINT</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://api.telegram.org/bot</span><span class="si">{</span><span class="n">BOT_TOKEN</span><span class="si">}</span><span class="s2">/sendMessage&quot;</span>
+    <span class="n">API_HEADERS</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">}</span>
+    <span class="n">API_CONTENT</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">CHAT_ID</span><span class="p">,</span>
+        <span class="s2">&quot;parse_mode&quot;</span><span class="p">:</span> <span class="s2">&quot;MarkdownV2&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;disable_web_page_preview&quot;</span><span class="p">:</span> <span class="s2">&quot;true&quot;</span>
+    <span class="p">}</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Justin Flannery.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

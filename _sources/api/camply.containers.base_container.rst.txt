@@ -1,0 +1,7 @@
+camply.containers.base\_container module
+========================================
+
+.. automodule:: camply.containers.base_container
+   :members:
+   :undoc-members:
+   :show-inheritance:

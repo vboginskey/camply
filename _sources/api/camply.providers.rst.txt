@@ -1,0 +1,27 @@
+camply.providers package
+========================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   camply.providers.recreation_dot_gov
+   camply.providers.xanterra
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   camply.providers.base_provider
+
+Module contents
+---------------
+
+.. automodule:: camply.providers
+   :members:
+   :undoc-members:
+   :show-inheritance:

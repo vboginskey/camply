@@ -1,0 +1,7 @@
+camply.utils.configure\_camply module
+=====================================
+
+.. automodule:: camply.utils.configure_camply
+   :members:
+   :undoc-members:
+   :show-inheritance:

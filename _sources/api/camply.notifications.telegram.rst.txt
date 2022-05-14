@@ -1,0 +1,7 @@
+camply.notifications.telegram module
+====================================
+
+.. automodule:: camply.notifications.telegram
+   :members:
+   :undoc-members:
+   :show-inheritance:

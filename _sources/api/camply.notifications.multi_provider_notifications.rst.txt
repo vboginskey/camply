@@ -1,0 +1,7 @@
+camply.notifications.multi\_provider\_notifications module
+==========================================================
+
+.. automodule:: camply.notifications.multi_provider_notifications
+   :members:
+   :undoc-members:
+   :show-inheritance:

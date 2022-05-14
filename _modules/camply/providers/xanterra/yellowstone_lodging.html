@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>camply.providers.xanterra.yellowstone_lodging &mdash; camply 0.4.0 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/autodoc_pydantic.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/autoclasstoc.css" type="text/css" />
+    <link rel="shortcut icon" href="https://juftin.com/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/clipboard.min.js"></script>
+        <script src="../../../../_static/copybutton.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html" class="icon icon-home"> camply
+          </a>
+              <div class="version">
+                0.4.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../usage.html">Check Out The ReadTheDocs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../usage.html#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../usage.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../usage.html#command-line-usage">Command Line Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../usage.html#finding-recreation-areas-ids-and-campground-ids-to-search-without-using-the-command-line">Finding Recreation Areas IDs and Campground IDs To Search Without Using the Command Line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../usage.html#object-oriented-usage-python">Object-Oriented Usage (Python)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../usage.html#running-in-docker">Running in Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../usage.html#dependencies">Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cli.html">camply CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/modules.html">API Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">camply</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      <li>camply.providers.xanterra.yellowstone_lodging</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for camply.providers.xanterra.yellowstone_lodging</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Python Class Check Yellowstone Campground Booking API for Availability</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">from</span> <span class="nn">json</span> <span class="kn">import</span> <span class="n">loads</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">choice</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">urllib</span> <span class="kn">import</span> <span class="n">parse</span>
+
+<span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">to_datetime</span>
+<span class="kn">from</span> <span class="nn">pytz</span> <span class="kn">import</span> <span class="n">timezone</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">tenacity</span>
+
+<span class="kn">from</span> <span class="nn">camply.config</span> <span class="kn">import</span> <span class="n">STANDARD_HEADERS</span><span class="p">,</span> <span class="n">USER_AGENTS</span><span class="p">,</span> <span class="n">YellowstoneConfig</span>
+<span class="kn">from</span> <span class="nn">camply.containers</span> <span class="kn">import</span> <span class="n">AvailableCampsite</span>
+<span class="kn">from</span> <span class="nn">camply.providers.base_provider</span> <span class="kn">import</span> <span class="n">BaseProvider</span>
+<span class="kn">from</span> <span class="nn">camply.utils</span> <span class="kn">import</span> <span class="n">logging_utils</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="YellowstoneLodging"><a class="viewcode-back" href="../../../../api/camply.providers.xanterra.yellowstone_lodging.html#camply.YellowstoneLodging">[docs]</a><span class="k">class</span> <span class="nc">YellowstoneLodging</span><span class="p">(</span><span class="n">BaseProvider</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Scanner for Lodging in Yellowstone</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        String Representation</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;&lt;YellowstoneLodging&gt;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_get_monthly_availability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">month</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">nights</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check All Lodging in Yellowstone for Campground Data</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        data_availability: dict</span>
+<span class="sd">            Data Availability Dictionary</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">date</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_ensure_current_month</span><span class="p">(</span><span class="n">month</span><span class="o">=</span><span class="n">month</span><span class="p">),</span>
+                          <span class="n">limit</span><span class="o">=</span><span class="mi">31</span><span class="p">,</span>
+                          <span class="n">rate_code</span><span class="o">=</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">RATE_CODE</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">nights</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">query_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">nights</span><span class="o">=</span><span class="n">nights</span><span class="p">))</span>
+        <span class="n">api_endpoint</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_api_endpoint</span><span class="p">(</span>
+            <span class="n">url_path</span><span class="o">=</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">YELLOWSTONE_LODGING_PATH</span><span class="p">,</span>
+            <span class="n">query</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Searching for Yellowstone Lodging Availability: </span><span class="si">{</span><span class="n">month</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%B, %Y&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">all_resort_availability_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_yellowstone_request</span><span class="p">(</span>
+            <span class="n">endpoint</span><span class="o">=</span><span class="n">api_endpoint</span><span class="p">,</span>
+            <span class="n">params</span><span class="o">=</span><span class="n">query_dict</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">all_resort_availability_data</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="nd">@tenacity</span><span class="o">.</span><span class="n">retry</span><span class="p">(</span><span class="n">wait</span><span class="o">=</span><span class="n">tenacity</span><span class="o">.</span><span class="n">wait_random_exponential</span><span class="p">(</span><span class="n">multiplier</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">1800</span><span class="p">),</span>
+                    <span class="n">stop</span><span class="o">=</span><span class="n">tenacity</span><span class="o">.</span><span class="n">stop</span><span class="o">.</span><span class="n">stop_after_delay</span><span class="p">(</span><span class="mi">6000</span><span class="p">))</span>
+    <span class="k">def</span> <span class="nf">_try_retry_get_data</span><span class="p">(</span><span class="n">endpoint</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Try and Retry Fetching Data from the Yellowstone API.</span>
+
+<span class="sd">        Unfortunately this is a required method to request the data since the</span>
+<span class="sd">        Yellowstone API doesn&#39;t always return data.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        endpoint: str</span>
+<span class="sd">            API Endpoint</span>
+<span class="sd">        params</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">yellowstone_headers</span> <span class="o">=</span> <span class="n">choice</span><span class="p">(</span><span class="n">USER_AGENTS</span><span class="p">)</span>
+        <span class="n">yellowstone_headers</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">STANDARD_HEADERS</span><span class="p">)</span>
+        <span class="n">yellowstone_headers</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">API_REFERRERS</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">endpoint</span><span class="p">,</span>
+                                <span class="n">headers</span><span class="o">=</span><span class="n">yellowstone_headers</span><span class="p">,</span>
+                                <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span> <span class="ow">and</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">error_message</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Something went wrong with checking the &quot;</span>
+                             <span class="s2">&quot;Yellowstone Booking API. Will continue retrying.&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">error_message</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">error_message</span><span class="p">)</span>
+
+<div class="viewcode-block" id="YellowstoneLodging.make_yellowstone_request"><a class="viewcode-back" href="../../../../api/camply.providers.xanterra.yellowstone_lodging.html#camply.YellowstoneLodging.make_yellowstone_request">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">make_yellowstone_request</span><span class="p">(</span><span class="n">endpoint</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Try and Retry Fetching Data from the Yellowstone API.</span>
+
+<span class="sd">        Unfortunately this is a required method to request the data since the</span>
+<span class="sd">        Yellowstone API doesn&#39;t always return data.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        endpoint: str</span>
+<span class="sd">            API Endpoint</span>
+<span class="sd">        params</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="n">YellowstoneLodging</span><span class="o">.</span><span class="n">_try_retry_get_data</span><span class="p">(</span><span class="n">endpoint</span><span class="o">=</span><span class="n">endpoint</span><span class="p">,</span>
+                                                             <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">RuntimeError</span> <span class="k">as</span> <span class="n">re</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;error_message: </span><span class="si">{</span><span class="n">re</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">content</span></div>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_get_api_endpoint</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">url_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Build the API Endpoint for All Yellowstone Lodging</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">query</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">query_string</span> <span class="o">=</span> <span class="n">parse</span><span class="o">.</span><span class="n">urlencode</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">query_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">url_components</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">scheme</span><span class="o">=</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">API_SCHEME</span><span class="p">,</span>
+                              <span class="n">netloc</span><span class="o">=</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">API_BASE_ENDPOINT</span><span class="p">,</span>
+                              <span class="n">url</span><span class="o">=</span><span class="n">url_path</span><span class="p">,</span>
+                              <span class="n">params</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="n">query_string</span><span class="p">,</span> <span class="n">fragment</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">api_endpoint</span> <span class="o">=</span> <span class="n">parse</span><span class="o">.</span><span class="n">urlunparse</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">url_components</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+        <span class="k">return</span> <span class="n">api_endpoint</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_return_lodging_url</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">lodging_code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">month</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span>
+                            <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a Browser Loadable URL to book from</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        lodging_code: str</span>
+<span class="sd">            Lodging Code from API</span>
+<span class="sd">        month: datetime</span>
+<span class="sd">            Month to return bookings filtered to</span>
+<span class="sd">        params: Optional[dict]</span>
+<span class="sd">            Optional URL Parameters</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            URL String</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">dateFrom</span><span class="o">=</span><span class="n">month</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%m-</span><span class="si">%d</span><span class="s2">-%Y&quot;</span><span class="p">),</span>
+            <span class="n">adults</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">destination</span><span class="o">=</span><span class="n">lodging_code</span><span class="p">,</span>
+            <span class="n">children</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+        <span class="n">query_string</span> <span class="o">=</span> <span class="n">parse</span><span class="o">.</span><span class="n">urlencode</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">)</span>
+
+        <span class="n">url_components</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">scheme</span><span class="o">=</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">API_SCHEME</span><span class="p">,</span>
+                              <span class="n">netloc</span><span class="o">=</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">WEBUI_BASE_ENDPOINT</span><span class="p">,</span>
+                              <span class="n">url</span><span class="o">=</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">WEBUI_BOOKING_PATH</span><span class="p">,</span>
+                              <span class="n">params</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="n">query_string</span><span class="p">,</span> <span class="n">fragment</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">webui_endpoint</span> <span class="o">=</span> <span class="n">parse</span><span class="o">.</span><span class="n">urlunparse</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">url_components</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+        <span class="k">return</span> <span class="n">webui_endpoint</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_compile_campground_availabilities</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">availability</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gather Data about campground availabilities within a JSON Availability Objet</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        availability: dict</span>
+<span class="sd">            JSON Availability Object</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        available_campsites:  List[dict]</span>
+<span class="sd">            List of Availabilities as JSON</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">available_campsites</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">date_string</span> <span class="ow">in</span> <span class="n">availability</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">booking_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">date_string</span><span class="p">,</span> <span class="s2">&quot;%m/</span><span class="si">%d</span><span class="s2">/%Y&quot;</span><span class="p">)</span>
+            <span class="n">daily_data</span> <span class="o">=</span> <span class="n">availability</span><span class="p">[</span><span class="n">date_string</span><span class="p">]</span>
+            <span class="n">camping_keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">daily_data</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span>
+                            <span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">LODGING_CAMPGROUND_QUALIFIER</span> <span class="ow">in</span> <span class="n">key</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">hotel_code</span> <span class="ow">in</span> <span class="n">camping_keys</span><span class="p">:</span>
+                <span class="n">hotel_data</span> <span class="o">=</span> <span class="n">daily_data</span><span class="p">[</span><span class="n">hotel_code</span><span class="p">]</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">hotel_title</span> <span class="o">=</span> <span class="n">hotel_data</span><span class="p">[</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">LODGING_RATES</span><span class="p">][</span>
+                        <span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">RATE_CODE</span><span class="p">][</span>
+                        <span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">LODGING_TITLE</span><span class="p">]</span>
+                    <span class="n">hotel_rate_mins</span> <span class="o">=</span> <span class="n">hotel_data</span><span class="p">[</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">LODGING_RATES</span><span class="p">][</span>
+                        <span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">RATE_CODE</span><span class="p">][</span>
+                        <span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">LODGING_BASE_PRICES</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">hotel_rate_mins</span> <span class="o">!=</span> <span class="p">{</span><span class="s2">&quot;1&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}:</span>
+                        <span class="n">min_capacity</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">hotel_rate_mins</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+                        <span class="n">max_capacity</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">hotel_rate_mins</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+                        <span class="n">capacity</span> <span class="o">=</span> <span class="p">(</span><span class="n">min_capacity</span><span class="p">,</span> <span class="n">max_capacity</span><span class="p">)</span>
+                        <span class="n">campsite</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">campsite_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                            <span class="n">booking_date</span><span class="o">=</span><span class="n">booking_date</span><span class="p">,</span>
+                            <span class="n">campsite_occupancy</span><span class="o">=</span><span class="n">capacity</span><span class="p">,</span>
+                            <span class="n">recreation_area</span><span class="o">=</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">YELLOWSTONE_RECREATION_AREA_NAME</span><span class="p">,</span>
+                            <span class="n">recreation_area_id</span><span class="o">=</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">YELLOWSTONE_RECREATION_AREA_ID</span><span class="p">,</span>
+                            <span class="n">facility_name</span><span class="o">=</span><span class="n">hotel_title</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+                                <span class="o">*</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">YELLOWSTONE_CAMPGROUND_NAME_REPLACE</span><span class="p">),</span>
+                            <span class="n">facility_id</span><span class="o">=</span><span class="n">hotel_code</span><span class="p">)</span>
+                        <span class="n">available_campsites</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">campsite</span><span class="p">)</span>
+                <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+                    <span class="n">_</span> <span class="o">=</span> <span class="n">hotel_data</span><span class="p">[</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">LODGING_ERROR_MESSAGE</span><span class="p">]</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="si">{</span><span class="n">logging_utils</span><span class="o">.</span><span class="n">get_emoji</span><span class="p">(</span><span class="n">available_campsites</span><span class="p">)</span><span class="si">}</span><span class="se">\t</span><span class="s2">&quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">available_campsites</span><span class="p">)</span><span class="si">}</span><span class="s2"> sites found.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">available_campsites</span>
+
+    <span class="k">def</span> <span class="nf">_gather_campsite_specific_availability</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">available_campsites</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">dict</span><span class="p">],</span>
+            <span class="n">month</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span>
+            <span class="n">nights</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get campsite extra information</span>
+
+<span class="sd">        Given a DataFrame of campsite availability, return updated Data with details</span>
+<span class="sd">        about the actual campsites that are available (i.e Tent Size, RV Length, Etc)</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        available_campsites: List[dict]</span>
+<span class="sd">            List of Available Campsites as JSON objects</span>
+<span class="sd">        month: datetime</span>
+<span class="sd">            Month object</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        List[dict]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">available_room_array</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="n">availability_df</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">available_campsites</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">availability_df</span><span class="o">.</span><span class="n">empty</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">available_room_array</span>
+        <span class="k">for</span> <span class="n">facility_id</span><span class="p">,</span> <span class="n">_facility_df</span> <span class="ow">in</span> <span class="n">availability_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span>
+                <span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">FACILITY_ID</span><span class="p">):</span>
+            <span class="n">api_endpoint</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_api_endpoint</span><span class="p">(</span>
+                <span class="n">url_path</span><span class="o">=</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">YELLOWSTONE_CAMPSITE_AVAILABILITY</span><span class="p">,</span>
+                <span class="n">query</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">date</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_ensure_current_month</span><span class="p">(</span><span class="n">month</span><span class="o">=</span><span class="n">month</span><span class="p">),</span> <span class="n">limit</span><span class="o">=</span><span class="mi">31</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">nights</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">nights</span><span class="o">=</span><span class="n">nights</span><span class="p">))</span>
+            <span class="n">campsite_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_yellowstone_request</span><span class="p">(</span>
+                <span class="n">endpoint</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">api_endpoint</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">facility_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+            <span class="n">campsite_availability</span> <span class="o">=</span> <span class="n">campsite_data</span><span class="p">[</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">BOOKING_AVAILABILITY</span><span class="p">]</span>
+            <span class="n">booking_dates</span> <span class="o">=</span> <span class="n">campsite_availability</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+            <span class="n">availabilities</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_daily_availability</span><span class="p">(</span>
+                <span class="n">booking_dates</span><span class="o">=</span><span class="n">booking_dates</span><span class="p">,</span>
+                <span class="n">campsite_availability</span><span class="o">=</span><span class="n">campsite_availability</span><span class="p">,</span>
+                <span class="n">facility_id</span><span class="o">=</span><span class="n">facility_id</span><span class="p">)</span>
+            <span class="n">available_room_array</span> <span class="o">+=</span> <span class="n">availabilities</span>
+        <span class="k">return</span> <span class="n">available_room_array</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_process_daily_availability</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">booking_dates</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+                                    <span class="n">campsite_availability</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">facility_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> \
+            <span class="n">List</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Process Monthly Availability</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        booking_dates: List[str]</span>
+<span class="sd">            List of booking dates to process</span>
+<span class="sd">        campsite_availability: dict</span>
+<span class="sd">            Campsite availability dict</span>
+<span class="sd">        facility_id: str</span>
+<span class="sd">            Identification of the Facility</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        List[dict]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">daily_availabilities</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">booking_date_str</span> <span class="ow">in</span> <span class="n">booking_dates</span><span class="p">:</span>
+            <span class="n">daily_availability</span> <span class="o">=</span> <span class="n">campsite_availability</span><span class="p">[</span><span class="n">booking_date_str</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">daily_availability</span><span class="p">[</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">FACILITY_STATUS</span><span class="p">]</span> <span class="o">==</span> \
+                    <span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">FACILITY_STATUS_QUALIFIER</span><span class="p">:</span>
+                <span class="n">available_rooms</span> <span class="o">=</span> <span class="n">daily_availability</span><span class="p">[</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">FACILITY_ROOMS</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">room</span> <span class="ow">in</span> <span class="n">available_rooms</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">room</span><span class="p">[</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">FACILITY_AVAILABLE_QUALIFIER</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">daily_availabilities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">booking_date</span><span class="o">=</span><span class="n">booking_date_str</span><span class="p">,</span>
+                            <span class="n">facility_id</span><span class="o">=</span><span class="n">facility_id</span><span class="p">,</span>
+                            <span class="n">campsite_code</span><span class="o">=</span><span class="n">room</span><span class="p">[</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">FACILITY_ROOM_CODE</span><span class="p">],</span>
+                            <span class="n">available</span><span class="o">=</span><span class="n">room</span><span class="p">[</span>
+                                <span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">FACILITY_AVAILABLE_QUALIFIER</span><span class="p">],</span>
+                            <span class="n">price</span><span class="o">=</span><span class="n">room</span><span class="p">[</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">FACILITY_PRICE</span><span class="p">]))</span>
+        <span class="k">return</span> <span class="n">daily_availabilities</span>
+
+    <span class="k">def</span> <span class="nf">_get_property_information</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">available_rooms</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">dict</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gather Information About All Campgrounds / Hotels within Yellowstone</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        available_rooms: List[dict]</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        List[dict]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">property_info_array</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="n">availability_df</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">available_rooms</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">availability_df</span><span class="o">.</span><span class="n">empty</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">property_info_array</span>
+        <span class="n">facility_identifiers</span> <span class="o">=</span> <span class="n">availability_df</span><span class="p">[</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">FACILITY_ID</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">facility_id</span> <span class="ow">in</span> <span class="n">facility_identifiers</span><span class="p">:</span>
+            <span class="n">api_endpoint</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_api_endpoint</span><span class="p">(</span>
+                <span class="n">url_path</span><span class="o">=</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">YELLOWSTONE_PROPERTY_INFO</span><span class="p">,</span>
+                <span class="n">query</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+            <span class="n">campsite_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_yellowstone_request</span><span class="p">(</span>
+                <span class="n">endpoint</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">api_endpoint</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">facility_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">campsite_codes</span> <span class="o">=</span> <span class="n">campsite_info</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">campsite_code</span> <span class="ow">in</span> <span class="n">campsite_codes</span><span class="p">:</span>
+                <span class="n">campsite_data</span> <span class="o">=</span> <span class="n">campsite_info</span><span class="p">[</span><span class="n">campsite_code</span><span class="p">]</span>
+                <span class="n">property_info_array</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">facility_id</span><span class="o">=</span><span class="n">facility_id</span><span class="p">,</span>
+                    <span class="n">campsite_code</span><span class="o">=</span><span class="n">campsite_code</span><span class="p">,</span>
+                    <span class="n">campsite_title</span><span class="o">=</span><span class="n">campsite_data</span><span class="p">[</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">LODGING_TITLE</span><span class="p">],</span>
+                    <span class="n">campsite_type</span><span class="o">=</span><span class="n">campsite_data</span><span class="p">[</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">FACILITY_TYPE</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span>
+                    <span class="n">capacity</span><span class="o">=</span><span class="p">(</span><span class="n">campsite_data</span><span class="p">[</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">LODGING_OCCUPANCY_BASE</span><span class="p">],</span>
+                              <span class="n">campsite_data</span><span class="p">[</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">LODGING_OCCUPANCY_MAX</span><span class="p">])</span>
+                <span class="p">))</span>
+        <span class="k">return</span> <span class="n">property_info_array</span>
+
+<div class="viewcode-block" id="YellowstoneLodging.get_monthly_campsites"><a class="viewcode-back" href="../../../../api/camply.providers.xanterra.yellowstone_lodging.html#camply.YellowstoneLodging.get_monthly_campsites">[docs]</a>    <span class="k">def</span> <span class="nf">get_monthly_campsites</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">month</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span>
+                              <span class="n">nights</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">AvailableCampsite</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return All Campsites Available in a Given Month</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        month: datetime</span>
+<span class="sd">            Month to Search</span>
+<span class="sd">        nights: Optional[int]</span>
+<span class="sd">            Search for consecutive nights</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        List[AvailableCampsite]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+        <span class="n">search_date</span> <span class="o">=</span> <span class="n">month</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">day</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">month</span> <span class="o">&lt;=</span> <span class="n">now</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="s2">&quot;Cannot input search dates before today, adjusting search parameters.&quot;</span><span class="p">)</span>
+            <span class="n">search_date</span> <span class="o">=</span> <span class="n">search_date</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="n">now</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="o">=</span><span class="n">now</span><span class="o">.</span><span class="n">month</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="n">now</span><span class="o">.</span><span class="n">day</span><span class="p">)</span>
+        <span class="n">availability_found</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_monthly_availability</span><span class="p">(</span><span class="n">month</span><span class="o">=</span><span class="n">search_date</span><span class="p">,</span>
+                                                            <span class="n">nights</span><span class="o">=</span><span class="n">nights</span><span class="p">)</span>
+        <span class="n">monthly_campsites</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compile_campground_availabilities</span><span class="p">(</span>
+            <span class="n">availability</span><span class="o">=</span><span class="n">availability_found</span><span class="p">[</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">BOOKING_AVAILABILITY</span><span class="p">])</span>
+        <span class="n">campsite_data</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">monthly_campsites</span><span class="p">,</span>
+                                  <span class="n">columns</span><span class="o">=</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">CAMPSITE_DATA_COLUMNS</span><span class="p">)</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">campsite_data</span><span class="o">.</span><span class="n">empty</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="n">available_room_array</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gather_campsite_specific_availability</span><span class="p">(</span>
+            <span class="n">available_campsites</span><span class="o">=</span><span class="n">monthly_campsites</span><span class="p">,</span> <span class="n">month</span><span class="o">=</span><span class="n">month</span><span class="p">,</span>
+            <span class="n">nights</span><span class="o">=</span><span class="n">nights</span><span class="p">)</span>
+        <span class="n">available_rooms</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">available_room_array</span><span class="p">)</span>
+        <span class="n">property_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_property_information</span><span class="p">(</span>
+            <span class="n">available_rooms</span><span class="o">=</span><span class="n">available_room_array</span><span class="p">)</span>
+        <span class="n">properties</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">property_info</span><span class="p">)</span>
+        <span class="n">merged_campsites</span> <span class="o">=</span> <span class="n">available_rooms</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">properties</span><span class="p">,</span>
+                                                 <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">FACILITY_ID_COLUMN</span><span class="p">,</span>
+                                                     <span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">CAMPSITE_ID_COLUMN</span><span class="p">])</span>
+        <span class="n">merged_campsites</span><span class="p">[</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">BOOKING_DATE_COLUMN</span><span class="p">]</span> <span class="o">=</span> <span class="n">to_datetime</span><span class="p">(</span>
+            <span class="n">merged_campsites</span><span class="p">[</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">BOOKING_DATE_COLUMN</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">nights</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">nights_param</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">nights</span><span class="o">=</span><span class="n">nights</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">nights_param</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">nights</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">booking_nights</span> <span class="o">=</span> <span class="n">nights_param</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;nights&quot;</span><span class="p">)</span>
+        <span class="n">merged_campsites</span><span class="p">[</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">BOOKING_END_DATE_COLUMN</span><span class="p">]</span> <span class="o">=</span> \
+            <span class="n">merged_campsites</span><span class="p">[</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">BOOKING_DATE_COLUMN</span><span class="p">]</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span>
+                <span class="n">days</span><span class="o">=</span><span class="n">booking_nights</span><span class="p">)</span>
+        <span class="n">merged_campsites</span><span class="p">[</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">BOOKING_NIGHTS_COLUMN</span><span class="p">]</span> <span class="o">=</span> <span class="n">booking_nights</span>
+        <span class="n">final_campsites</span> <span class="o">=</span> <span class="n">merged_campsites</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+            <span class="n">campsite_data</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">FACILITY_ID_COLUMN</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+            <span class="n">by</span><span class="o">=</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">BOOKING_DATE_COLUMN</span><span class="p">)</span>
+        <span class="n">final_campsites</span><span class="p">[</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">BOOKING_URL_COLUMN</span><span class="p">]</span> <span class="o">=</span> <span class="n">final_campsites</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_return_lodging_url</span><span class="p">(</span><span class="n">lodging_code</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">facility_id</span><span class="p">,</span>
+                                               <span class="n">month</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">booking_date</span><span class="p">,</span>
+                                               <span class="n">params</span><span class="o">=</span><span class="n">nights_param</span><span class="p">),</span>
+            <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">all_monthly_campsite_array</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df_to_campsites</span><span class="p">(</span><span class="n">campsite_df</span><span class="o">=</span><span class="n">final_campsites</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">all_monthly_campsite_array</span></div>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_df_to_campsites</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">campsite_df</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">AvailableCampsite</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Transform a DataFrame into an array of AvailableCampsites</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        campsite_df: DataFrame</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        List[AvailableCampsite]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">all_monthly_campsite_array</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">campsite_df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+            <span class="n">campsite</span> <span class="o">=</span> <span class="n">AvailableCampsite</span><span class="p">(</span>
+                <span class="n">campsite_id</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">CAMPSITE_ID_COLUMN</span><span class="p">],</span>
+                <span class="n">booking_date</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">BOOKING_DATE_COLUMN</span><span class="p">],</span>
+                <span class="n">booking_end_date</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">BOOKING_END_DATE_COLUMN</span><span class="p">],</span>
+                <span class="n">booking_nights</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">BOOKING_NIGHTS_COLUMN</span><span class="p">],</span>
+                <span class="n">campsite_site_name</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">CAMPSITE_SITE_NAME_COLUMN</span><span class="p">],</span>
+                <span class="n">campsite_loop_name</span><span class="o">=</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">YELLOWSTONE_LOOP_NAME</span><span class="p">,</span>
+                <span class="n">campsite_type</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">CAMPSITE_TYPE_COLUMN</span><span class="p">],</span>
+                <span class="n">campsite_occupancy</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">CAMPSITE_OCCUPANCY_COLUMN</span><span class="p">],</span>
+                <span class="n">campsite_use_type</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">CAMPSITE_USE_TYPE_COLUMN</span><span class="p">],</span>
+                <span class="n">availability_status</span><span class="o">=</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">CAMPSITE_AVAILABILITY_STATUS</span><span class="p">,</span>
+                <span class="n">recreation_area</span><span class="o">=</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">YELLOWSTONE_RECREATION_AREA_NAME</span><span class="p">,</span>
+                <span class="n">recreation_area_id</span><span class="o">=</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">YELLOWSTONE_RECREATION_AREA_ID</span><span class="p">,</span>
+                <span class="n">facility_name</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">FACILITY_NAME_COLUMN</span><span class="p">],</span>
+                <span class="n">facility_id</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">FACILITY_ID_COLUMN</span><span class="p">],</span>
+                <span class="n">booking_url</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">BOOKING_URL_COLUMN</span><span class="p">])</span>
+            <span class="n">all_monthly_campsite_array</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">campsite</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">all_monthly_campsite_array</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_ensure_current_month</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">month</span><span class="p">:</span> <span class="n">datetime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">datetime</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Ensure That We Never Give the Yellowstone API Dates in the past.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        month: datetime</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        datetime</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">yellowstone_timezone</span> <span class="o">=</span> <span class="n">timezone</span><span class="p">(</span><span class="n">YellowstoneConfig</span><span class="o">.</span><span class="n">YELLOWSTONE_TIMEZONE</span><span class="p">)</span>
+        <span class="n">yellowstone_current_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">yellowstone_timezone</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+        <span class="n">today</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="n">yellowstone_current_time</span><span class="o">.</span><span class="n">year</span><span class="p">,</span>
+                         <span class="n">month</span><span class="o">=</span><span class="n">yellowstone_current_time</span><span class="o">.</span><span class="n">month</span><span class="p">,</span>
+                         <span class="n">day</span><span class="o">=</span><span class="n">yellowstone_current_time</span><span class="o">.</span><span class="n">day</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">today</span> <span class="o">&gt;</span> <span class="n">month</span><span class="p">:</span>
+            <span class="n">month</span> <span class="o">=</span> <span class="n">today</span>
+        <span class="k">return</span> <span class="n">month</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Justin Flannery.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

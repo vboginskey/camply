@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>camply.containers.api_responses &mdash; camply 0.4.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/autodoc_pydantic.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/autoclasstoc.css" type="text/css" />
+    <link rel="shortcut icon" href="https://juftin.com/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> camply
+          </a>
+              <div class="version">
+                0.4.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Check Out The ReadTheDocs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#command-line-usage">Command Line Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#finding-recreation-areas-ids-and-campground-ids-to-search-without-using-the-command-line">Finding Recreation Areas IDs and Campground IDs To Search Without Using the Command Line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#object-oriented-usage-python">Object-Oriented Usage (Python)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#running-in-docker">Running in Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#dependencies">Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli.html">camply CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">API Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">camply</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      <li>camply.containers.api_responses</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for camply.containers.api_responses</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">API Response Objects</span>
+
+<span class="sd">These are JSON Responses from APIs</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">camply.config.api_config</span> <span class="kn">import</span> <span class="n">RecreationBookingConfig</span>
+<span class="kn">from</span> <span class="nn">camply.containers.base_container</span> <span class="kn">import</span> <span class="n">CamplyModel</span>
+
+
+<span class="k">class</span> <span class="nc">_CampsiteEquipment</span><span class="p">(</span><span class="n">CamplyModel</span><span class="p">):</span>
+    <span class="n">EquipmentName</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">MaxLength</span><span class="p">:</span> <span class="nb">float</span>
+
+
+<span class="k">class</span> <span class="nc">_CampsiteAttribute</span><span class="p">(</span><span class="n">CamplyModel</span><span class="p">):</span>
+    <span class="n">AttributeName</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">AttributeValue</span><span class="p">:</span> <span class="nb">str</span>
+
+
+<div class="viewcode-block" id="CampsiteResponse"><a class="viewcode-back" href="../../../api/camply.containers.api_responses.html#camply.containers.api_responses.CampsiteResponse">[docs]</a><span class="k">class</span> <span class="nc">CampsiteResponse</span><span class="p">(</span><span class="n">CamplyModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    https://ridb.recreation.gov/api/v1/campsites/&lt;CAMPSITE ID&gt;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">CampsiteID</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">FacilityID</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">CampsiteName</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">CampsiteType</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">TypeOfUse</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">Loop</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">CampsiteAccessible</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">CampsiteReservable</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">CampsiteLongitude</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">CampsiteLatitude</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">CreatedDate</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span>
+    <span class="n">LastUpdatedDate</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span>
+    <span class="n">PERMITTEDEQUIPMENT</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">_CampsiteEquipment</span><span class="p">]</span>
+    <span class="n">ATTRIBUTES</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">_CampsiteAttribute</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="UnawareDatetime"><a class="viewcode-back" href="../../../api/camply.containers.api_responses.html#camply.containers.api_responses.UnawareDatetime">[docs]</a><span class="k">class</span> <span class="nc">UnawareDatetime</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Datetime Unaware Timestamp Parsing</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">__get_validators__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate Validators</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">yield</span> <span class="bp">cls</span><span class="o">.</span><span class="n">validate</span>
+
+<div class="viewcode-block" id="UnawareDatetime.validate"><a class="viewcode-back" href="../../../api/camply.containers.api_responses.html#camply.containers.api_responses.UnawareDatetime.validate">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Validate Date Strings Into</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        v: Union[str, datetime.datetime]</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        datetime.datetime</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">T%H:%M:%SZ&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">v</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;You Must Provide a Parsable Datetime String or Object&quot;</span><span class="p">)</span></div></div>
+
+
+<span class="k">class</span> <span class="nc">_CampsiteAvailabilityCampsiteResponse</span><span class="p">(</span><span class="n">CamplyModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    https://ridb.recreation.gov/api/v1/campsites/&lt;CAMPSITE ID&gt;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">availabilities</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">UnawareDatetime</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">loop</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">RecreationBookingConfig</span><span class="o">.</span><span class="n">CAMPSITE_LOCATION_LOOP_DEFAULT</span>
+    <span class="n">campsite_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">max_num_people</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">min_num_people</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">type_of_use</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">site</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">RecreationBookingConfig</span><span class="o">.</span><span class="n">CAMPSITE_LOCATION_SITE_DEFAULT</span>
+
+
+<div class="viewcode-block" id="CampsiteAvailabilityResponse"><a class="viewcode-back" href="../../../api/camply.containers.api_responses.html#camply.containers.api_responses.CampsiteAvailabilityResponse">[docs]</a><span class="k">class</span> <span class="nc">CampsiteAvailabilityResponse</span><span class="p">(</span><span class="n">CamplyModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    https://ridb.recreation.gov/api/v1/campsites/&lt;CAMPSITE ID&gt;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">campsites</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">_CampsiteAvailabilityCampsiteResponse</span><span class="p">]</span></div>
+
+
+<span class="k">class</span> <span class="nc">_RecAreaAddress</span><span class="p">(</span><span class="n">CamplyModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Recreation Area Address Field</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">AddressStateCode</span><span class="p">:</span> <span class="nb">str</span>
+
+
+<div class="viewcode-block" id="RecreationAreaResponse"><a class="viewcode-back" href="../../../api/camply.containers.api_responses.html#camply.containers.api_responses.RecreationAreaResponse">[docs]</a><span class="k">class</span> <span class="nc">RecreationAreaResponse</span><span class="p">(</span><span class="n">CamplyModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    https://ridb.recreation.gov/api/v1/campsites/&lt;CAMPSITE ID&gt;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">RecAreaID</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">RecAreaName</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">RECAREAADDRESS</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">_RecAreaAddress</span><span class="p">]</span></div>
+
+
+<span class="k">class</span> <span class="nc">_FacilityAddress</span><span class="p">(</span><span class="n">_RecAreaAddress</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Facility Address aka RecArea Address</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">_FacilityRecArea</span><span class="p">(</span><span class="n">CamplyModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Recreation Area inside of Facility</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">RecAreaID</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">RecAreaName</span><span class="p">:</span> <span class="nb">str</span>
+
+
+<div class="viewcode-block" id="FacilityResponse"><a class="viewcode-back" href="../../../api/camply.containers.api_responses.html#camply.containers.api_responses.FacilityResponse">[docs]</a><span class="k">class</span> <span class="nc">FacilityResponse</span><span class="p">(</span><span class="n">CamplyModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    /api/v1/facilities/&lt;Facility ID&gt;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">FacilityID</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">FacilityName</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">FacilityTypeDescription</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">Enabled</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">Reservable</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">FACILITYADDRESS</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">_FacilityAddress</span><span class="p">]]</span>
+    <span class="n">RECAREA</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">_FacilityRecArea</span><span class="p">]]</span></div>
+
+
+<span class="k">class</span> <span class="nc">_PaginationCountResponse</span><span class="p">(</span><span class="n">CamplyModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pagination Counters</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">CURRENT_COUNT</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">TOTAL_COUNT</span><span class="p">:</span> <span class="nb">int</span>
+
+
+<span class="k">class</span> <span class="nc">_PaginationMetadataResponse</span><span class="p">(</span><span class="n">CamplyModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pagination Metadata</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">RESULTS</span><span class="p">:</span> <span class="n">_PaginationCountResponse</span>
+
+
+<div class="viewcode-block" id="GenericResponse"><a class="viewcode-back" href="../../../api/camply.containers.api_responses.html#camply.containers.api_responses.GenericResponse">[docs]</a><span class="k">class</span> <span class="nc">GenericResponse</span><span class="p">(</span><span class="n">CamplyModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generic Response to Be Paginated</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">RECDATA</span><span class="p">:</span> <span class="n">Any</span>
+    <span class="n">METADATA</span><span class="p">:</span> <span class="n">_PaginationMetadataResponse</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Justin Flannery.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

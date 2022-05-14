@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>camply.providers package &mdash; camply 0.4.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/autodoc_pydantic.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/autoclasstoc.css" type="text/css" />
+    <link rel="shortcut icon" href="https://juftin.com/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="camply.providers.recreation_dot_gov package" href="camply.providers.recreation_dot_gov.html" />
+    <link rel="prev" title="camply.notifications.telegram module" href="camply.notifications.telegram.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> camply
+          </a>
+              <div class="version">
+                0.4.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Check Out The ReadTheDocs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#command-line-usage">Command Line Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#finding-recreation-areas-ids-and-campground-ids-to-search-without-using-the-command-line">Finding Recreation Areas IDs and Campground IDs To Search Without Using the Command Line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#object-oriented-usage-python">Object-Oriented Usage (Python)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#running-in-docker">Running in Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#dependencies">Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">camply CLI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="camply.html">camply package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="camply.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="camply.config.html">camply.config package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="camply.containers.html">camply.containers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="camply.notifications.html">camply.notifications package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">camply.providers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="camply.search.html">camply.search package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="camply.utils.html">camply.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="camply.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="camply.html#module-camply">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">camply</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">camply</a> &raquo;</li>
+          <li><a href="camply.html">camply package</a> &raquo;</li>
+      <li>camply.providers package</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="camply-providers-package">
+<h1>camply.providers package<a class="headerlink" href="#camply-providers-package" title="Permalink to this headline"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="camply.providers.recreation_dot_gov.html">camply.providers.recreation_dot_gov package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="camply.providers.recreation_dot_gov.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="camply.providers.recreation_dot_gov.campsite_search.html">camply.providers.recreation_dot_gov.campsite_search module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="camply.providers.recreation_dot_gov.html#module-camply.providers.recreation_dot_gov">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="camply.providers.xanterra.html">camply.providers.xanterra package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="camply.providers.xanterra.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="camply.providers.xanterra.yellowstone_lodging.html">camply.providers.xanterra.yellowstone_lodging module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="camply.providers.xanterra.html#module-camply.providers.xanterra">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="camply.providers.base_provider.html">camply.providers.base_provider module</a></li>
+</ul>
+</div>
+</section>
+<section id="module-camply.providers">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-camply.providers" title="Permalink to this headline"></a></h2>
+<p>providers __init__ file</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="camply.providers.BaseProvider">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camply.providers.</span></span><span class="sig-name descname"><span class="pre">BaseProvider</span></span><a class="reference internal" href="../_modules/camply/providers/base_provider.html#BaseProvider"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.providers.BaseProvider" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></a></p>
+<p>Base Provider Class</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="camply.providers.RecreationDotGov">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camply.providers.</span></span><span class="sig-name descname"><span class="pre">RecreationDotGov</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/camply/providers/recreation_dot_gov/campsite_search.html#RecreationDotGov"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.providers.RecreationDotGov" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="camply.providers.base_provider.html#camply.providers.base_provider.BaseProvider" title="camply.providers.base_provider.BaseProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">camply.providers.base_provider.BaseProvider</span></code></a></p>
+<p>Python Class for Working with Recreation.gov API / NPS APIs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>api_key</strong> (<em>optional</em>) – <strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="camply.providers.RecreationDotGov.find_recreation_areas">
+<span class="sig-name descname"><span class="pre">find_recreation_areas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_string</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/camply/providers/recreation_dot_gov/campsite_search.html#RecreationDotGov.find_recreation_areas"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.providers.RecreationDotGov.find_recreation_areas" title="Permalink to this definition"></a></dt>
+<dd><p>Find Matching Campsites Based on Search String</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>search_string</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Search Keyword(s)
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>filtered_responses</strong> – Array of Matching Campsites</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="camply.providers.RecreationDotGov.find_campgrounds">
+<span class="sig-name descname"><span class="pre">find_campgrounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_string</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rec_area_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">campground_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">campsite_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/camply/providers/recreation_dot_gov/campsite_search.html#RecreationDotGov.find_campgrounds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.providers.RecreationDotGov.find_campgrounds" title="Permalink to this definition"></a></dt>
+<dd><p>Find Bookable Campgrounds Given a Set of Search Criteria</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>search_string</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Search Keyword(s)
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>rec_area_id</strong> (<em>Optional</em><em>[</em><em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em><em>]</em>) – Recreation Area ID to filter with
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>campground_id</strong> (<em>Optional</em><em>[</em><em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em><em>]</em>) – ID of the Campground
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>campsite_id</strong> (<em>Optional</em><em>[</em><em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em><em>]</em>) – ID of the Campsite
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>facilities</strong> – Array of Matching Campsites</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="camply.containers.html#camply.containers.CampgroundFacility" title="camply.containers.CampgroundFacility">CampgroundFacility</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="camply.providers.RecreationDotGov.find_facilities_per_recreation_area">
+<span class="sig-name descname"><span class="pre">find_facilities_per_recreation_area</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rec_area_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/camply/providers/recreation_dot_gov/campsite_search.html#RecreationDotGov.find_facilities_per_recreation_area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.providers.RecreationDotGov.find_facilities_per_recreation_area" title="Permalink to this definition"></a></dt>
+<dd><p>Find Matching Campsites Based from Recreation Area</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rec_area_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Recreation Area ID
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>campgrounds</strong> – Array of Matching Campsites</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="camply.containers.html#camply.containers.CampgroundFacility" title="camply.containers.CampgroundFacility">CampgroundFacility</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="camply.providers.RecreationDotGov.process_facilities_responses">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">process_facilities_responses</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">facility</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/camply/providers/recreation_dot_gov/campsite_search.html#RecreationDotGov.process_facilities_responses"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.providers.RecreationDotGov.process_facilities_responses" title="Permalink to this definition"></a></dt>
+<dd><p>Process Facilities Responses to be More Usable</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>facility</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Tuple[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a>, <a class="reference internal" href="camply.containers.html#camply.containers.CampgroundFacility" title="camply.containers.CampgroundFacility">CampgroundFacility</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="camply.providers.RecreationDotGov.log_sorted_response">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">log_sorted_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response_array</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/camply/providers/recreation_dot_gov/campsite_search.html#RecreationDotGov.log_sorted_response"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.providers.RecreationDotGov.log_sorted_response" title="Permalink to this definition"></a></dt>
+<dd><p>Log Some Statements in a Nice Sorted way</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>response_array</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="camply.providers.RecreationDotGov.get_recdotgov_data">
+<span class="sig-name descname"><span class="pre">get_recdotgov_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">campground_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">month</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/camply/providers/recreation_dot_gov/campsite_search.html#RecreationDotGov.get_recdotgov_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.providers.RecreationDotGov.get_recdotgov_data" title="Permalink to this definition"></a></dt>
+<dd><p>Find Campsite Availability Data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>campground_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Campground ID from the RIDB API. Can also be pulled of URLs on Recreation.gov</p></li>
+<li><p><strong>month</strong> (<em>datetime</em>) – datetime object, results will be filtered to month</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Union[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)">list</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="camply.providers.RecreationDotGov.process_campsite_availability">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">process_campsite_availability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">availability</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recreation_area</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recreation_area_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facility_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facility_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">month</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/camply/providers/recreation_dot_gov/campsite_search.html#RecreationDotGov.process_campsite_availability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.providers.RecreationDotGov.process_campsite_availability" title="Permalink to this definition"></a></dt>
+<dd><p>Parse the JSON Response and return availabilities</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>availability</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – API Response</p></li>
+<li><p><strong>recreation_area</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Name of Recreation Area</p></li>
+<li><p><strong>recreation_area_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – ID of Recreation Area</p></li>
+<li><p><strong>facility_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Campground Facility Name</p></li>
+<li><p><strong>facility_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Campground Facility ID</p></li>
+<li><p><strong>month</strong> (<em>datetime</em>) – Month to Process</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>total_campsite_availability</strong> – Any monthly availabilities</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[Optional[<a class="reference internal" href="camply.html#camply.AvailableCampsite" title="camply.AvailableCampsite">AvailableCampsite</a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="camply.providers.RecreationDotGov.get_campsite_by_id">
+<span class="sig-name descname"><span class="pre">get_campsite_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">campsite_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/camply/providers/recreation_dot_gov/campsite_search.html#RecreationDotGov.get_campsite_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.providers.RecreationDotGov.get_campsite_by_id" title="Permalink to this definition"></a></dt>
+<dd><p>Get a Campsite’s Details</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>campsite_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="camply.containers.api_responses.html#camply.containers.api_responses.CampsiteResponse" title="camply.containers.api_responses.CampsiteResponse">CampsiteResponse</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="camply.providers.RecreationDotGov.get_campground_ids_by_campsites">
+<span class="sig-name descname"><span class="pre">get_campground_ids_by_campsites</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">campsite_ids</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/camply/providers/recreation_dot_gov/campsite_search.html#RecreationDotGov.get_campground_ids_by_campsites"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.providers.RecreationDotGov.get_campground_ids_by_campsites" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieve a list of FacilityIDs, and Facilities from a Campsite ID List</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>campsite_ids</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – List of Campsite IDs</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Tuple[List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>], List[<a class="reference internal" href="camply.containers.api_responses.html#camply.containers.api_responses.CampsiteResponse" title="camply.containers.api_responses.CampsiteResponse">CampsiteResponse</a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="camply.providers.YellowstoneLodging">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camply.providers.</span></span><span class="sig-name descname"><span class="pre">YellowstoneLodging</span></span><a class="reference internal" href="../_modules/camply/providers/xanterra/yellowstone_lodging.html#YellowstoneLodging"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.providers.YellowstoneLodging" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="camply.providers.base_provider.html#camply.providers.base_provider.BaseProvider" title="camply.providers.base_provider.BaseProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">camply.providers.base_provider.BaseProvider</span></code></a></p>
+<p>Scanner for Lodging in Yellowstone</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="camply.providers.YellowstoneLodging.make_yellowstone_request">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">make_yellowstone_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/camply/providers/xanterra/yellowstone_lodging.html#YellowstoneLodging.make_yellowstone_request"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.providers.YellowstoneLodging.make_yellowstone_request" title="Permalink to this definition"></a></dt>
+<dd><p>Try and Retry Fetching Data from the Yellowstone API.</p>
+<p>Unfortunately this is a required method to request the data since the
+Yellowstone API doesn’t always return data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>endpoint</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – API Endpoint</p></li>
+<li><p><strong>params</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>], <em>optional</em>) – <strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="camply.providers.YellowstoneLodging.get_monthly_campsites">
+<span class="sig-name descname"><span class="pre">get_monthly_campsites</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">month</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/camply/providers/xanterra/yellowstone_lodging.html#YellowstoneLodging.get_monthly_campsites"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.providers.YellowstoneLodging.get_monthly_campsites" title="Permalink to this definition"></a></dt>
+<dd><p>Return All Campsites Available in a Given Month</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>month</strong> (<em>datetime</em>) – Month to Search</p></li>
+<li><p><strong>nights</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – Search for consecutive nights
+<strong>[Default]:</strong> <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[<a class="reference internal" href="camply.html#camply.AvailableCampsite" title="camply.AvailableCampsite">AvailableCampsite</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="camply.notifications.telegram.html" class="btn btn-neutral float-left" title="camply.notifications.telegram module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="camply.providers.recreation_dot_gov.html" class="btn btn-neutral float-right" title="camply.providers.recreation_dot_gov package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Justin Flannery.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>camply.config.api_config module &mdash; camply 0.4.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/autodoc_pydantic.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/autoclasstoc.css" type="text/css" />
+    <link rel="shortcut icon" href="https://juftin.com/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="camply.config.data_columns module" href="camply.config.data_columns.html" />
+    <link rel="prev" title="camply.config package" href="camply.config.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> camply
+          </a>
+              <div class="version">
+                0.4.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Check Out The ReadTheDocs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#command-line-usage">Command Line Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#finding-recreation-areas-ids-and-campground-ids-to-search-without-using-the-command-line">Finding Recreation Areas IDs and Campground IDs To Search Without Using the Command Line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#object-oriented-usage-python">Object-Oriented Usage (Python)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#running-in-docker">Running in Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#dependencies">Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">camply CLI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="camply.html">camply package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="camply.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="camply.config.html">camply.config package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="camply.containers.html">camply.containers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="camply.notifications.html">camply.notifications package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="camply.providers.html">camply.providers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="camply.search.html">camply.search package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="camply.utils.html">camply.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="camply.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="camply.html#module-camply">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">camply</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">camply</a> &raquo;</li>
+          <li><a href="camply.html">camply package</a> &raquo;</li>
+          <li><a href="camply.config.html">camply.config package</a> &raquo;</li>
+      <li>camply.config.api_config module</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-camply.config.api_config">
+<span id="camply-config-api-config-module"></span><h1>camply.config.api_config module<a class="headerlink" href="#module-camply.config.api_config" title="Permalink to this headline"></a></h1>
+<p>API Searching Configuration</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="camply.config.api_config.RIDBConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camply.config.api_config.</span></span><span class="sig-name descname"><span class="pre">RIDBConfig</span></span><a class="reference internal" href="../_modules/camply/config/api_config.html#RIDBConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.config.api_config.RIDBConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>RIDB API Configuration</p>
+<p><a class="reference external" href="https://ridb.recreation.gov/docs">https://ridb.recreation.gov/docs</a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.api_config.RIDBConfig.API_KEY">
+<span class="sig-name descname"><span class="pre">API_KEY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">b'YTc0MTY0NzEtMWI1ZC00YTY0LWFkM2QtYTIzM2U3Y2I1YzQ0'</span></em><a class="headerlink" href="#camply.config.api_config.RIDBConfig.API_KEY" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.api_config.RIDBConfig.RIDB_SCHEME">
+<span class="sig-name descname"><span class="pre">RIDB_SCHEME</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'https'</span></em><a class="headerlink" href="#camply.config.api_config.RIDBConfig.RIDB_SCHEME" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.api_config.RIDBConfig.RIDB_NET_LOC">
+<span class="sig-name descname"><span class="pre">RIDB_NET_LOC</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ridb.recreation.gov'</span></em><a class="headerlink" href="#camply.config.api_config.RIDBConfig.RIDB_NET_LOC" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.api_config.RIDBConfig.RIDB_BASE_PATH">
+<span class="sig-name descname"><span class="pre">RIDB_BASE_PATH</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'api/v1/'</span></em><a class="headerlink" href="#camply.config.api_config.RIDBConfig.RIDB_BASE_PATH" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.api_config.RIDBConfig.FACILITIES_API_PATH">
+<span class="sig-name descname"><span class="pre">FACILITIES_API_PATH</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'facilities'</span></em><a class="headerlink" href="#camply.config.api_config.RIDBConfig.FACILITIES_API_PATH" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.api_config.RIDBConfig.CAMPGROUND_FACILITY_FIELD_QUALIFIER">
+<span class="sig-name descname"><span class="pre">CAMPGROUND_FACILITY_FIELD_QUALIFIER</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Campground'</span></em><a class="headerlink" href="#camply.config.api_config.RIDBConfig.CAMPGROUND_FACILITY_FIELD_QUALIFIER" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.api_config.RIDBConfig.REC_AREA_API_PATH">
+<span class="sig-name descname"><span class="pre">REC_AREA_API_PATH</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'recareas'</span></em><a class="headerlink" href="#camply.config.api_config.RIDBConfig.REC_AREA_API_PATH" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.api_config.RIDBConfig.CAMPSITE_API_PATH">
+<span class="sig-name descname"><span class="pre">CAMPSITE_API_PATH</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'campsites'</span></em><a class="headerlink" href="#camply.config.api_config.RIDBConfig.CAMPSITE_API_PATH" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="camply.config.api_config.RecreationBookingConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camply.config.api_config.</span></span><span class="sig-name descname"><span class="pre">RecreationBookingConfig</span></span><a class="reference internal" href="../_modules/camply/config/api_config.html#RecreationBookingConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.config.api_config.RecreationBookingConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Variable Storage Class for Recreation.gov Booking API</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.api_config.RecreationBookingConfig.API_SCHEME">
+<span class="sig-name descname"><span class="pre">API_SCHEME</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'https'</span></em><a class="headerlink" href="#camply.config.api_config.RecreationBookingConfig.API_SCHEME" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.api_config.RecreationBookingConfig.API_NET_LOC">
+<span class="sig-name descname"><span class="pre">API_NET_LOC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'www.recreation.gov'</span></em><a class="headerlink" href="#camply.config.api_config.RecreationBookingConfig.API_NET_LOC" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.api_config.RecreationBookingConfig.API_BASE_PATH">
+<span class="sig-name descname"><span class="pre">API_BASE_PATH</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'api/camps/availability/campground/'</span></em><a class="headerlink" href="#camply.config.api_config.RecreationBookingConfig.API_BASE_PATH" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.api_config.RecreationBookingConfig.API_MONTH_PATH">
+<span class="sig-name descname"><span class="pre">API_MONTH_PATH</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'month'</span></em><a class="headerlink" href="#camply.config.api_config.RecreationBookingConfig.API_MONTH_PATH" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.api_config.RecreationBookingConfig.API_REFERRERS">
+<span class="sig-name descname"><span class="pre">API_REFERRERS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'Referer':</span> <span class="pre">'https://www.recreation.gov/'}</span></em><a class="headerlink" href="#camply.config.api_config.RecreationBookingConfig.API_REFERRERS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.api_config.RecreationBookingConfig.CAMPSITE_UNAVAILABLE_STRINGS">
+<span class="sig-name descname"><span class="pre">CAMPSITE_UNAVAILABLE_STRINGS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><span class="pre">list</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['Reserved',</span> <span class="pre">'Not</span> <span class="pre">Available',</span> <span class="pre">'Not</span> <span class="pre">Reservable',</span> <span class="pre">'Not</span> <span class="pre">Reservable</span> <span class="pre">Management',</span> <span class="pre">'Not</span> <span class="pre">Available</span> <span class="pre">Cutoff',</span> <span class="pre">'Lottery',</span> <span class="pre">'Open']</span></em><a class="headerlink" href="#camply.config.api_config.RecreationBookingConfig.CAMPSITE_UNAVAILABLE_STRINGS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.api_config.RecreationBookingConfig.CAMPSITE_LOCATION_LOOP_DEFAULT">
+<span class="sig-name descname"><span class="pre">CAMPSITE_LOCATION_LOOP_DEFAULT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Default</span> <span class="pre">Loop'</span></em><a class="headerlink" href="#camply.config.api_config.RecreationBookingConfig.CAMPSITE_LOCATION_LOOP_DEFAULT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.api_config.RecreationBookingConfig.CAMPSITE_LOCATION_SITE_DEFAULT">
+<span class="sig-name descname"><span class="pre">CAMPSITE_LOCATION_SITE_DEFAULT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Default</span> <span class="pre">Site'</span></em><a class="headerlink" href="#camply.config.api_config.RecreationBookingConfig.CAMPSITE_LOCATION_SITE_DEFAULT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.api_config.RecreationBookingConfig.CAMPSITE_BOOKING_URL">
+<span class="sig-name descname"><span class="pre">CAMPSITE_BOOKING_URL</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'https://www.recreation.gov/camping/campsites'</span></em><a class="headerlink" href="#camply.config.api_config.RecreationBookingConfig.CAMPSITE_BOOKING_URL" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.api_config.RecreationBookingConfig.RATE_LIMITING">
+<span class="sig-name descname"><span class="pre">RATE_LIMITING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(1.01,</span> <span class="pre">1.51)</span></em><a class="headerlink" href="#camply.config.api_config.RecreationBookingConfig.RATE_LIMITING" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="camply.config.html" class="btn btn-neutral float-left" title="camply.config package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="camply.config.data_columns.html" class="btn btn-neutral float-right" title="camply.config.data_columns module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Justin Flannery.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

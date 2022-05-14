@@ -1,0 +1,7 @@
+camply.notifications.base\_notifications module
+===============================================
+
+.. automodule:: camply.notifications.base_notifications
+   :members:
+   :undoc-members:
+   :show-inheritance:

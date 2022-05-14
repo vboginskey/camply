@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>camply CLI &mdash; camply 0.4.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/autodoc_pydantic.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/autoclasstoc.css" type="text/css" />
+    <link rel="shortcut icon" href="https://juftin.com/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="camply" href="api/modules.html" />
+    <link rel="prev" title="Check Out The ReadTheDocs" href="usage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> camply
+          </a>
+              <div class="version">
+                0.4.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Check Out The ReadTheDocs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html#command-line-usage">Command Line Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html#finding-recreation-areas-ids-and-campground-ids-to-search-without-using-the-command-line">Finding Recreation Areas IDs and Campground IDs To Search Without Using the Command Line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html#object-oriented-usage-python">Object-Oriented Usage (Python)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html#running-in-docker">Running in Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html#dependencies">Dependencies</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">camply CLI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#run-via-docker">Run via Docker</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#camply">camply</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#camply-campgrounds">campgrounds</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#camply-campsites">campsites</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#camply-configure">configure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#camply-recreation-areas">recreation-areas</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">API Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">camply</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>camply CLI</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="camply-cli">
+<h1>camply CLI<a class="headerlink" href="#camply-cli" title="Permalink to this headline"></a></h1>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">❯ camply</span>
+<span class="go">2022-04-27 00:48:04,415 [  CAMPLY]: camply, the campsite finder ⛺️</span>
+<span class="go">Usage: camply [OPTIONS] COMMAND [ARGS]...</span>
+
+<span class="go">  Welcome to camply, the campsite finder.</span>
+
+<span class="go">  Finding reservations at sold out campgrounds can be tough. That&#39;s where</span>
+<span class="go">  camply comes in. It searches the APIs of booking services like</span>
+<span class="go">  https://recreation.gov (which indexes thousands of campgrounds across the</span>
+<span class="go">  USA) to continuously check for cancellations and availabilities to pop up.</span>
+<span class="go">  Once a campsite becomes available, camply sends you a notification to book</span>
+<span class="go">  your spot!</span>
+
+<span class="go">  visit the camply documentation at https://github.com/juftin/camply</span>
+
+<span class="go">Options:</span>
+<span class="go">  --version  Show the version and exit.</span>
+<span class="go">  --help     Show this message and exit.</span>
+
+<span class="go">Commands:</span>
+<span class="go">  campgrounds       Search for Campgrounds (inside of Recreation Areas)...</span>
+<span class="go">  campsites         Find available Campsites using search criteria</span>
+<span class="go">  configure         Set up camply configuration file with an interactive...</span>
+<span class="go">  recreation-areas  Search for Recreation Areas and list them</span>
+
+<span class="go">2022-04-27 00:48:04,416 [  CAMPLY]: Exiting camply 👋</span>
+</pre></div>
+</div>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline"></a></h2>
+<p>To use camply, first install it using pip:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">pip install camply</span>
+</pre></div>
+</div>
+<section id="run-via-docker">
+<h3>Run via Docker<a class="headerlink" href="#run-via-docker" title="Permalink to this headline"></a></h3>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker pull juftin/camply</span>
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run \</span>
+<span class="go">    juftin/camply:latest \</span>
+<span class="go">    camply recreation-areas search --state CO</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline"></a></h2>
+<section id="camply">
+<h3>camply<a class="headerlink" href="#camply" title="Permalink to this headline"></a></h3>
+<p>Welcome to camply, the campsite finder.</p>
+<p>Finding reservations at sold out campgrounds can be
+tough. That’s where camply comes in. It searches the APIs of booking services like
+<a class="reference external" href="https://recreation.gov">https://recreation.gov</a> (which indexes thousands of campgrounds across the USA) to continuously
+check for cancellations and availabilities to pop up. Once a campsite becomes available,
+camply sends you a notification to book your spot!</p>
+<p>visit the camply documentation at <a class="reference external" href="https://github.com/juftin/camply">https://github.com/juftin/camply</a></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>camply <span class="o">[</span>OPTIONS<span class="o">]</span> COMMAND <span class="o">[</span>ARGS<span class="o">]</span>...
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-camply-version">
+<span class="sig-name descname"><span class="pre">--version</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-camply-version" title="Permalink to this definition"></a></dt>
+<dd><p>Show the version and exit.</p>
+</dd></dl>
+
+<section id="camply-campgrounds">
+<h4>campgrounds<a class="headerlink" href="#camply-campgrounds" title="Permalink to this headline"></a></h4>
+<p>Search for Campgrounds (inside of Recreation Areas) and list them</p>
+<p>Search for Campgrounds and their IDs. Campgrounds are facilities inside of
+Recreation Areas that contain campsites. Most ‘campgrounds’ are areas made up of
+multiple campsites, others are facilities like fire towers or cabins that might only
+contain a single ‘campsite’ to book.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>camply campgrounds <span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-camply-campgrounds-campsite">
+<span class="sig-name descname"><span class="pre">--campsite</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;campsite&gt;</span></span><a class="headerlink" href="#cmdoption-camply-campgrounds-campsite" title="Permalink to this definition"></a></dt>
+<dd><p>Add individual Campsites by ID.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-camply-campgrounds-campground">
+<span class="sig-name descname"><span class="pre">--campground</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;campground&gt;</span></span><a class="headerlink" href="#cmdoption-camply-campgrounds-campground" title="Permalink to this definition"></a></dt>
+<dd><p>Add individual Campgrounds by ID.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-camply-campgrounds-rec-area">
+<span class="sig-name descname"><span class="pre">--rec-area</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;rec_area&gt;</span></span><a class="headerlink" href="#cmdoption-camply-campgrounds-rec-area" title="Permalink to this definition"></a></dt>
+<dd><p>Add Recreation Areas (comprised of campgrounds) by ID.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-camply-campgrounds-state">
+<span class="sig-name descname"><span class="pre">--state</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;state&gt;</span></span><a class="headerlink" href="#cmdoption-camply-campgrounds-state" title="Permalink to this definition"></a></dt>
+<dd><p>Filter by US state code.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-camply-campgrounds-search">
+<span class="sig-name descname"><span class="pre">--search</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;search&gt;</span></span><a class="headerlink" href="#cmdoption-camply-campgrounds-search" title="Permalink to this definition"></a></dt>
+<dd><p>Search for Campgrounds or Recreation Areas by search string.</p>
+</dd></dl>
+
+</section>
+<section id="camply-campsites">
+<h4>campsites<a class="headerlink" href="#camply-campsites" title="Permalink to this headline"></a></h4>
+<p>Find available Campsites using search criteria</p>
+<p>Search for a campsite within camply. Campsites are returned based on the search criteria
+provided. Campsites contain properties like booking date, site type (tent, RV, cabin, etc),
+capacity, price, and a link to make the booking. Required parameters include
+<cite>–start-date</cite>, <cite>–end-date</cite>, <cite>–rec-area</cite> / <cite>–campground</cite>. Constant searching
+functionality can be enabled with  <cite>–continuous</cite> and notifications can be enabled using
+<cite>–notifications</cite>.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>camply campsites <span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-camply-campsites-rec-area">
+<span class="sig-name descname"><span class="pre">--rec-area</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;rec_area&gt;</span></span><a class="headerlink" href="#cmdoption-camply-campsites-rec-area" title="Permalink to this definition"></a></dt>
+<dd><p>Add Recreation Areas (comprised of campgrounds) by ID.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-camply-campsites-campground">
+<span class="sig-name descname"><span class="pre">--campground</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;campground&gt;</span></span><a class="headerlink" href="#cmdoption-camply-campsites-campground" title="Permalink to this definition"></a></dt>
+<dd><p>Add individual Campgrounds by ID.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-camply-campsites-campsite">
+<span class="sig-name descname"><span class="pre">--campsite</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;campsite&gt;</span></span><a class="headerlink" href="#cmdoption-camply-campsites-campsite" title="Permalink to this definition"></a></dt>
+<dd><p>Add individual Campsites by ID.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-camply-campsites-start-date">
+<span class="sig-name descname"><span class="pre">--start-date</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;start_date&gt;</span></span><a class="headerlink" href="#cmdoption-camply-campsites-start-date" title="Permalink to this definition"></a></dt>
+<dd><p>(YYYY-MM-DD) Start of Search window. You will be arriving this day.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-camply-campsites-end-date">
+<span class="sig-name descname"><span class="pre">--end-date</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;end_date&gt;</span></span><a class="headerlink" href="#cmdoption-camply-campsites-end-date" title="Permalink to this definition"></a></dt>
+<dd><p>(YYYY-MM-DD) End of Search window. You will be checking out this day.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-camply-campsites-weekends">
+<span class="sig-name descname"><span class="pre">--weekends</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-camply-campsites-weekends" title="Permalink to this definition"></a></dt>
+<dd><p>Only search for weekend bookings (Fri/Sat nights).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p>False</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-camply-campsites-nights">
+<span class="sig-name descname"><span class="pre">--nights</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;nights&gt;</span></span><a class="headerlink" href="#cmdoption-camply-campsites-nights" title="Permalink to this definition"></a></dt>
+<dd><p>Search for campsite stays with consecutive nights. Defaults to 1 which returns all campsites found.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p>1</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-camply-campsites-provider">
+<span class="sig-name descname"><span class="pre">--provider</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;provider&gt;</span></span><a class="headerlink" href="#cmdoption-camply-campsites-provider" title="Permalink to this definition"></a></dt>
+<dd><p>Camping Search Provider. Options available are ‘Yellowstone’ and ‘RecreationDotGov’. Defaults to ‘RecreationDotGov’, not case-sensitive.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p>RecreationDotGov</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-camply-campsites-continuous">
+<span class="sig-name descname"><span class="pre">--continuous</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;continuous&gt;</span></span><a class="headerlink" href="#cmdoption-camply-campsites-continuous" title="Permalink to this definition"></a></dt>
+<dd><p>Continuously check for a campsite to become available, and quit once at least one campsite is found.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p>False</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-camply-campsites-polling-interval">
+<span class="sig-name descname"><span class="pre">--polling-interval</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;polling_interval&gt;</span></span><a class="headerlink" href="#cmdoption-camply-campsites-polling-interval" title="Permalink to this definition"></a></dt>
+<dd><p>If –continuous is activated, how often to wait in between checks (in minutes). Defaults to 10, cannot be less than 5.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p>10</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-camply-campsites-notifications">
+<span class="sig-name descname"><span class="pre">--notifications</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;notifications&gt;</span></span><a class="headerlink" href="#cmdoption-camply-campsites-notifications" title="Permalink to this definition"></a></dt>
+<dd><p>If –continuous is activated, types of notifications to receive. Options available are ‘email’, ‘pushover’, ‘pushbullet’, ‘telegram’, or ‘silent’. Defaults to ‘silent’ - which just logs messages to console.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p>silent</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-camply-campsites-notify-first-try">
+<span class="sig-name descname"><span class="pre">--notify-first-try</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-camply-campsites-notify-first-try" title="Permalink to this definition"></a></dt>
+<dd><p>If –continuous is activated, whether to send all non-silent notifications if more than 5 matching campsites are found on the first try. Defaults to false which only sends the first 5.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p>False</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-camply-campsites-search-forever">
+<span class="sig-name descname"><span class="pre">--search-forever</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-camply-campsites-search-forever" title="Permalink to this definition"></a></dt>
+<dd><p>If –continuous is activated, this method continues to search after the first availability has been found. The one caveat is that it will never notify about the same identical campsite for the same booking date.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p>False</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-camply-campsites-yml-config">
+<span class="sig-name descname"><span class="pre">--yml-config</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;yml_config&gt;</span></span><a class="headerlink" href="#cmdoption-camply-campsites-yml-config" title="Permalink to this definition"></a></dt>
+<dd><p>Rather than provide arguments to the command line utility, instead pass a file path to a YAML configuration file. See the documentation for more information on how to structure your configuration file.</p>
+</dd></dl>
+
+</section>
+<section id="camply-configure">
+<h4>configure<a class="headerlink" href="#camply-configure" title="Permalink to this headline"></a></h4>
+<p>Set up camply configuration file with an interactive console</p>
+<p>In order to send notifications through camply you must set up some authorization values.
+Whether you need to set up pushover notifications (push notifications on your phone,
+your pushover account can be set up at <a class="reference external" href="https://pushover.net">https://pushover.net</a>) or Email messages, everything
+can be done through the configure command. The end result is a file called .camply in your
+home folder.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>camply configure <span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+<section id="camply-recreation-areas">
+<h4>recreation-areas<a class="headerlink" href="#camply-recreation-areas" title="Permalink to this headline"></a></h4>
+<p>Search for Recreation Areas and list them</p>
+<p>Search for Recreation Areas and their IDs. Recreation Areas are places like
+National Parks and National Forests that can contain one or many campgrounds.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>camply recreation-areas <span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-camply-recreation-areas-state">
+<span class="sig-name descname"><span class="pre">--state</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;state&gt;</span></span><a class="headerlink" href="#cmdoption-camply-recreation-areas-state" title="Permalink to this definition"></a></dt>
+<dd><p>Filter by US state code.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-camply-recreation-areas-search">
+<span class="sig-name descname"><span class="pre">--search</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;search&gt;</span></span><a class="headerlink" href="#cmdoption-camply-recreation-areas-search" title="Permalink to this definition"></a></dt>
+<dd><p>Search for Campgrounds or Recreation Areas by search string.</p>
+</dd></dl>
+
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="usage.html" class="btn btn-neutral float-left" title="Check Out The ReadTheDocs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api/modules.html" class="btn btn-neutral float-right" title="camply" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Justin Flannery.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

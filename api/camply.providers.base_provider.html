@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>camply.providers.base_provider module &mdash; camply 0.4.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/autodoc_pydantic.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/autoclasstoc.css" type="text/css" />
+    <link rel="shortcut icon" href="https://juftin.com/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="camply.search package" href="camply.search.html" />
+    <link rel="prev" title="camply.providers.xanterra.yellowstone_lodging module" href="camply.providers.xanterra.yellowstone_lodging.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> camply
+          </a>
+              <div class="version">
+                0.4.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Check Out The ReadTheDocs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#command-line-usage">Command Line Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#finding-recreation-areas-ids-and-campground-ids-to-search-without-using-the-command-line">Finding Recreation Areas IDs and Campground IDs To Search Without Using the Command Line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#object-oriented-usage-python">Object-Oriented Usage (Python)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#running-in-docker">Running in Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#dependencies">Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">camply CLI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="camply.html">camply package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="camply.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="camply.config.html">camply.config package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="camply.containers.html">camply.containers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="camply.notifications.html">camply.notifications package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="camply.providers.html">camply.providers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="camply.search.html">camply.search package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="camply.utils.html">camply.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="camply.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="camply.html#module-camply">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">camply</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">camply</a> &raquo;</li>
+          <li><a href="camply.html">camply package</a> &raquo;</li>
+          <li><a href="camply.providers.html">camply.providers package</a> &raquo;</li>
+      <li>camply.providers.base_provider module</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-camply.providers.base_provider">
+<span id="camply-providers-base-provider-module"></span><h1>camply.providers.base_provider module<a class="headerlink" href="#module-camply.providers.base_provider" title="Permalink to this headline"></a></h1>
+<p>BaseProvider Base Class</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="camply.providers.base_provider.BaseProvider">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camply.providers.base_provider.</span></span><span class="sig-name descname"><span class="pre">BaseProvider</span></span><a class="reference internal" href="../_modules/camply/providers/base_provider.html#BaseProvider"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.providers.base_provider.BaseProvider" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></a></p>
+<p>Base Provider Class</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="camply.providers.base_provider.ProviderError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camply.providers.base_provider.</span></span><span class="sig-name descname"><span class="pre">ProviderError</span></span><a class="reference internal" href="../_modules/camply/providers/base_provider.html#ProviderError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.providers.base_provider.ProviderError" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
+<p>General Provider Error</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="camply.providers.base_provider.ProviderSearchError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camply.providers.base_provider.</span></span><span class="sig-name descname"><span class="pre">ProviderSearchError</span></span><a class="reference internal" href="../_modules/camply/providers/base_provider.html#ProviderSearchError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.providers.base_provider.ProviderSearchError" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#camply.providers.base_provider.ProviderError" title="camply.providers.base_provider.ProviderError"><code class="xref py py-class docutils literal notranslate"><span class="pre">camply.providers.base_provider.ProviderError</span></code></a></p>
+<p>Searching Error</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="camply.providers.xanterra.yellowstone_lodging.html" class="btn btn-neutral float-left" title="camply.providers.xanterra.yellowstone_lodging module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="camply.search.html" class="btn btn-neutral float-right" title="camply.search package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Justin Flannery.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

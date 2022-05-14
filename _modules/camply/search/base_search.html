@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>camply.search.base_search &mdash; camply 0.4.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/autodoc_pydantic.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/autoclasstoc.css" type="text/css" />
+    <link rel="shortcut icon" href="https://juftin.com/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> camply
+          </a>
+              <div class="version">
+                0.4.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Check Out The ReadTheDocs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#command-line-usage">Command Line Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#finding-recreation-areas-ids-and-campground-ids-to-search-without-using-the-command-line">Finding Recreation Areas IDs and Campground IDs To Search Without Using the Command Line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#object-oriented-usage-python">Object-Oriented Usage (Python)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#running-in-docker">Running in Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html#dependencies">Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli.html">camply CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">API Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">camply</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      <li>camply.search.base_search</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for camply.search.base_search</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Recreation.gov Web Searching Utilities</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">groupby</span><span class="p">,</span> <span class="n">islice</span><span class="p">,</span> <span class="n">tee</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">itemgetter</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">getenv</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Set</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">concat</span><span class="p">,</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">date_range</span><span class="p">,</span> <span class="n">Series</span><span class="p">,</span> <span class="n">Timedelta</span>
+<span class="kn">import</span> <span class="nn">tenacity</span>
+
+<span class="kn">from</span> <span class="nn">camply.config</span> <span class="kn">import</span> <span class="n">CampsiteContainerFields</span><span class="p">,</span> <span class="n">DataColumns</span><span class="p">,</span> <span class="n">SearchConfig</span>
+<span class="kn">from</span> <span class="nn">camply.containers</span> <span class="kn">import</span> <span class="n">AvailableCampsite</span><span class="p">,</span> <span class="n">SearchWindow</span>
+<span class="kn">from</span> <span class="nn">camply.notifications.base_notifications</span> <span class="kn">import</span> <span class="n">BaseNotifications</span>
+<span class="kn">from</span> <span class="nn">camply.notifications.multi_provider_notifications</span> <span class="kn">import</span> <span class="n">MultiNotifierProvider</span>
+<span class="kn">from</span> <span class="nn">camply.providers</span> <span class="kn">import</span> <span class="n">RecreationDotGov</span><span class="p">,</span> <span class="n">YellowstoneLodging</span>
+<span class="kn">from</span> <span class="nn">camply.utils</span> <span class="kn">import</span> <span class="n">make_list</span>
+<span class="kn">from</span> <span class="nn">camply.utils.logging_utils</span> <span class="kn">import</span> <span class="n">get_emoji</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="SearchError"><a class="viewcode-back" href="../../../api/camply.search.base_search.html#camply.search.SearchError">[docs]</a><span class="k">class</span> <span class="nc">SearchError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generic Search Error</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="CampsiteNotFoundError"><a class="viewcode-back" href="../../../api/camply.search.base_search.html#camply.search.CampsiteNotFoundError">[docs]</a><span class="k">class</span> <span class="nc">CampsiteNotFoundError</span><span class="p">(</span><span class="n">SearchError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Campsite not found Error</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="BaseCampingSearch"><a class="viewcode-back" href="../../../api/camply.search.base_search.html#camply.search.BaseCampingSearch">[docs]</a><span class="k">class</span> <span class="nc">BaseCampingSearch</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Camping Search Object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">provider</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">RecreationDotGov</span><span class="p">,</span>
+                                       <span class="n">YellowstoneLodging</span><span class="p">],</span>
+                 <span class="n">search_window</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">SearchWindow</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">SearchWindow</span><span class="p">]],</span>
+                 <span class="n">weekends_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                 <span class="n">nights</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize with Search Parameters</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        provider: Union[RecreationDotGov, YellowstoneLodging]</span>
+<span class="sd">            API Provider</span>
+<span class="sd">        search_window: Union[SearchWindow, List[SearchWindow]]</span>
+<span class="sd">            Search Window tuple containing start date and End Date</span>
+<span class="sd">        weekends_only: bool</span>
+<span class="sd">            Whether to only search for Camping availabilities on the weekends (Friday /</span>
+<span class="sd">            Saturday nights)</span>
+<span class="sd">        nights: int</span>
+<span class="sd">            minimum number of consecutive nights to search per campsite,defaults to 1</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">campsite_finder</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">RecreationDotGov</span><span class="p">,</span> <span class="n">YellowstoneLodging</span><span class="p">]</span> <span class="o">=</span> <span class="n">provider</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">search_window</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">SearchWindow</span><span class="p">]</span> <span class="o">=</span> <span class="n">make_list</span><span class="p">(</span><span class="n">search_window</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weekends_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">weekends_only</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">search_days</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_search_days</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">search_months</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_search_months</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_consecutive_nights</span><span class="p">(</span><span class="n">nights</span><span class="o">=</span><span class="n">nights</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">campsites_found</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="n">AvailableCampsite</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+<div class="viewcode-block" id="BaseCampingSearch.get_all_campsites"><a class="viewcode-back" href="../../../api/camply.search.base_search.html#camply.search.BaseCampingSearch.get_all_campsites">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">get_all_campsites</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">AvailableCampsite</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform the Search and Return Matching Availabilities.</span>
+
+<span class="sd">        This method must be implemented</span>
+<span class="sd">        on all sub-classes.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        List[AvailableCampsite]</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_intersection_date_overlap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">date</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">periods</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Find Date Overlap</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        date: datetime</span>
+<span class="sd">        periods: int</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">campsite_date_range</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">date</span><span class="o">.</span><span class="n">to_pydatetime</span><span class="p">(),</span>
+                                             <span class="n">periods</span><span class="o">=</span><span class="n">periods</span><span class="p">))</span>
+        <span class="n">intersection</span> <span class="o">=</span> <span class="n">campsite_date_range</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">search_days</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">intersection</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">_compare_date_overlap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">campsite</span><span class="p">:</span> <span class="n">AvailableCampsite</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        See whether a campsite should be returned as found</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        campsite: AvailableCampsite</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">intersection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_intersection_date_overlap</span><span class="p">(</span><span class="n">date</span><span class="o">=</span><span class="n">campsite</span><span class="o">.</span><span class="n">booking_date</span><span class="p">,</span>
+                                                           <span class="n">periods</span><span class="o">=</span><span class="n">campsite</span><span class="o">.</span><span class="n">booking_nights</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">intersection</span>
+
+    <span class="k">def</span> <span class="nf">_filter_date_overlap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">campsites</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        See whether a campsite should be returned as found</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        campsites: DataFrame</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        DataFrame</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filtered_campsites</span> <span class="o">=</span> <span class="n">campsites</span><span class="p">[</span><span class="n">campsites</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_intersection_date_overlap</span><span class="p">(</span><span class="n">date</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">booking_date</span><span class="p">,</span>
+                                                          <span class="n">periods</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">booking_nights</span><span class="p">),</span>
+            <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">filtered_campsites</span>
+
+    <span class="k">def</span> <span class="nf">_search_matching_campsites_available</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                                             <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                                             <span class="n">raise_error</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">AvailableCampsite</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform the Search and Return Matching Availabilities</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        log: bool</span>
+<span class="sd">            Whether to log found campsites</span>
+<span class="sd">        verbose: bool</span>
+<span class="sd">            Used with `log` to enhance the amount of info logged to the console</span>
+<span class="sd">        raise_error: bool</span>
+<span class="sd">            Whether to raise an error if nothing is found. Defaults to False.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        List[AvailableCampsite]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">matching_campgrounds</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">camp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_all_campsites</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">all</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_compare_date_overlap</span><span class="p">(</span><span class="n">campsite</span><span class="o">=</span><span class="n">camp</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">,</span>
+                    <span class="n">camp</span><span class="o">.</span><span class="n">booking_nights</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nights</span><span class="p">]):</span>
+                <span class="n">matching_campgrounds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">camp</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="p">(</span><span class="n">get_emoji</span><span class="p">(</span><span class="n">matching_campgrounds</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span><span class="si">}{</span><span class="nb">len</span><span class="p">(</span><span class="n">matching_campgrounds</span><span class="p">)</span><span class="si">}</span><span class="s2"> &quot;</span>
+                    <span class="s2">&quot;Reservable Campsites Matching Search Preferences&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assemble_availabilities</span><span class="p">(</span><span class="n">matching_data</span><span class="o">=</span><span class="n">matching_campgrounds</span><span class="p">,</span>
+                                     <span class="n">log</span><span class="o">=</span><span class="n">log</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">matching_campgrounds</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">raise_error</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">campsite_availability_message</span> <span class="o">=</span> <span class="s2">&quot;No Campsites were found, we&#39;ll continue checking&quot;</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">campsite_availability_message</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">CampsiteNotFoundError</span><span class="p">(</span><span class="n">campsite_availability_message</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">matching_campgrounds</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_get_polling_minutes</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">polling_interval</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the Number of Minutes to Search</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        polling_interval: Optional[int]</span>
+<span class="sd">            Used with `continuous=True`, the amount of time to wait between searches.</span>
+<span class="sd">            Defaults to 10 if not provided, cannot be less than 5</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">polling_interval</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">polling_interval</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;POLLING_INTERVAL&quot;</span><span class="p">,</span> <span class="n">SearchConfig</span><span class="o">.</span><span class="n">RECOMMENDED_POLLING_INTERVAL</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">polling_interval</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">SearchConfig</span><span class="o">.</span><span class="n">POLLING_INTERVAL_MINIMUM</span><span class="p">:</span>
+            <span class="n">polling_interval</span> <span class="o">=</span> <span class="n">SearchConfig</span><span class="o">.</span><span class="n">POLLING_INTERVAL_MINIMUM</span>
+        <span class="n">polling_interval_minutes</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">polling_interval</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">polling_interval_minutes</span>
+
+    <span class="k">def</span> <span class="nf">_continuous_search_retry</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">log</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">polling_interval</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+            <span class="n">continuous_search_attempts</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+            <span class="n">notification_provider</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">BaseNotifications</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
+            <span class="n">notify_first_try</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">AvailableCampsite</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Search for Campsites until at least one is found</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        log: bool</span>
+<span class="sd">            Whether to log found campsites</span>
+<span class="sd">        verbose: bool</span>
+<span class="sd">            Used with `log` to enhance the amount of info logged to the console</span>
+<span class="sd">        polling_interval: Optional[int]</span>
+<span class="sd">            Used with `continuous=True`, the amount of time to wait between searches.</span>
+<span class="sd">            Defaults to 10 if not provided, cannot be less than 5</span>
+<span class="sd">        continuous_search_attempts: int</span>
+<span class="sd">            Number of preexisting search attempts</span>
+<span class="sd">        notification_provider: provider: Union[str, List[str]]</span>
+<span class="sd">            Used with `continuous=True`, Name of notification provider to use. Accepts</span>
+<span class="sd">            &quot;email&quot;, &quot;pushover&quot;, and defaults to &quot;silent&quot;. Also accepts a list or commma</span>
+<span class="sd">            separated string of these options or even a notification provider object itself</span>
+<span class="sd">        notify_first_try: bool</span>
+<span class="sd">            Used with `continuous=True`, whether to send all non-silent notifications if more</span>
+<span class="sd">            than 5 matching campsites are found on the first try. Defaults to false which</span>
+<span class="sd">            only sends the first 5.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        List[AvailableCampsite]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">polling_interval_minutes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_polling_minutes</span><span class="p">(</span><span class="n">polling_interval</span><span class="o">=</span><span class="n">polling_interval</span><span class="p">)</span>
+        <span class="n">notifier</span> <span class="o">=</span> <span class="n">MultiNotifierProvider</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="n">notification_provider</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Searching for campsites every </span><span class="si">{</span><span class="n">polling_interval_minutes</span><span class="si">}</span><span class="s2"> minutes. &quot;</span><span class="p">)</span>
+        <span class="n">notifier</span><span class="o">.</span><span class="n">log_providers</span><span class="p">()</span>
+        <span class="n">retryer</span> <span class="o">=</span> <span class="n">tenacity</span><span class="o">.</span><span class="n">Retrying</span><span class="p">(</span>
+            <span class="n">retry</span><span class="o">=</span><span class="n">tenacity</span><span class="o">.</span><span class="n">retry_if_exception_type</span><span class="p">(</span><span class="n">CampsiteNotFoundError</span><span class="p">),</span>
+            <span class="n">wait</span><span class="o">=</span><span class="n">tenacity</span><span class="o">.</span><span class="n">wait</span><span class="o">.</span><span class="n">wait_fixed</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">polling_interval_minutes</span><span class="p">)</span> <span class="o">*</span> <span class="mi">60</span><span class="p">))</span>
+        <span class="n">matching_campsites</span> <span class="o">=</span> <span class="n">retryer</span><span class="o">.</span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_search_matching_campsites_available</span><span class="p">,</span>
+                                              <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">found_campsites</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">matching_campsites</span><span class="p">)</span>
+        <span class="n">new_campsites</span> <span class="o">=</span> <span class="n">found_campsites</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">campsites_found</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assemble_availabilities</span><span class="p">(</span><span class="n">matching_data</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">new_campsites</span><span class="p">),</span> <span class="n">log</span><span class="o">=</span><span class="n">log</span><span class="p">,</span>
+                                     <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">new_campsites</span><span class="p">)</span><span class="si">}</span><span class="s2"> New Campsites Found.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">campsites_found</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_campsites</span><span class="p">)</span>
+        <span class="n">logged_campsites</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">new_campsites</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_handle_notifications</span><span class="p">(</span><span class="n">retryer</span><span class="o">=</span><span class="n">retryer</span><span class="p">,</span> <span class="n">notifier</span><span class="o">=</span><span class="n">notifier</span><span class="p">,</span>
+                                   <span class="n">logged_campsites</span><span class="o">=</span><span class="n">logged_campsites</span><span class="p">,</span>
+                                   <span class="n">continuous_search_attempts</span><span class="o">=</span><span class="n">continuous_search_attempts</span><span class="p">,</span>
+                                   <span class="n">notify_first_try</span><span class="o">=</span><span class="n">notify_first_try</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">campsites_found</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_handle_notifications</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span>
+                              <span class="n">retryer</span><span class="p">:</span> <span class="n">tenacity</span><span class="o">.</span><span class="n">Retrying</span><span class="p">,</span>
+                              <span class="n">notifier</span><span class="p">:</span> <span class="n">MultiNotifierProvider</span><span class="p">,</span>
+                              <span class="n">logged_campsites</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">AvailableCampsite</span><span class="p">],</span>
+                              <span class="n">continuous_search_attempts</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                              <span class="n">notify_first_try</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+                              <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handle sending notifications</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        retryer: tenacity.Retrying</span>
+<span class="sd">        notifier: MultiNotifierProvider</span>
+<span class="sd">        logged_campsites: List[AvailableCampsite]</span>
+<span class="sd">        continuous_search_attempts: int</span>
+<span class="sd">        notify_first_try: bool</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">attempt_number</span> <span class="o">=</span> <span class="n">retryer</span><span class="o">.</span><span class="n">statistics</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;attempt_number&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">minimum_first_notify</span> <span class="o">=</span> <span class="n">SearchConfig</span><span class="o">.</span><span class="n">MINIMUM_CAMPSITES_FIRST_NOTIFY</span>
+        <span class="k">if</span> <span class="nb">max</span><span class="p">([</span><span class="n">attempt_number</span><span class="p">,</span> <span class="n">continuous_search_attempts</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">logged_campsites</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_handle_too_many_campsites_found</span><span class="p">(</span>
+                <span class="n">notifier</span><span class="o">=</span><span class="n">notifier</span><span class="p">,</span>
+                <span class="n">logged_campsites</span><span class="o">=</span><span class="n">logged_campsites</span><span class="p">)</span>
+            <span class="n">notifier</span><span class="o">.</span><span class="n">send_campsites</span><span class="p">(</span><span class="n">campsites</span><span class="o">=</span><span class="n">logged_campsites</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">attempt_number</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">notify_first_try</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">logged_campsites</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_handle_too_many_campsites_found</span><span class="p">(</span>
+                <span class="n">notifier</span><span class="o">=</span><span class="n">notifier</span><span class="p">,</span>
+                <span class="n">logged_campsites</span><span class="o">=</span><span class="n">logged_campsites</span><span class="p">)</span>
+            <span class="n">notifier</span><span class="o">.</span><span class="n">send_campsites</span><span class="p">(</span><span class="n">campsites</span><span class="o">=</span><span class="n">logged_campsites</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">notifier</span><span class="o">.</span><span class="n">providers</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> \
+                    <span class="nb">len</span><span class="p">(</span><span class="n">logged_campsites</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">minimum_first_notify</span><span class="p">:</span>
+                <span class="n">error_message</span> <span class="o">=</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found more than </span><span class="si">{</span><span class="n">minimum_first_notify</span><span class="si">}</span><span class="s2"> &quot;</span>
+                                 <span class="sa">f</span><span class="s2">&quot;matching campsites (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">logged_campsites</span><span class="p">)</span><span class="si">}</span><span class="s2">) on the &quot;</span>
+                                 <span class="s2">&quot;first try. Try searching online instead. &quot;</span>
+                                 <span class="sa">f</span><span class="s2">&quot;camply is only sending the first &quot;</span>
+                                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">minimum_first_notify</span><span class="si">}</span><span class="s2"> notifications. &quot;</span>
+                                 <span class="s2">&quot;Go Get your campsite! 🏕&quot;</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">error_message</span><span class="p">)</span>
+                <span class="n">notifier</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="n">error_message</span><span class="p">)</span>
+                <span class="n">logged_campsites</span> <span class="o">=</span> <span class="n">logged_campsites</span><span class="p">[:</span><span class="n">minimum_first_notify</span><span class="p">]</span>
+            <span class="n">notifier</span><span class="o">.</span><span class="n">send_campsites</span><span class="p">(</span><span class="n">campsites</span><span class="o">=</span><span class="n">logged_campsites</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_handle_too_many_campsites_found</span><span class="p">(</span>
+            <span class="bp">cls</span><span class="p">,</span> <span class="n">notifier</span><span class="p">:</span> <span class="n">MultiNotifierProvider</span><span class="p">,</span>
+            <span class="n">logged_campsites</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">AvailableCampsite</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">AvailableCampsite</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handle Scenarios Where Too Many Campsites are Found</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        notifier: MultiNotifierProvider</span>
+<span class="sd">        logged_campsites: List[AvailableCampsite]</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        List[AvailableCampsite]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">limit</span> <span class="o">=</span> <span class="n">SearchConfig</span><span class="o">.</span><span class="n">MAXIMUM_NOTIFICATION_BATCH_SIZE</span>
+        <span class="n">number_campsites</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">logged_campsites</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">number_campsites</span> <span class="o">&gt;</span> <span class="n">limit</span><span class="p">:</span>
+            <span class="n">warning_message</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Too many campsites were found during the search (</span><span class="si">{</span><span class="n">number_campsites</span><span class="si">}</span><span class="s2"> &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;total). camply will only send you the first </span><span class="si">{</span><span class="n">limit</span><span class="si">}</span><span class="s2"> notifications.&quot;</span>
+            <span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">warning_message</span><span class="p">)</span>
+            <span class="n">restricted_campsites</span> <span class="o">=</span> <span class="n">logged_campsites</span><span class="p">[:</span><span class="n">limit</span><span class="p">]</span>
+            <span class="n">notifier</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">warning_message</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">restricted_campsites</span> <span class="o">=</span> <span class="n">logged_campsites</span>
+        <span class="k">return</span> <span class="n">restricted_campsites</span>
+
+    <span class="k">def</span> <span class="nf">_search_campsites_continuous</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                                     <span class="n">polling_interval</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                                     <span class="n">notification_provider</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;silent&quot;</span><span class="p">,</span>
+                                     <span class="n">notify_first_try</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                                     <span class="n">search_forever</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Continuously Search For Campsites</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        log: bool</span>
+<span class="sd">            Whether to log found campsites</span>
+<span class="sd">        verbose: bool</span>
+<span class="sd">            Used with `log` to enhance the amount of info logged to the console</span>
+<span class="sd">        polling_interval: Optional[int]</span>
+<span class="sd">            Used with `continuous=True`, the amount of time to wait between searches.</span>
+<span class="sd">            Defaults to 10 if not provided, cannot be less than 5</span>
+<span class="sd">        notification_provider: str</span>
+<span class="sd">            Used with `continuous=True`, Name of notification provider to use. Accepts</span>
+<span class="sd">            &quot;email&quot;, &quot;pushover&quot;, and defaults to &quot;silent&quot;. Also accepts a list or commma</span>
+<span class="sd">            separated string of these options or even a notification provider object itself</span>
+<span class="sd">        notify_first_try: bool</span>
+<span class="sd">            Used with `continuous=True`, whether to send all non-silent notifications if more</span>
+<span class="sd">            than 5 matching campsites are found on the first try. Defaults to false which</span>
+<span class="sd">            only sends the first 5.</span>
+<span class="sd">        search_forever: bool</span>
+<span class="sd">            Used with `continuous=True`, This option searches for new campsites forever, with</span>
+<span class="sd">            the caveat being that it will never notify about the same campsite.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        List[AvailableCampsite]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">polling_interval_minutes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_polling_minutes</span><span class="p">(</span><span class="n">polling_interval</span><span class="o">=</span><span class="n">polling_interval</span><span class="p">)</span>
+        <span class="n">continuous_search</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">continuous_search_attempts</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">continuous_search</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_continuous_search_retry</span><span class="p">(</span><span class="n">log</span><span class="o">=</span><span class="n">log</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
+                                          <span class="n">polling_interval</span><span class="o">=</span><span class="n">polling_interval</span><span class="p">,</span>
+                                          <span class="n">notification_provider</span><span class="o">=</span><span class="n">notification_provider</span><span class="p">,</span>
+                                          <span class="n">notify_first_try</span><span class="o">=</span><span class="n">notify_first_try</span><span class="p">,</span>
+                                          <span class="n">continuous_search_attempts</span><span class="o">=</span><span class="n">continuous_search_attempts</span><span class="p">)</span>
+            <span class="n">continuous_search_attempts</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">search_forever</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">sleep</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">polling_interval_minutes</span><span class="p">)</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">continuous_search</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">campsites_found</span><span class="p">)</span>
+
+<div class="viewcode-block" id="BaseCampingSearch.get_matching_campsites"><a class="viewcode-back" href="../../../api/camply.search.base_search.html#camply.search.BaseCampingSearch.get_matching_campsites">[docs]</a>    <span class="k">def</span> <span class="nf">get_matching_campsites</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                               <span class="n">continuous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                               <span class="n">polling_interval</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                               <span class="n">notification_provider</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;silent&quot;</span><span class="p">,</span>
+                               <span class="n">notify_first_try</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                               <span class="n">search_forever</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">AvailableCampsite</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform the Search and Return Matching Availabilities</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        log: bool</span>
+<span class="sd">            Whether to log found campsites</span>
+<span class="sd">        verbose: bool</span>
+<span class="sd">            Used with `log` to enhance the amount of info logged to the console</span>
+<span class="sd">        continuous: bool</span>
+<span class="sd">            Whether to continue searching beyond just the first time</span>
+<span class="sd">        polling_interval: Optional[int]</span>
+<span class="sd">            Used with `continuous=True`, the amount of time to wait between searches.</span>
+<span class="sd">            Defaults to 10 if not provided, cannot be less than 5</span>
+<span class="sd">        notification_provider: str</span>
+<span class="sd">            Used with `continuous=True`, Name of notification provider to use. Accepts</span>
+<span class="sd">            &quot;email&quot;, &quot;pushover&quot;, and defaults to &quot;silent&quot;. Also accepts a list or commma</span>
+<span class="sd">            separated string of these options or even a notification provider object itself</span>
+<span class="sd">        notify_first_try: bool</span>
+<span class="sd">            Used with `continuous=True`, whether to send all non-silent notifications if more</span>
+<span class="sd">            than 5 matching campsites are found on the first try. Defaults to false which</span>
+<span class="sd">            only sends the first 5.</span>
+<span class="sd">        search_forever: bool</span>
+<span class="sd">            Used with `continuous=True`, This option searches for new campsites forever, with</span>
+<span class="sd">            the caveat being that it will never notify about the same campsite.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        List[AvailableCampsite]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">continuous</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_search_campsites_continuous</span><span class="p">(</span><span class="n">log</span><span class="o">=</span><span class="n">log</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
+                                              <span class="n">polling_interval</span><span class="o">=</span><span class="n">polling_interval</span><span class="p">,</span>
+                                              <span class="n">notification_provider</span><span class="o">=</span><span class="n">notification_provider</span><span class="p">,</span>
+                                              <span class="n">notify_first_try</span><span class="o">=</span><span class="n">notify_first_try</span><span class="p">,</span>
+                                              <span class="n">search_forever</span><span class="o">=</span><span class="n">search_forever</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">matching_campsites</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_search_matching_campsites_available</span><span class="p">(</span><span class="n">log</span><span class="o">=</span><span class="n">log</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">campsites_found</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">matching_campsites</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">campsites_found</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_search_days</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">datetime</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve Specific Days to Search For</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        search_days: List[datetime]</span>
+<span class="sd">            Datetime days to search for reservations</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">current_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+        <span class="n">search_nights</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">window</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_window</span><span class="p">:</span>
+            <span class="n">generated_dates</span> <span class="o">=</span> <span class="p">{</span><span class="n">date</span> <span class="k">for</span> <span class="n">date</span> <span class="ow">in</span> <span class="n">window</span><span class="o">.</span><span class="n">get_date_range</span><span class="p">()</span> <span class="k">if</span> <span class="n">date</span> <span class="o">&gt;=</span> <span class="n">current_date</span><span class="p">}</span>
+            <span class="n">search_nights</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">generated_dates</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">weekends_only</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Limiting Search of Campgrounds to Weekend Availabilities&quot;</span><span class="p">)</span>
+            <span class="n">search_nights</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">search_nights</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">weekday</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]}</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">search_nights</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">search_nights</span><span class="p">)</span><span class="si">}</span><span class="s2"> booking nights selected for search, &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;ranging from </span><span class="si">{</span><span class="nb">min</span><span class="p">(</span><span class="n">search_nights</span><span class="p">)</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="nb">max</span><span class="p">(</span><span class="n">search_nights</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">SearchConfig</span><span class="o">.</span><span class="n">ERROR_MESSAGE</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">SearchConfig</span><span class="o">.</span><span class="n">ERROR_MESSAGE</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">search_nights</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_get_search_months</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">datetime</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the Unique Months that need to be Searched</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        search_months: List[datetime]</span>
+<span class="sd">            Datetime Months to search for reservations</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">truncated_months</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">day</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">day</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_days</span><span class="p">])</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">truncated_months</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">truncated_months</span><span class="p">)</span><span class="si">}</span><span class="s2"> different months selected for search, &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;ranging from </span><span class="si">{</span><span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">search_days</span><span class="p">)</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">search_days</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">truncated_months</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">truncated_months</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">SearchConfig</span><span class="o">.</span><span class="n">ERROR_MESSAGE</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">SearchConfig</span><span class="o">.</span><span class="n">ERROR_MESSAGE</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">truncated_months</span><span class="p">))</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_consolidate_campsites</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">campsite_df</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">,</span>
+                               <span class="n">nights</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">AvailableCampsite</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Consolidate Single Night Campsites into Multiple Night Campsites</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        campsite_df: DataFrame</span>
+<span class="sd">            DataFrame of AvailableCampsites</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        List[AvailableCampsite]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">composed_groupings</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">campsite_slice</span> <span class="ow">in</span> <span class="n">campsite_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">CampsiteContainerFields</span><span class="o">.</span><span class="n">CAMPSITE_ID</span><span class="p">,</span> <span class="n">CampsiteContainerFields</span><span class="o">.</span><span class="n">CAMPGROUND_ID</span><span class="p">]):</span>
+            <span class="c1"># SORT THE VALUES AND CREATE A COPIED SLICE</span>
+            <span class="n">campsite_grouping</span> <span class="o">=</span> <span class="n">campsite_slice</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="n">CampsiteContainerFields</span><span class="o">.</span><span class="n">BOOKING_DATE</span><span class="p">,</span>
+                                                           <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="c1"># ASSEMBLE THE CAMPSITES AVAILABILITIES INTO GROUPS THAT ARE CONSECUTIVE</span>
+            <span class="n">booking_date</span> <span class="o">=</span> <span class="n">campsite_grouping</span><span class="p">[</span><span class="n">CampsiteContainerFields</span><span class="o">.</span><span class="n">BOOKING_DATE</span><span class="p">]</span>
+            <span class="n">date</span> <span class="o">=</span> <span class="n">Timedelta</span><span class="p">(</span><span class="s2">&quot;1d&quot;</span><span class="p">)</span>
+            <span class="n">consecutive_nights</span> <span class="o">=</span> <span class="n">booking_date</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span> <span class="o">!=</span> <span class="n">date</span>
+            <span class="n">group_identifier</span> <span class="o">=</span> <span class="n">consecutive_nights</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
+            <span class="n">campsite_grouping</span><span class="p">[</span><span class="n">CampsiteContainerFields</span><span class="o">.</span><span class="n">CAMPSITE_GROUP</span><span class="p">]</span> <span class="o">=</span> <span class="n">group_identifier</span>
+            <span class="c1"># USE THE ASSEMBLED GROUPS TO CREATE UPDATED CAMPSITES AND REMOVE DUPLICATES</span>
+            <span class="k">for</span> <span class="n">_campsite_group</span><span class="p">,</span> <span class="n">campsite_group_slice</span> <span class="ow">in</span> <span class="n">campsite_grouping</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">CampsiteContainerFields</span><span class="o">.</span><span class="n">CAMPSITE_GROUP</span><span class="p">]):</span>
+                <span class="n">composed_grouping</span> <span class="o">=</span> <span class="n">campsite_group_slice</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+                    <span class="n">by</span><span class="o">=</span><span class="n">CampsiteContainerFields</span><span class="o">.</span><span class="n">BOOKING_DATE</span><span class="p">,</span>
+                    <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+                <span class="n">composed_grouping</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">CampsiteContainerFields</span><span class="o">.</span><span class="n">CAMPSITE_GROUP</span><span class="p">],</span>
+                                       <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">nightly_breakouts</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_find_consecutive_nights</span><span class="p">(</span><span class="n">dataframe</span><span class="o">=</span><span class="n">composed_grouping</span><span class="p">,</span>
+                                                                 <span class="n">nights</span><span class="o">=</span><span class="n">nights</span><span class="p">)</span>
+                <span class="n">composed_groupings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nightly_breakouts</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">composed_groupings</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">composed_groupings</span> <span class="o">=</span> <span class="p">[</span><span class="n">DataFrame</span><span class="p">()]</span>
+        <span class="k">return</span> <span class="n">concat</span><span class="p">(</span><span class="n">composed_groupings</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_consecutive_subseq</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">iterable</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Find All Sub Sequences by length Given a List</span>
+
+<span class="sd">        See https://tinyurl.com/5av5unjd</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        iterable: Iterable</span>
+<span class="sd">        length: int</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Generator</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">consec_run</span> <span class="ow">in</span> <span class="n">groupby</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">iterable</span><span class="p">),</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">k_wise</span> <span class="o">=</span> <span class="n">tee</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">consec_run</span><span class="p">),</span> <span class="n">length</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">it</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">k_wise</span><span class="p">):</span>
+                <span class="nb">next</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">yield from</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">k_wise</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_find_consecutive_nights</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dataframe</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">nights</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Explode a DataFrame of Consecutive Nightly Campsite Availabilities,</span>
+
+<span class="sd">        Expand to all unique possibilities given the length of the stay.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        dataframe: DataFrame</span>
+<span class="sd">        nights: int</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        DataFrame</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dataframe_slice</span> <span class="o">=</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">nights_indexes</span> <span class="o">=</span> <span class="n">dataframe_slice</span><span class="o">.</span><span class="n">booking_date</span><span class="o">.</span><span class="n">index</span>
+        <span class="n">consecutive_generator</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_consecutive_subseq</span><span class="p">(</span><span class="n">iterable</span><span class="o">=</span><span class="n">nights_indexes</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="n">nights</span><span class="p">)</span>
+        <span class="n">sequences</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">consecutive_generator</span><span class="p">)</span>
+        <span class="n">concatted_data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">sequence</span> <span class="ow">in</span> <span class="n">sequences</span><span class="p">:</span>
+            <span class="n">index_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>
+            <span class="n">data_copy</span> <span class="o">=</span> <span class="n">dataframe_slice</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">index_list</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">data_copy</span><span class="o">.</span><span class="n">booking_date</span> <span class="o">=</span> <span class="n">data_copy</span><span class="o">.</span><span class="n">booking_date</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+            <span class="n">data_copy</span><span class="o">.</span><span class="n">booking_end_date</span> <span class="o">=</span> <span class="n">data_copy</span><span class="o">.</span><span class="n">booking_end_date</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+            <span class="n">data_copy</span><span class="o">.</span><span class="n">booking_url</span> <span class="o">=</span> <span class="n">data_copy</span><span class="o">.</span><span class="n">booking_url</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">index_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+            <span class="n">data_copy</span><span class="o">.</span><span class="n">booking_nights</span> <span class="o">=</span> <span class="p">(</span><span class="n">data_copy</span><span class="o">.</span><span class="n">booking_end_date</span> <span class="o">-</span> <span class="n">data_copy</span><span class="o">.</span><span class="n">booking_date</span><span class="p">)</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">days</span>
+            <span class="n">data_copy</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">concatted_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data_copy</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">concatted_data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">concatted_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">DataFrame</span><span class="p">()]</span>
+        <span class="k">return</span> <span class="n">concat</span><span class="p">(</span><span class="n">concatted_data</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_validate_consecutive_nights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nights</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Validate the number of consecutive nights to search</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        nights : int</span>
+<span class="sd">            Number of nights to check</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        int</span>
+<span class="sd">            The proper number of nights to search</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">search_days</span> <span class="o">=</span> <span class="n">Series</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">search_days</span><span class="p">)</span>
+        <span class="n">consecutive_nights</span> <span class="o">=</span> <span class="n">search_days</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span> <span class="o">!=</span> <span class="n">Timedelta</span><span class="p">(</span><span class="s2">&quot;1d&quot;</span><span class="p">)</span>
+        <span class="n">largest_grouping</span> <span class="o">=</span> <span class="n">consecutive_nights</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">nights</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Searching for availabilities with </span><span class="si">{</span><span class="n">nights</span><span class="si">}</span><span class="s2"> consecutive night stays.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">nights</span> <span class="o">&gt;</span> <span class="n">largest_grouping</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Too many consecutive nights selected. &quot;</span>
+                           <span class="s2">&quot;The consecutive night parameter will be set to &quot;</span>
+                           <span class="sa">f</span><span class="s2">&quot;the max possible, </span><span class="si">{</span><span class="n">largest_grouping</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">largest_grouping</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">nights</span>
+
+<div class="viewcode-block" id="BaseCampingSearch.campsites_to_df"><a class="viewcode-back" href="../../../api/camply.search.base_search.html#camply.search.BaseCampingSearch.campsites_to_df">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">campsites_to_df</span><span class="p">(</span><span class="n">campsites</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">AvailableCampsite</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert Campsite Array to</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        campsites: List[AvailableCampsite]</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        DataFrame</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">campsite_df</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="n">campsite</span><span class="o">.</span><span class="vm">__dict__</span> <span class="k">for</span> <span class="n">campsite</span> <span class="ow">in</span> <span class="n">campsites</span><span class="p">],</span>
+                                <span class="n">columns</span><span class="o">=</span><span class="n">AvailableCampsite</span><span class="o">.</span><span class="n">__fields__</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">campsite_df</span></div>
+
+<div class="viewcode-block" id="BaseCampingSearch.df_to_campsites"><a class="viewcode-back" href="../../../api/camply.search.base_search.html#camply.search.BaseCampingSearch.df_to_campsites">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">df_to_campsites</span><span class="p">(</span><span class="n">campsite_df</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">AvailableCampsite</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert Campsite DataFrame to array of AvailableCampsite objects</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        campsite_df: DataFrame</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        List[AvailableCampsite]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">composed_campsite_array</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="n">composed_campsite_data_array</span> <span class="o">=</span> <span class="n">campsite_df</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s2">&quot;records&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">campsite_record</span> <span class="ow">in</span> <span class="n">composed_campsite_data_array</span><span class="p">:</span>
+            <span class="n">composed_campsite_array</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">AvailableCampsite</span><span class="p">(</span><span class="o">**</span><span class="n">campsite_record</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">composed_campsite_array</span></div>
+
+<div class="viewcode-block" id="BaseCampingSearch.assemble_availabilities"><a class="viewcode-back" href="../../../api/camply.search.base_search.html#camply.search.BaseCampingSearch.assemble_availabilities">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">assemble_availabilities</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span>
+                                <span class="n">matching_data</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">AvailableCampsite</span><span class="p">],</span>
+                                <span class="n">log</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                                <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Prepare a Pandas DataFrame from Array of AvailableCampsite objects</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        matching_data: List[AvailableCampsite]</span>
+<span class="sd">            List of campsites to assemble</span>
+<span class="sd">        log: bool</span>
+<span class="sd">            Whether to log found campsites</span>
+<span class="sd">        verbose: bool</span>
+<span class="sd">            Used with `log` to enhance the amount of info logged to the console</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        availability_df: DataFrame</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">availability_df</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">campsites_to_df</span><span class="p">(</span><span class="n">campsites</span><span class="o">=</span><span class="n">matching_data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">log</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_log_availabilities</span><span class="p">(</span><span class="n">availability_df</span><span class="o">=</span><span class="n">availability_df</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">availability_df</span></div>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_log_availabilities</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">availability_df</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Log the Availabilities</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        availability_df: DataFrame</span>
+<span class="sd">        verbose: bool</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        DataFrame</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">booking_date</span><span class="p">:</span> <span class="n">datetime</span>
+        <span class="k">for</span> <span class="n">booking_date</span><span class="p">,</span> <span class="n">available_sites</span> <span class="ow">in</span> <span class="n">availability_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;booking_date&quot;</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📅 </span><span class="si">{</span><span class="n">booking_date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%a</span><span class="s1">, %B </span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2"> &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;🏕  </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">available_sites</span><span class="p">)</span><span class="si">}</span><span class="s2"> sites&quot;</span><span class="p">)</span>
+            <span class="n">location_tuple</span><span class="p">:</span> <span class="nb">tuple</span>
+            <span class="k">for</span> <span class="n">location_tuple</span><span class="p">,</span> <span class="n">campground_availability</span> <span class="ow">in</span> \
+                    <span class="n">available_sites</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="n">DataColumns</span><span class="o">.</span><span class="n">RECREATION_AREA_COLUMN</span><span class="p">,</span>
+                                             <span class="n">DataColumns</span><span class="o">.</span><span class="n">FACILITY_NAME_COLUMN</span><span class="p">]):</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">⛰️  </span><span class="si">{</span><span class="s1">&#39;  🏕  &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">location_tuple</span><span class="p">)</span><span class="si">}</span><span class="s2">: ⛺ &quot;</span>
+                            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">campground_availability</span><span class="p">)</span><span class="si">}</span><span class="s2"> sites&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">verbose</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">booking_nights</span><span class="p">,</span> <span class="n">nightly_availability</span> <span class="ow">in</span> <span class="n">campground_availability</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span>
+                            <span class="p">[</span><span class="n">DataColumns</span><span class="o">.</span><span class="n">BOOKING_NIGHTS_COLUMN</span><span class="p">]):</span>
+                        <span class="n">unique_urls</span> <span class="o">=</span> <span class="n">nightly_availability</span><span class="p">[</span><span class="n">DataColumns</span><span class="o">.</span><span class="n">BOOKING_URL_COLUMN</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+                        <span class="k">for</span> <span class="n">booking_url</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">unique_urls</span><span class="p">):</span>
+                            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t\t</span><span class="s2">🔗 </span><span class="si">{</span><span class="n">booking_url</span><span class="si">}</span><span class="s2"> &quot;</span>
+                                        <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">booking_nights</span><span class="si">}</span><span class="s2"> night&quot;</span>
+                                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;s&#39;</span> <span class="k">if</span> <span class="n">booking_nights</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">availability_df</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Justin Flannery.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

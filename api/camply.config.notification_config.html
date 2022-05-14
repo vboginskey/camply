@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>camply.config.notification_config module &mdash; camply 0.4.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/autodoc_pydantic.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/autoclasstoc.css" type="text/css" />
+    <link rel="shortcut icon" href="https://juftin.com/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="camply.config.search_config module" href="camply.config.search_config.html" />
+    <link rel="prev" title="camply.config.file_config module" href="camply.config.file_config.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> camply
+          </a>
+              <div class="version">
+                0.4.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Check Out The ReadTheDocs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#command-line-usage">Command Line Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#finding-recreation-areas-ids-and-campground-ids-to-search-without-using-the-command-line">Finding Recreation Areas IDs and Campground IDs To Search Without Using the Command Line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#object-oriented-usage-python">Object-Oriented Usage (Python)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#running-in-docker">Running in Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#dependencies">Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">camply CLI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="camply.html">camply package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="camply.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="camply.config.html">camply.config package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="camply.containers.html">camply.containers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="camply.notifications.html">camply.notifications package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="camply.providers.html">camply.providers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="camply.search.html">camply.search package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="camply.utils.html">camply.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="camply.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="camply.html#module-camply">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">camply</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">camply</a> &raquo;</li>
+          <li><a href="camply.html">camply package</a> &raquo;</li>
+          <li><a href="camply.config.html">camply.config package</a> &raquo;</li>
+      <li>camply.config.notification_config module</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-camply.config.notification_config">
+<span id="camply-config-notification-config-module"></span><h1>camply.config.notification_config module<a class="headerlink" href="#module-camply.config.notification_config" title="Permalink to this headline"></a></h1>
+<p>Project Configuration for Pushover Variables</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="camply.config.notification_config.PushoverConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camply.config.notification_config.</span></span><span class="sig-name descname"><span class="pre">PushoverConfig</span></span><a class="reference internal" href="../_modules/camply/config/notification_config.html#PushoverConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.config.notification_config.PushoverConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Pushover Notification Config Class</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.notification_config.PushoverConfig.PUSHOVER_API_ENDPOINT">
+<span class="sig-name descname"><span class="pre">PUSHOVER_API_ENDPOINT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'https://api.pushover.net/1/messages.json'</span></em><a class="headerlink" href="#camply.config.notification_config.PushoverConfig.PUSHOVER_API_ENDPOINT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.notification_config.PushoverConfig.PUSHOVER_DEFAULT_API_TOKEN">
+<span class="sig-name descname"><span class="pre">PUSHOVER_DEFAULT_API_TOKEN</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)"><span class="pre">bytes</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">b'YWpjN3M1a2hhYTRlOG1zYWhncnFnaHduZGdtbmI3'</span></em><a class="headerlink" href="#camply.config.notification_config.PushoverConfig.PUSHOVER_DEFAULT_API_TOKEN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.notification_config.PushoverConfig.API_HEADERS">
+<span class="sig-name descname"><span class="pre">API_HEADERS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'Content-Type':</span> <span class="pre">'application/json'}</span></em><a class="headerlink" href="#camply.config.notification_config.PushoverConfig.API_HEADERS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.notification_config.PushoverConfig.PUSH_TOKEN">
+<span class="sig-name descname"><span class="pre">PUSH_TOKEN</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#camply.config.notification_config.PushoverConfig.PUSH_TOKEN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.notification_config.PushoverConfig.PUSH_USER">
+<span class="sig-name descname"><span class="pre">PUSH_USER</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#camply.config.notification_config.PushoverConfig.PUSH_USER" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="camply.config.notification_config.EmailConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camply.config.notification_config.</span></span><span class="sig-name descname"><span class="pre">EmailConfig</span></span><a class="reference internal" href="../_modules/camply/config/notification_config.html#EmailConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.config.notification_config.EmailConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Email Notification Config Class</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.notification_config.EmailConfig.EMAIL_TO_ADDRESS">
+<span class="sig-name descname"><span class="pre">EMAIL_TO_ADDRESS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#camply.config.notification_config.EmailConfig.EMAIL_TO_ADDRESS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.notification_config.EmailConfig.DEFAULT_FROM_ADDRESS">
+<span class="sig-name descname"><span class="pre">DEFAULT_FROM_ADDRESS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'camply&#64;juftin.com'</span></em><a class="headerlink" href="#camply.config.notification_config.EmailConfig.DEFAULT_FROM_ADDRESS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.notification_config.EmailConfig.EMAIL_FROM_ADDRESS">
+<span class="sig-name descname"><span class="pre">EMAIL_FROM_ADDRESS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'camply&#64;juftin.com'</span></em><a class="headerlink" href="#camply.config.notification_config.EmailConfig.EMAIL_FROM_ADDRESS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.notification_config.EmailConfig.DEFAULT_SUBJECT_LINE">
+<span class="sig-name descname"><span class="pre">DEFAULT_SUBJECT_LINE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Camply</span> <span class="pre">Notification'</span></em><a class="headerlink" href="#camply.config.notification_config.EmailConfig.DEFAULT_SUBJECT_LINE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.notification_config.EmailConfig.EMAIL_SUBJECT_LINE">
+<span class="sig-name descname"><span class="pre">EMAIL_SUBJECT_LINE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Camply</span> <span class="pre">Notification'</span></em><a class="headerlink" href="#camply.config.notification_config.EmailConfig.EMAIL_SUBJECT_LINE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.notification_config.EmailConfig.DEFAULT_SMTP_SERVER">
+<span class="sig-name descname"><span class="pre">DEFAULT_SMTP_SERVER</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'smtp.gmail.com'</span></em><a class="headerlink" href="#camply.config.notification_config.EmailConfig.DEFAULT_SMTP_SERVER" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.notification_config.EmailConfig.EMAIL_SMTP_SERVER">
+<span class="sig-name descname"><span class="pre">EMAIL_SMTP_SERVER</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'smtp.gmail.com'</span></em><a class="headerlink" href="#camply.config.notification_config.EmailConfig.EMAIL_SMTP_SERVER" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.notification_config.EmailConfig.EMAIL_USERNAME">
+<span class="sig-name descname"><span class="pre">EMAIL_USERNAME</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#camply.config.notification_config.EmailConfig.EMAIL_USERNAME" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.notification_config.EmailConfig.EMAIL_PASSWORD">
+<span class="sig-name descname"><span class="pre">EMAIL_PASSWORD</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#camply.config.notification_config.EmailConfig.EMAIL_PASSWORD" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.notification_config.EmailConfig.DEFAULT_SMTP_PORT">
+<span class="sig-name descname"><span class="pre">DEFAULT_SMTP_PORT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">465</span></em><a class="headerlink" href="#camply.config.notification_config.EmailConfig.DEFAULT_SMTP_PORT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.notification_config.EmailConfig.EMAIL_SMTP_PORT">
+<span class="sig-name descname"><span class="pre">EMAIL_SMTP_PORT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">465</span></em><a class="headerlink" href="#camply.config.notification_config.EmailConfig.EMAIL_SMTP_PORT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.notification_config.EmailConfig.ENVIRONMENT_VARIABLE_NAMES">
+<span class="sig-name descname"><span class="pre">ENVIRONMENT_VARIABLE_NAMES</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['EMAIL_TO_ADDRESS',</span> <span class="pre">'EMAIL_USERNAME',</span> <span class="pre">'EMAIL_PASSWORD']</span></em><a class="headerlink" href="#camply.config.notification_config.EmailConfig.ENVIRONMENT_VARIABLE_NAMES" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.notification_config.EmailConfig.OPTIONAL_ENVIRONMENT_VARIABLE">
+<span class="sig-name descname"><span class="pre">OPTIONAL_ENVIRONMENT_VARIABLE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['EMAIL_SMTP_SERVER</span> <span class="pre">(default:</span> <span class="pre">smtp.gmail.com)',</span> <span class="pre">'EMAIL_FROM_ADDRESS</span> <span class="pre">(default:</span> <span class="pre">camply&#64;juftin.com)',</span> <span class="pre">'EMAIL_SUBJECT_LINE</span> <span class="pre">(default:</span> <span class="pre">&quot;Camply</span> <span class="pre">Notification&quot;)',</span> <span class="pre">'EMAIL_SMTP_PORT</span> <span class="pre">(default:</span> <span class="pre">465)']</span></em><a class="headerlink" href="#camply.config.notification_config.EmailConfig.OPTIONAL_ENVIRONMENT_VARIABLE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="camply.config.notification_config.PushbulletConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camply.config.notification_config.</span></span><span class="sig-name descname"><span class="pre">PushbulletConfig</span></span><a class="reference internal" href="../_modules/camply/config/notification_config.html#PushbulletConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.config.notification_config.PushbulletConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Pushbullet Notification Config Class</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.notification_config.PushbulletConfig.PUSHBULLET_API_ENDPOINT">
+<span class="sig-name descname"><span class="pre">PUSHBULLET_API_ENDPOINT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'https://api.pushbullet.com/v2/pushes'</span></em><a class="headerlink" href="#camply.config.notification_config.PushbulletConfig.PUSHBULLET_API_ENDPOINT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.notification_config.PushbulletConfig.API_HEADERS">
+<span class="sig-name descname"><span class="pre">API_HEADERS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'Content-Type':</span> <span class="pre">'application/json'}</span></em><a class="headerlink" href="#camply.config.notification_config.PushbulletConfig.API_HEADERS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.notification_config.PushbulletConfig.API_TOKEN">
+<span class="sig-name descname"><span class="pre">API_TOKEN</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#camply.config.notification_config.PushbulletConfig.API_TOKEN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="camply.config.notification_config.TelegramConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camply.config.notification_config.</span></span><span class="sig-name descname"><span class="pre">TelegramConfig</span></span><a class="reference internal" href="../_modules/camply/config/notification_config.html#TelegramConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.config.notification_config.TelegramConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Telegram Notification Config Class</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.notification_config.TelegramConfig.BOT_TOKEN">
+<span class="sig-name descname"><span class="pre">BOT_TOKEN</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#camply.config.notification_config.TelegramConfig.BOT_TOKEN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.notification_config.TelegramConfig.CHAT_ID">
+<span class="sig-name descname"><span class="pre">CHAT_ID</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#camply.config.notification_config.TelegramConfig.CHAT_ID" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.notification_config.TelegramConfig.API_ENDPOINT">
+<span class="sig-name descname"><span class="pre">API_ENDPOINT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'https://api.telegram.org/botNone/sendMessage'</span></em><a class="headerlink" href="#camply.config.notification_config.TelegramConfig.API_ENDPOINT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.notification_config.TelegramConfig.API_HEADERS">
+<span class="sig-name descname"><span class="pre">API_HEADERS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'Content-Type':</span> <span class="pre">'application/json'}</span></em><a class="headerlink" href="#camply.config.notification_config.TelegramConfig.API_HEADERS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.notification_config.TelegramConfig.API_CONTENT">
+<span class="sig-name descname"><span class="pre">API_CONTENT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'chat_id':</span> <span class="pre">None,</span> <span class="pre">'disable_web_page_preview':</span> <span class="pre">'true',</span> <span class="pre">'parse_mode':</span> <span class="pre">'MarkdownV2'}</span></em><a class="headerlink" href="#camply.config.notification_config.TelegramConfig.API_CONTENT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="camply.config.file_config.html" class="btn btn-neutral float-left" title="camply.config.file_config module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="camply.config.search_config.html" class="btn btn-neutral float-right" title="camply.config.search_config module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Justin Flannery.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

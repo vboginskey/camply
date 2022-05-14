@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>camply.containers.api_responses module &mdash; camply 0.4.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/autodoc_pydantic.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/autoclasstoc.css" type="text/css" />
+    <link rel="shortcut icon" href="https://juftin.com/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="camply.containers.base_container module" href="camply.containers.base_container.html" />
+    <link rel="prev" title="camply.containers package" href="camply.containers.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> camply
+          </a>
+              <div class="version">
+                0.4.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Check Out The ReadTheDocs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#command-line-usage">Command Line Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#finding-recreation-areas-ids-and-campground-ids-to-search-without-using-the-command-line">Finding Recreation Areas IDs and Campground IDs To Search Without Using the Command Line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#object-oriented-usage-python">Object-Oriented Usage (Python)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#running-in-docker">Running in Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#dependencies">Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">camply CLI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="camply.html">camply package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="camply.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="camply.config.html">camply.config package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="camply.containers.html">camply.containers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="camply.notifications.html">camply.notifications package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="camply.providers.html">camply.providers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="camply.search.html">camply.search package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="camply.utils.html">camply.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="camply.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="camply.html#module-camply">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">camply</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">camply</a> &raquo;</li>
+          <li><a href="camply.html">camply package</a> &raquo;</li>
+          <li><a href="camply.containers.html">camply.containers package</a> &raquo;</li>
+      <li>camply.containers.api_responses module</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-camply.containers.api_responses">
+<span id="camply-containers-api-responses-module"></span><h1>camply.containers.api_responses module<a class="headerlink" href="#module-camply.containers.api_responses" title="Permalink to this headline"></a></h1>
+<p>API Response Objects</p>
+<p>These are JSON Responses from APIs</p>
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="camply.containers.api_responses.CampsiteResponse">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camply.containers.api_responses.</span></span><span class="sig-name descname"><span class="pre">CampsiteResponse</span></span><a class="reference internal" href="../_modules/camply/containers/api_responses.html#CampsiteResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.containers.api_responses.CampsiteResponse" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="camply.containers.base_container.html#camply.containers.base_container.CamplyModel" title="camply.containers.base_container.CamplyModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">camply.containers.base_container.CamplyModel</span></code></a></p>
+<p><a class="reference external" href="https://ridb.recreation.gov/api/v1/campsites">https://ridb.recreation.gov/api/v1/campsites</a>/&lt;CAMPSITE ID&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#camply.containers.api_responses.CampsiteResponse.ATTRIBUTES" title="camply.containers.api_responses.CampsiteResponse.ATTRIBUTES"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ATTRIBUTES</span> <span class="pre">(List[camply.containers.api_responses._CampsiteAttribute])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#camply.containers.api_responses.CampsiteResponse.CampsiteAccessible" title="camply.containers.api_responses.CampsiteResponse.CampsiteAccessible"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CampsiteAccessible</span> <span class="pre">(bool)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#camply.containers.api_responses.CampsiteResponse.CampsiteID" title="camply.containers.api_responses.CampsiteResponse.CampsiteID"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CampsiteID</span> <span class="pre">(int)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#camply.containers.api_responses.CampsiteResponse.CampsiteLatitude" title="camply.containers.api_responses.CampsiteResponse.CampsiteLatitude"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CampsiteLatitude</span> <span class="pre">(float)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#camply.containers.api_responses.CampsiteResponse.CampsiteLongitude" title="camply.containers.api_responses.CampsiteResponse.CampsiteLongitude"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CampsiteLongitude</span> <span class="pre">(float)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#camply.containers.api_responses.CampsiteResponse.CampsiteName" title="camply.containers.api_responses.CampsiteResponse.CampsiteName"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CampsiteName</span> <span class="pre">(str)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#camply.containers.api_responses.CampsiteResponse.CampsiteReservable" title="camply.containers.api_responses.CampsiteResponse.CampsiteReservable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CampsiteReservable</span> <span class="pre">(bool)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#camply.containers.api_responses.CampsiteResponse.CampsiteType" title="camply.containers.api_responses.CampsiteResponse.CampsiteType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CampsiteType</span> <span class="pre">(str)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#camply.containers.api_responses.CampsiteResponse.CreatedDate" title="camply.containers.api_responses.CampsiteResponse.CreatedDate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CreatedDate</span> <span class="pre">(datetime.date)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#camply.containers.api_responses.CampsiteResponse.FacilityID" title="camply.containers.api_responses.CampsiteResponse.FacilityID"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FacilityID</span> <span class="pre">(int)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#camply.containers.api_responses.CampsiteResponse.LastUpdatedDate" title="camply.containers.api_responses.CampsiteResponse.LastUpdatedDate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LastUpdatedDate</span> <span class="pre">(datetime.date)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#camply.containers.api_responses.CampsiteResponse.Loop" title="camply.containers.api_responses.CampsiteResponse.Loop"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Loop</span> <span class="pre">(str)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#camply.containers.api_responses.CampsiteResponse.PERMITTEDEQUIPMENT" title="camply.containers.api_responses.CampsiteResponse.PERMITTEDEQUIPMENT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PERMITTEDEQUIPMENT</span> <span class="pre">(List[camply.containers.api_responses._CampsiteEquipment])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#camply.containers.api_responses.CampsiteResponse.TypeOfUse" title="camply.containers.api_responses.CampsiteResponse.TypeOfUse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TypeOfUse</span> <span class="pre">(str)</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="camply.containers.api_responses.CampsiteResponse.ATTRIBUTES">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ATTRIBUTES</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">camply.containers.api_responses._CampsiteAttribute</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#camply.containers.api_responses.CampsiteResponse.ATTRIBUTES" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="camply.containers.api_responses.CampsiteResponse.CampsiteAccessible">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CampsiteAccessible</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#camply.containers.api_responses.CampsiteResponse.CampsiteAccessible" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="camply.containers.api_responses.CampsiteResponse.CampsiteID">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CampsiteID</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#camply.containers.api_responses.CampsiteResponse.CampsiteID" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="camply.containers.api_responses.CampsiteResponse.CampsiteLatitude">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CampsiteLatitude</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#camply.containers.api_responses.CampsiteResponse.CampsiteLatitude" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="camply.containers.api_responses.CampsiteResponse.CampsiteLongitude">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CampsiteLongitude</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#camply.containers.api_responses.CampsiteResponse.CampsiteLongitude" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="camply.containers.api_responses.CampsiteResponse.CampsiteName">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CampsiteName</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#camply.containers.api_responses.CampsiteResponse.CampsiteName" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="camply.containers.api_responses.CampsiteResponse.CampsiteReservable">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CampsiteReservable</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#camply.containers.api_responses.CampsiteResponse.CampsiteReservable" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="camply.containers.api_responses.CampsiteResponse.CampsiteType">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CampsiteType</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#camply.containers.api_responses.CampsiteResponse.CampsiteType" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="camply.containers.api_responses.CampsiteResponse.CreatedDate">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CreatedDate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.date" title="(in Python v3.10)"><span class="pre">datetime.date</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#camply.containers.api_responses.CampsiteResponse.CreatedDate" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="camply.containers.api_responses.CampsiteResponse.FacilityID">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FacilityID</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#camply.containers.api_responses.CampsiteResponse.FacilityID" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="camply.containers.api_responses.CampsiteResponse.LastUpdatedDate">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LastUpdatedDate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.date" title="(in Python v3.10)"><span class="pre">datetime.date</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#camply.containers.api_responses.CampsiteResponse.LastUpdatedDate" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="camply.containers.api_responses.CampsiteResponse.Loop">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Loop</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#camply.containers.api_responses.CampsiteResponse.Loop" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="camply.containers.api_responses.CampsiteResponse.PERMITTEDEQUIPMENT">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PERMITTEDEQUIPMENT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">camply.containers.api_responses._CampsiteEquipment</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#camply.containers.api_responses.CampsiteResponse.PERMITTEDEQUIPMENT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="camply.containers.api_responses.CampsiteResponse.TypeOfUse">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TypeOfUse</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#camply.containers.api_responses.CampsiteResponse.TypeOfUse" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="camply.containers.api_responses.UnawareDatetime">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camply.containers.api_responses.</span></span><span class="sig-name descname"><span class="pre">UnawareDatetime</span></span><a class="reference internal" href="../_modules/camply/containers/api_responses.html#UnawareDatetime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.containers.api_responses.UnawareDatetime" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime.datetime</span></code></a></p>
+<p>Datetime Unaware Timestamp Parsing</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="camply.containers.api_responses.UnawareDatetime.validate">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/camply/containers/api_responses.html#UnawareDatetime.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.containers.api_responses.UnawareDatetime.validate" title="Permalink to this definition"></a></dt>
+<dd><p>Validate Date Strings Into</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>v</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.10)"><em>datetime.datetime</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.10)">datetime.datetime</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="camply.containers.api_responses.CampsiteAvailabilityResponse">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camply.containers.api_responses.</span></span><span class="sig-name descname"><span class="pre">CampsiteAvailabilityResponse</span></span><a class="reference internal" href="../_modules/camply/containers/api_responses.html#CampsiteAvailabilityResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.containers.api_responses.CampsiteAvailabilityResponse" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="camply.containers.base_container.html#camply.containers.base_container.CamplyModel" title="camply.containers.base_container.CamplyModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">camply.containers.base_container.CamplyModel</span></code></a></p>
+<p><a class="reference external" href="https://ridb.recreation.gov/api/v1/campsites">https://ridb.recreation.gov/api/v1/campsites</a>/&lt;CAMPSITE ID&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#camply.containers.api_responses.CampsiteAvailabilityResponse.campsites" title="camply.containers.api_responses.CampsiteAvailabilityResponse.campsites"><code class="xref py py-obj docutils literal notranslate"><span class="pre">campsites</span> <span class="pre">(Dict[int,</span> <span class="pre">camply.containers.api_responses._CampsiteAvailabilityCampsiteResponse])</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="camply.containers.api_responses.CampsiteAvailabilityResponse.campsites">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">campsites</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">camply.containers.api_responses._CampsiteAvailabilityCampsiteResponse</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#camply.containers.api_responses.CampsiteAvailabilityResponse.campsites" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="camply.containers.api_responses.RecreationAreaResponse">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camply.containers.api_responses.</span></span><span class="sig-name descname"><span class="pre">RecreationAreaResponse</span></span><a class="reference internal" href="../_modules/camply/containers/api_responses.html#RecreationAreaResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.containers.api_responses.RecreationAreaResponse" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="camply.containers.base_container.html#camply.containers.base_container.CamplyModel" title="camply.containers.base_container.CamplyModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">camply.containers.base_container.CamplyModel</span></code></a></p>
+<p><a class="reference external" href="https://ridb.recreation.gov/api/v1/campsites">https://ridb.recreation.gov/api/v1/campsites</a>/&lt;CAMPSITE ID&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#camply.containers.api_responses.RecreationAreaResponse.RECAREAADDRESS" title="camply.containers.api_responses.RecreationAreaResponse.RECAREAADDRESS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RECAREAADDRESS</span> <span class="pre">(List[camply.containers.api_responses._RecAreaAddress])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#camply.containers.api_responses.RecreationAreaResponse.RecAreaID" title="camply.containers.api_responses.RecreationAreaResponse.RecAreaID"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RecAreaID</span> <span class="pre">(int)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#camply.containers.api_responses.RecreationAreaResponse.RecAreaName" title="camply.containers.api_responses.RecreationAreaResponse.RecAreaName"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RecAreaName</span> <span class="pre">(str)</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="camply.containers.api_responses.RecreationAreaResponse.RECAREAADDRESS">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RECAREAADDRESS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">camply.containers.api_responses._RecAreaAddress</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#camply.containers.api_responses.RecreationAreaResponse.RECAREAADDRESS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="camply.containers.api_responses.RecreationAreaResponse.RecAreaID">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RecAreaID</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#camply.containers.api_responses.RecreationAreaResponse.RecAreaID" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="camply.containers.api_responses.RecreationAreaResponse.RecAreaName">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RecAreaName</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#camply.containers.api_responses.RecreationAreaResponse.RecAreaName" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="camply.containers.api_responses.FacilityResponse">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camply.containers.api_responses.</span></span><span class="sig-name descname"><span class="pre">FacilityResponse</span></span><a class="reference internal" href="../_modules/camply/containers/api_responses.html#FacilityResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.containers.api_responses.FacilityResponse" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="camply.containers.base_container.html#camply.containers.base_container.CamplyModel" title="camply.containers.base_container.CamplyModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">camply.containers.base_container.CamplyModel</span></code></a></p>
+<p>/api/v1/facilities/&lt;Facility ID&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#camply.containers.api_responses.FacilityResponse.Enabled" title="camply.containers.api_responses.FacilityResponse.Enabled"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Enabled</span> <span class="pre">(bool)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#camply.containers.api_responses.FacilityResponse.FACILITYADDRESS" title="camply.containers.api_responses.FacilityResponse.FACILITYADDRESS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FACILITYADDRESS</span> <span class="pre">(Optional[List[camply.containers.api_responses._FacilityAddress]])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#camply.containers.api_responses.FacilityResponse.FacilityID" title="camply.containers.api_responses.FacilityResponse.FacilityID"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FacilityID</span> <span class="pre">(int)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#camply.containers.api_responses.FacilityResponse.FacilityName" title="camply.containers.api_responses.FacilityResponse.FacilityName"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FacilityName</span> <span class="pre">(str)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#camply.containers.api_responses.FacilityResponse.FacilityTypeDescription" title="camply.containers.api_responses.FacilityResponse.FacilityTypeDescription"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FacilityTypeDescription</span> <span class="pre">(str)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#camply.containers.api_responses.FacilityResponse.RECAREA" title="camply.containers.api_responses.FacilityResponse.RECAREA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RECAREA</span> <span class="pre">(Optional[List[camply.containers.api_responses._FacilityRecArea]])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#camply.containers.api_responses.FacilityResponse.Reservable" title="camply.containers.api_responses.FacilityResponse.Reservable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Reservable</span> <span class="pre">(bool)</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="camply.containers.api_responses.FacilityResponse.Enabled">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Enabled</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#camply.containers.api_responses.FacilityResponse.Enabled" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="camply.containers.api_responses.FacilityResponse.FACILITYADDRESS">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FACILITYADDRESS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">camply.containers.api_responses._FacilityAddress</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PydanticUndefined</span></em><a class="headerlink" href="#camply.containers.api_responses.FacilityResponse.FACILITYADDRESS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="camply.containers.api_responses.FacilityResponse.FacilityID">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FacilityID</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#camply.containers.api_responses.FacilityResponse.FacilityID" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="camply.containers.api_responses.FacilityResponse.FacilityName">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FacilityName</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#camply.containers.api_responses.FacilityResponse.FacilityName" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="camply.containers.api_responses.FacilityResponse.FacilityTypeDescription">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FacilityTypeDescription</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#camply.containers.api_responses.FacilityResponse.FacilityTypeDescription" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="camply.containers.api_responses.FacilityResponse.RECAREA">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RECAREA</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">camply.containers.api_responses._FacilityRecArea</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PydanticUndefined</span></em><a class="headerlink" href="#camply.containers.api_responses.FacilityResponse.RECAREA" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="camply.containers.api_responses.FacilityResponse.Reservable">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Reservable</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#camply.containers.api_responses.FacilityResponse.Reservable" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="camply.containers.api_responses.GenericResponse">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camply.containers.api_responses.</span></span><span class="sig-name descname"><span class="pre">GenericResponse</span></span><a class="reference internal" href="../_modules/camply/containers/api_responses.html#GenericResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.containers.api_responses.GenericResponse" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="camply.containers.base_container.html#camply.containers.base_container.CamplyModel" title="camply.containers.base_container.CamplyModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">camply.containers.base_container.CamplyModel</span></code></a></p>
+<p>Generic Response to Be Paginated</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#camply.containers.api_responses.GenericResponse.METADATA" title="camply.containers.api_responses.GenericResponse.METADATA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">METADATA</span> <span class="pre">(camply.containers.api_responses._PaginationMetadataResponse)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#camply.containers.api_responses.GenericResponse.RECDATA" title="camply.containers.api_responses.GenericResponse.RECDATA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RECDATA</span> <span class="pre">(Any)</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="camply.containers.api_responses.GenericResponse.METADATA">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">METADATA</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">camply.containers.api_responses._PaginationMetadataResponse</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#camply.containers.api_responses.GenericResponse.METADATA" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="camply.containers.api_responses.GenericResponse.RECDATA">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RECDATA</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Any</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PydanticUndefined</span></em><a class="headerlink" href="#camply.containers.api_responses.GenericResponse.RECDATA" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="camply.containers.html" class="btn btn-neutral float-left" title="camply.containers package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="camply.containers.base_container.html" class="btn btn-neutral float-right" title="camply.containers.base_container module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Justin Flannery.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

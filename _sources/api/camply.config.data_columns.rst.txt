@@ -1,0 +1,7 @@
+camply.config.data\_columns module
+==================================
+
+.. automodule:: camply.config.data_columns
+   :members:
+   :undoc-members:
+   :show-inheritance:

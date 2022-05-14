@@ -1,0 +1,24 @@
+camply.notifications package
+============================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   camply.notifications.base_notifications
+   camply.notifications.email_notifications
+   camply.notifications.multi_provider_notifications
+   camply.notifications.pushbullet
+   camply.notifications.pushover
+   camply.notifications.silent_notifications
+   camply.notifications.telegram
+
+Module contents
+---------------
+
+.. automodule:: camply.notifications
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+camply.config.api\_config module
+================================
+
+.. automodule:: camply.config.api_config
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>camply.config package &mdash; camply 0.4.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/autodoc_pydantic.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/autoclasstoc.css" type="text/css" />
+    <link rel="shortcut icon" href="https://juftin.com/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="camply.config.api_config module" href="camply.config.api_config.html" />
+    <link rel="prev" title="camply package" href="camply.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> camply
+          </a>
+              <div class="version">
+                0.4.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Check Out The ReadTheDocs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#command-line-usage">Command Line Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#finding-recreation-areas-ids-and-campground-ids-to-search-without-using-the-command-line">Finding Recreation Areas IDs and Campground IDs To Search Without Using the Command Line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#object-oriented-usage-python">Object-Oriented Usage (Python)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#running-in-docker">Running in Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#dependencies">Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">camply CLI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="camply.html">camply package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="camply.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">camply.config package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="camply.containers.html">camply.containers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="camply.notifications.html">camply.notifications package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="camply.providers.html">camply.providers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="camply.search.html">camply.search package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="camply.utils.html">camply.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="camply.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="camply.html#module-camply">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">camply</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">camply</a> &raquo;</li>
+          <li><a href="camply.html">camply package</a> &raquo;</li>
+      <li>camply.config package</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="camply-config-package">
+<h1>camply.config package<a class="headerlink" href="#camply-config-package" title="Permalink to this headline"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="camply.config.api_config.html">camply.config.api_config module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="camply.config.data_columns.html">camply.config.data_columns module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="camply.config.file_config.html">camply.config.file_config module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="camply.config.notification_config.html">camply.config.notification_config module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="camply.config.search_config.html">camply.config.search_config module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="camply.config.yellowstone_config.html">camply.config.yellowstone_config module</a></li>
+</ul>
+</div>
+</section>
+<section id="module-camply.config">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-camply.config" title="Permalink to this headline"></a></h2>
+<p>Config __init__ file</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="camply.config.RecreationBookingConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camply.config.</span></span><span class="sig-name descname"><span class="pre">RecreationBookingConfig</span></span><a class="reference internal" href="../_modules/camply/config/api_config.html#RecreationBookingConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.config.RecreationBookingConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Variable Storage Class for Recreation.gov Booking API</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.RecreationBookingConfig.API_SCHEME">
+<span class="sig-name descname"><span class="pre">API_SCHEME</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'https'</span></em><a class="headerlink" href="#camply.config.RecreationBookingConfig.API_SCHEME" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.RecreationBookingConfig.API_NET_LOC">
+<span class="sig-name descname"><span class="pre">API_NET_LOC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'www.recreation.gov'</span></em><a class="headerlink" href="#camply.config.RecreationBookingConfig.API_NET_LOC" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.RecreationBookingConfig.API_BASE_PATH">
+<span class="sig-name descname"><span class="pre">API_BASE_PATH</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'api/camps/availability/campground/'</span></em><a class="headerlink" href="#camply.config.RecreationBookingConfig.API_BASE_PATH" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.RecreationBookingConfig.API_MONTH_PATH">
+<span class="sig-name descname"><span class="pre">API_MONTH_PATH</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'month'</span></em><a class="headerlink" href="#camply.config.RecreationBookingConfig.API_MONTH_PATH" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.RecreationBookingConfig.API_REFERRERS">
+<span class="sig-name descname"><span class="pre">API_REFERRERS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'Referer':</span> <span class="pre">'https://www.recreation.gov/'}</span></em><a class="headerlink" href="#camply.config.RecreationBookingConfig.API_REFERRERS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.RecreationBookingConfig.CAMPSITE_UNAVAILABLE_STRINGS">
+<span class="sig-name descname"><span class="pre">CAMPSITE_UNAVAILABLE_STRINGS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><span class="pre">list</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['Reserved',</span> <span class="pre">'Not</span> <span class="pre">Available',</span> <span class="pre">'Not</span> <span class="pre">Reservable',</span> <span class="pre">'Not</span> <span class="pre">Reservable</span> <span class="pre">Management',</span> <span class="pre">'Not</span> <span class="pre">Available</span> <span class="pre">Cutoff',</span> <span class="pre">'Lottery',</span> <span class="pre">'Open']</span></em><a class="headerlink" href="#camply.config.RecreationBookingConfig.CAMPSITE_UNAVAILABLE_STRINGS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.RecreationBookingConfig.CAMPSITE_LOCATION_LOOP_DEFAULT">
+<span class="sig-name descname"><span class="pre">CAMPSITE_LOCATION_LOOP_DEFAULT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Default</span> <span class="pre">Loop'</span></em><a class="headerlink" href="#camply.config.RecreationBookingConfig.CAMPSITE_LOCATION_LOOP_DEFAULT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.RecreationBookingConfig.CAMPSITE_LOCATION_SITE_DEFAULT">
+<span class="sig-name descname"><span class="pre">CAMPSITE_LOCATION_SITE_DEFAULT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Default</span> <span class="pre">Site'</span></em><a class="headerlink" href="#camply.config.RecreationBookingConfig.CAMPSITE_LOCATION_SITE_DEFAULT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.RecreationBookingConfig.CAMPSITE_BOOKING_URL">
+<span class="sig-name descname"><span class="pre">CAMPSITE_BOOKING_URL</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'https://www.recreation.gov/camping/campsites'</span></em><a class="headerlink" href="#camply.config.RecreationBookingConfig.CAMPSITE_BOOKING_URL" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.RecreationBookingConfig.RATE_LIMITING">
+<span class="sig-name descname"><span class="pre">RATE_LIMITING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(1.01,</span> <span class="pre">1.51)</span></em><a class="headerlink" href="#camply.config.RecreationBookingConfig.RATE_LIMITING" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="camply.config.RIDBConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camply.config.</span></span><span class="sig-name descname"><span class="pre">RIDBConfig</span></span><a class="reference internal" href="../_modules/camply/config/api_config.html#RIDBConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.config.RIDBConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>RIDB API Configuration</p>
+<p><a class="reference external" href="https://ridb.recreation.gov/docs">https://ridb.recreation.gov/docs</a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.RIDBConfig.API_KEY">
+<span class="sig-name descname"><span class="pre">API_KEY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">b'YTc0MTY0NzEtMWI1ZC00YTY0LWFkM2QtYTIzM2U3Y2I1YzQ0'</span></em><a class="headerlink" href="#camply.config.RIDBConfig.API_KEY" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.RIDBConfig.RIDB_SCHEME">
+<span class="sig-name descname"><span class="pre">RIDB_SCHEME</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'https'</span></em><a class="headerlink" href="#camply.config.RIDBConfig.RIDB_SCHEME" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.RIDBConfig.RIDB_NET_LOC">
+<span class="sig-name descname"><span class="pre">RIDB_NET_LOC</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ridb.recreation.gov'</span></em><a class="headerlink" href="#camply.config.RIDBConfig.RIDB_NET_LOC" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.RIDBConfig.RIDB_BASE_PATH">
+<span class="sig-name descname"><span class="pre">RIDB_BASE_PATH</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'api/v1/'</span></em><a class="headerlink" href="#camply.config.RIDBConfig.RIDB_BASE_PATH" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.RIDBConfig.FACILITIES_API_PATH">
+<span class="sig-name descname"><span class="pre">FACILITIES_API_PATH</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'facilities'</span></em><a class="headerlink" href="#camply.config.RIDBConfig.FACILITIES_API_PATH" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.RIDBConfig.CAMPGROUND_FACILITY_FIELD_QUALIFIER">
+<span class="sig-name descname"><span class="pre">CAMPGROUND_FACILITY_FIELD_QUALIFIER</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Campground'</span></em><a class="headerlink" href="#camply.config.RIDBConfig.CAMPGROUND_FACILITY_FIELD_QUALIFIER" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.RIDBConfig.REC_AREA_API_PATH">
+<span class="sig-name descname"><span class="pre">REC_AREA_API_PATH</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'recareas'</span></em><a class="headerlink" href="#camply.config.RIDBConfig.REC_AREA_API_PATH" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.RIDBConfig.CAMPSITE_API_PATH">
+<span class="sig-name descname"><span class="pre">CAMPSITE_API_PATH</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'campsites'</span></em><a class="headerlink" href="#camply.config.RIDBConfig.CAMPSITE_API_PATH" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="camply.config.CampsiteContainerFields">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camply.config.</span></span><span class="sig-name descname"><span class="pre">CampsiteContainerFields</span></span><a class="reference internal" href="../_modules/camply/config/data_columns.html#CampsiteContainerFields"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.config.CampsiteContainerFields" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>String Variable Storage Class</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.CampsiteContainerFields.CAMPSITE_ID">
+<span class="sig-name descname"><span class="pre">CAMPSITE_ID</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'campsite_id'</span></em><a class="headerlink" href="#camply.config.CampsiteContainerFields.CAMPSITE_ID" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.CampsiteContainerFields.CAMPGROUND_ID">
+<span class="sig-name descname"><span class="pre">CAMPGROUND_ID</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'facility_id'</span></em><a class="headerlink" href="#camply.config.CampsiteContainerFields.CAMPGROUND_ID" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.CampsiteContainerFields.BOOKING_DATE">
+<span class="sig-name descname"><span class="pre">BOOKING_DATE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'booking_date'</span></em><a class="headerlink" href="#camply.config.CampsiteContainerFields.BOOKING_DATE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.CampsiteContainerFields.CAMPSITE_GROUP">
+<span class="sig-name descname"><span class="pre">CAMPSITE_GROUP</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'campsite_group'</span></em><a class="headerlink" href="#camply.config.CampsiteContainerFields.CAMPSITE_GROUP" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.CampsiteContainerFields.BOOKING_END_DATE">
+<span class="sig-name descname"><span class="pre">BOOKING_END_DATE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'booking_end_date'</span></em><a class="headerlink" href="#camply.config.CampsiteContainerFields.BOOKING_END_DATE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.CampsiteContainerFields.BOOKING_URL">
+<span class="sig-name descname"><span class="pre">BOOKING_URL</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'booking_url'</span></em><a class="headerlink" href="#camply.config.CampsiteContainerFields.BOOKING_URL" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="camply.config.DataColumns">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camply.config.</span></span><span class="sig-name descname"><span class="pre">DataColumns</span></span><a class="reference internal" href="../_modules/camply/config/data_columns.html#DataColumns"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.config.DataColumns" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Variable Storage Class</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.DataColumns.CAMPSITE_ID_COLUMN">
+<span class="sig-name descname"><span class="pre">CAMPSITE_ID_COLUMN</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'campsite_code'</span></em><a class="headerlink" href="#camply.config.DataColumns.CAMPSITE_ID_COLUMN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.DataColumns.BOOKING_DATE_COLUMN">
+<span class="sig-name descname"><span class="pre">BOOKING_DATE_COLUMN</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'booking_date'</span></em><a class="headerlink" href="#camply.config.DataColumns.BOOKING_DATE_COLUMN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.DataColumns.BOOKING_END_DATE_COLUMN">
+<span class="sig-name descname"><span class="pre">BOOKING_END_DATE_COLUMN</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'booking_end_date'</span></em><a class="headerlink" href="#camply.config.DataColumns.BOOKING_END_DATE_COLUMN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.DataColumns.BOOKING_NIGHTS_COLUMN">
+<span class="sig-name descname"><span class="pre">BOOKING_NIGHTS_COLUMN</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'booking_nights'</span></em><a class="headerlink" href="#camply.config.DataColumns.BOOKING_NIGHTS_COLUMN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.DataColumns.CAMPSITE_SITE_NAME_COLUMN">
+<span class="sig-name descname"><span class="pre">CAMPSITE_SITE_NAME_COLUMN</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'campsite_title'</span></em><a class="headerlink" href="#camply.config.DataColumns.CAMPSITE_SITE_NAME_COLUMN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.DataColumns.CAMPSITE_TYPE_COLUMN">
+<span class="sig-name descname"><span class="pre">CAMPSITE_TYPE_COLUMN</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'campsite_type'</span></em><a class="headerlink" href="#camply.config.DataColumns.CAMPSITE_TYPE_COLUMN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.DataColumns.CAMPSITE_OCCUPANCY_COLUMN">
+<span class="sig-name descname"><span class="pre">CAMPSITE_OCCUPANCY_COLUMN</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'capacity'</span></em><a class="headerlink" href="#camply.config.DataColumns.CAMPSITE_OCCUPANCY_COLUMN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.DataColumns.CAMPSITE_USE_TYPE_COLUMN">
+<span class="sig-name descname"><span class="pre">CAMPSITE_USE_TYPE_COLUMN</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'campsite_type'</span></em><a class="headerlink" href="#camply.config.DataColumns.CAMPSITE_USE_TYPE_COLUMN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.DataColumns.AVAILABILITY_STATUS_COLUMN">
+<span class="sig-name descname"><span class="pre">AVAILABILITY_STATUS_COLUMN</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Available'</span></em><a class="headerlink" href="#camply.config.DataColumns.AVAILABILITY_STATUS_COLUMN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.DataColumns.RECREATION_AREA_COLUMN">
+<span class="sig-name descname"><span class="pre">RECREATION_AREA_COLUMN</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'recreation_area'</span></em><a class="headerlink" href="#camply.config.DataColumns.RECREATION_AREA_COLUMN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.DataColumns.FACILITY_NAME_COLUMN">
+<span class="sig-name descname"><span class="pre">FACILITY_NAME_COLUMN</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'facility_name'</span></em><a class="headerlink" href="#camply.config.DataColumns.FACILITY_NAME_COLUMN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.DataColumns.FACILITY_ID_COLUMN">
+<span class="sig-name descname"><span class="pre">FACILITY_ID_COLUMN</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'facility_id'</span></em><a class="headerlink" href="#camply.config.DataColumns.FACILITY_ID_COLUMN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.DataColumns.BOOKING_URL_COLUMN">
+<span class="sig-name descname"><span class="pre">BOOKING_URL_COLUMN</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'booking_url'</span></em><a class="headerlink" href="#camply.config.DataColumns.BOOKING_URL_COLUMN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="camply.config.FileConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camply.config.</span></span><span class="sig-name descname"><span class="pre">FileConfig</span></span><a class="reference internal" href="../_modules/camply/config/file_config.html#FileConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.config.FileConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>File Path Storage Class</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.FileConfig.HOME_PATH">
+<span class="sig-name descname"><span class="pre">HOME_PATH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'/home/runner'</span></em><a class="headerlink" href="#camply.config.FileConfig.HOME_PATH" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.FileConfig.DOT_CAMPLY_FILE">
+<span class="sig-name descname"><span class="pre">DOT_CAMPLY_FILE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'/home/runner/.camply'</span></em><a class="headerlink" href="#camply.config.FileConfig.DOT_CAMPLY_FILE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.FileConfig.CAMPLY_DIRECTORY">
+<span class="sig-name descname"><span class="pre">CAMPLY_DIRECTORY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PosixPath('/home/runner/work/camply/camply/main/camply')</span></em><a class="headerlink" href="#camply.config.FileConfig.CAMPLY_DIRECTORY" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.FileConfig.ROOT_DIRECTORY">
+<span class="sig-name descname"><span class="pre">ROOT_DIRECTORY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PosixPath('/home/runner/work/camply/camply/main')</span></em><a class="headerlink" href="#camply.config.FileConfig.ROOT_DIRECTORY" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.FileConfig.DOT_CAMPLY_FIELDS">
+<span class="sig-name descname"><span class="pre">DOT_CAMPLY_FIELDS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'EMAIL_FROM_ADDRESS':</span> <span class="pre">{'default':</span> <span class="pre">'camply&#64;juftin.com',</span> <span class="pre">'notes':</span> <span class="pre">'Email</span> <span class="pre">Notifications</span> <span class="pre">Will</span> <span class="pre">Come</span> <span class="pre">From</span> <span class="pre">this</span> <span class="pre">Email'},</span> <span class="pre">'EMAIL_PASSWORD':</span> <span class="pre">{'default':</span> <span class="pre">'',</span> <span class="pre">'notes':</span> <span class="pre">'Email</span> <span class="pre">Authorization</span> <span class="pre">Login</span> <span class="pre">Password'},</span> <span class="pre">'EMAIL_SMTP_PORT':</span> <span class="pre">{'default':</span> <span class="pre">465,</span> <span class="pre">'notes':</span> <span class="pre">'Email</span> <span class="pre">Authorization</span> <span class="pre">SMTP</span> <span class="pre">Server</span> <span class="pre">Port'},</span> <span class="pre">'EMAIL_SMTP_SERVER':</span> <span class="pre">{'default':</span> <span class="pre">'smtp.gmail.com',</span> <span class="pre">'notes':</span> <span class="pre">'Email</span> <span class="pre">Authorization</span> <span class="pre">SMTP</span> <span class="pre">Server</span> <span class="pre">Address'},</span> <span class="pre">'EMAIL_SUBJECT_LINE':</span> <span class="pre">{'default':</span> <span class="pre">'Camply</span> <span class="pre">Notification',</span> <span class="pre">'notes':</span> <span class="pre">'Email</span> <span class="pre">Notifications</span> <span class="pre">Will</span> <span class="pre">Have</span> <span class="pre">This</span> <span class="pre">Subject</span> <span class="pre">Line'},</span> <span class="pre">'EMAIL_TO_ADDRESS':</span> <span class="pre">{'default':</span> <span class="pre">'',</span> <span class="pre">'notes':</span> <span class="pre">'Email</span> <span class="pre">Notifications</span> <span class="pre">will</span> <span class="pre">be</span> <span class="pre">sent</span> <span class="pre">here'},</span> <span class="pre">'EMAIL_USERNAME':</span> <span class="pre">{'default':</span> <span class="pre">'',</span> <span class="pre">'notes':</span> <span class="pre">'Email</span> <span class="pre">Authorization</span> <span class="pre">Login</span> <span class="pre">Username'},</span> <span class="pre">'PUSHBULLET_API_TOKEN':</span> <span class="pre">{'default':</span> <span class="pre">'',</span> <span class="pre">'notes':</span> <span class="pre">'Enables</span> <span class="pre">Pushbullet</span> <span class="pre">Notifications'},</span> <span class="pre">'PUSHOVER_PUSH_TOKEN':</span> <span class="pre">{'default':</span> <span class="pre">'',</span> <span class="pre">'notes':</span> <span class="pre">'Pushover</span> <span class="pre">Notifications</span> <span class="pre">From</span> <span class="pre">Your</span> <span class="pre">Custom</span> <span class="pre">App</span> <span class="pre">(not</span> <span class="pre">required)'},</span> <span class="pre">'PUSHOVER_PUSH_USER':</span> <span class="pre">{'default':</span> <span class="pre">'',</span> <span class="pre">'notes':</span> <span class="pre">'Enables</span> <span class="pre">Pushover</span> <span class="pre">Notifications'},</span> <span class="pre">'RIDB_API_KEY':</span> <span class="pre">{'default':</span> <span class="pre">'',</span> <span class="pre">'notes':</span> <span class="pre">'Personal</span> <span class="pre">Recreation.gov</span> <span class="pre">API</span> <span class="pre">Key</span> <span class="pre">(not</span> <span class="pre">required)'},</span> <span class="pre">'TELEGRAM_BOT_TOKEN':</span> <span class="pre">{'default':</span> <span class="pre">'',</span> <span class="pre">'notes':</span> <span class="pre">'Enables</span> <span class="pre">Telegram</span> <span class="pre">Notifications'},</span> <span class="pre">'TELEGRAM_CHAT_ID':</span> <span class="pre">{'default':</span> <span class="pre">'',</span> <span class="pre">'notes':</span> <span class="pre">'Telegram</span> <span class="pre">Notification</span> <span class="pre">will</span> <span class="pre">be</span> <span class="pre">sent</span> <span class="pre">here'}}</span></em><a class="headerlink" href="#camply.config.FileConfig.DOT_CAMPLY_FIELDS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="camply.config.EmailConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camply.config.</span></span><span class="sig-name descname"><span class="pre">EmailConfig</span></span><a class="reference internal" href="../_modules/camply/config/notification_config.html#EmailConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.config.EmailConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Email Notification Config Class</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.EmailConfig.EMAIL_TO_ADDRESS">
+<span class="sig-name descname"><span class="pre">EMAIL_TO_ADDRESS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#camply.config.EmailConfig.EMAIL_TO_ADDRESS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.EmailConfig.DEFAULT_FROM_ADDRESS">
+<span class="sig-name descname"><span class="pre">DEFAULT_FROM_ADDRESS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'camply&#64;juftin.com'</span></em><a class="headerlink" href="#camply.config.EmailConfig.DEFAULT_FROM_ADDRESS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.EmailConfig.EMAIL_FROM_ADDRESS">
+<span class="sig-name descname"><span class="pre">EMAIL_FROM_ADDRESS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'camply&#64;juftin.com'</span></em><a class="headerlink" href="#camply.config.EmailConfig.EMAIL_FROM_ADDRESS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.EmailConfig.DEFAULT_SUBJECT_LINE">
+<span class="sig-name descname"><span class="pre">DEFAULT_SUBJECT_LINE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Camply</span> <span class="pre">Notification'</span></em><a class="headerlink" href="#camply.config.EmailConfig.DEFAULT_SUBJECT_LINE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.EmailConfig.EMAIL_SUBJECT_LINE">
+<span class="sig-name descname"><span class="pre">EMAIL_SUBJECT_LINE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Camply</span> <span class="pre">Notification'</span></em><a class="headerlink" href="#camply.config.EmailConfig.EMAIL_SUBJECT_LINE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.EmailConfig.DEFAULT_SMTP_SERVER">
+<span class="sig-name descname"><span class="pre">DEFAULT_SMTP_SERVER</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'smtp.gmail.com'</span></em><a class="headerlink" href="#camply.config.EmailConfig.DEFAULT_SMTP_SERVER" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.EmailConfig.EMAIL_SMTP_SERVER">
+<span class="sig-name descname"><span class="pre">EMAIL_SMTP_SERVER</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'smtp.gmail.com'</span></em><a class="headerlink" href="#camply.config.EmailConfig.EMAIL_SMTP_SERVER" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.EmailConfig.EMAIL_USERNAME">
+<span class="sig-name descname"><span class="pre">EMAIL_USERNAME</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#camply.config.EmailConfig.EMAIL_USERNAME" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.EmailConfig.EMAIL_PASSWORD">
+<span class="sig-name descname"><span class="pre">EMAIL_PASSWORD</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#camply.config.EmailConfig.EMAIL_PASSWORD" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.EmailConfig.DEFAULT_SMTP_PORT">
+<span class="sig-name descname"><span class="pre">DEFAULT_SMTP_PORT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">465</span></em><a class="headerlink" href="#camply.config.EmailConfig.DEFAULT_SMTP_PORT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.EmailConfig.EMAIL_SMTP_PORT">
+<span class="sig-name descname"><span class="pre">EMAIL_SMTP_PORT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">465</span></em><a class="headerlink" href="#camply.config.EmailConfig.EMAIL_SMTP_PORT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.EmailConfig.ENVIRONMENT_VARIABLE_NAMES">
+<span class="sig-name descname"><span class="pre">ENVIRONMENT_VARIABLE_NAMES</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['EMAIL_TO_ADDRESS',</span> <span class="pre">'EMAIL_USERNAME',</span> <span class="pre">'EMAIL_PASSWORD']</span></em><a class="headerlink" href="#camply.config.EmailConfig.ENVIRONMENT_VARIABLE_NAMES" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.EmailConfig.OPTIONAL_ENVIRONMENT_VARIABLE">
+<span class="sig-name descname"><span class="pre">OPTIONAL_ENVIRONMENT_VARIABLE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['EMAIL_SMTP_SERVER</span> <span class="pre">(default:</span> <span class="pre">smtp.gmail.com)',</span> <span class="pre">'EMAIL_FROM_ADDRESS</span> <span class="pre">(default:</span> <span class="pre">camply&#64;juftin.com)',</span> <span class="pre">'EMAIL_SUBJECT_LINE</span> <span class="pre">(default:</span> <span class="pre">&quot;Camply</span> <span class="pre">Notification&quot;)',</span> <span class="pre">'EMAIL_SMTP_PORT</span> <span class="pre">(default:</span> <span class="pre">465)']</span></em><a class="headerlink" href="#camply.config.EmailConfig.OPTIONAL_ENVIRONMENT_VARIABLE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="camply.config.PushbulletConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camply.config.</span></span><span class="sig-name descname"><span class="pre">PushbulletConfig</span></span><a class="reference internal" href="../_modules/camply/config/notification_config.html#PushbulletConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.config.PushbulletConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Pushbullet Notification Config Class</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.PushbulletConfig.PUSHBULLET_API_ENDPOINT">
+<span class="sig-name descname"><span class="pre">PUSHBULLET_API_ENDPOINT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'https://api.pushbullet.com/v2/pushes'</span></em><a class="headerlink" href="#camply.config.PushbulletConfig.PUSHBULLET_API_ENDPOINT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.PushbulletConfig.API_HEADERS">
+<span class="sig-name descname"><span class="pre">API_HEADERS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'Content-Type':</span> <span class="pre">'application/json'}</span></em><a class="headerlink" href="#camply.config.PushbulletConfig.API_HEADERS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.PushbulletConfig.API_TOKEN">
+<span class="sig-name descname"><span class="pre">API_TOKEN</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#camply.config.PushbulletConfig.API_TOKEN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="camply.config.PushoverConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camply.config.</span></span><span class="sig-name descname"><span class="pre">PushoverConfig</span></span><a class="reference internal" href="../_modules/camply/config/notification_config.html#PushoverConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.config.PushoverConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Pushover Notification Config Class</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.PushoverConfig.PUSHOVER_API_ENDPOINT">
+<span class="sig-name descname"><span class="pre">PUSHOVER_API_ENDPOINT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'https://api.pushover.net/1/messages.json'</span></em><a class="headerlink" href="#camply.config.PushoverConfig.PUSHOVER_API_ENDPOINT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.PushoverConfig.PUSHOVER_DEFAULT_API_TOKEN">
+<span class="sig-name descname"><span class="pre">PUSHOVER_DEFAULT_API_TOKEN</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)"><span class="pre">bytes</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">b'YWpjN3M1a2hhYTRlOG1zYWhncnFnaHduZGdtbmI3'</span></em><a class="headerlink" href="#camply.config.PushoverConfig.PUSHOVER_DEFAULT_API_TOKEN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.PushoverConfig.API_HEADERS">
+<span class="sig-name descname"><span class="pre">API_HEADERS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'Content-Type':</span> <span class="pre">'application/json'}</span></em><a class="headerlink" href="#camply.config.PushoverConfig.API_HEADERS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.PushoverConfig.PUSH_TOKEN">
+<span class="sig-name descname"><span class="pre">PUSH_TOKEN</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#camply.config.PushoverConfig.PUSH_TOKEN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.PushoverConfig.PUSH_USER">
+<span class="sig-name descname"><span class="pre">PUSH_USER</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#camply.config.PushoverConfig.PUSH_USER" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="camply.config.TelegramConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camply.config.</span></span><span class="sig-name descname"><span class="pre">TelegramConfig</span></span><a class="reference internal" href="../_modules/camply/config/notification_config.html#TelegramConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.config.TelegramConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Telegram Notification Config Class</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.TelegramConfig.BOT_TOKEN">
+<span class="sig-name descname"><span class="pre">BOT_TOKEN</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#camply.config.TelegramConfig.BOT_TOKEN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.TelegramConfig.CHAT_ID">
+<span class="sig-name descname"><span class="pre">CHAT_ID</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#camply.config.TelegramConfig.CHAT_ID" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.TelegramConfig.API_ENDPOINT">
+<span class="sig-name descname"><span class="pre">API_ENDPOINT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'https://api.telegram.org/botNone/sendMessage'</span></em><a class="headerlink" href="#camply.config.TelegramConfig.API_ENDPOINT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.TelegramConfig.API_HEADERS">
+<span class="sig-name descname"><span class="pre">API_HEADERS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'Content-Type':</span> <span class="pre">'application/json'}</span></em><a class="headerlink" href="#camply.config.TelegramConfig.API_HEADERS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.TelegramConfig.API_CONTENT">
+<span class="sig-name descname"><span class="pre">API_CONTENT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'chat_id':</span> <span class="pre">None,</span> <span class="pre">'disable_web_page_preview':</span> <span class="pre">'true',</span> <span class="pre">'parse_mode':</span> <span class="pre">'MarkdownV2'}</span></em><a class="headerlink" href="#camply.config.TelegramConfig.API_CONTENT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="camply.config.SearchConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camply.config.</span></span><span class="sig-name descname"><span class="pre">SearchConfig</span></span><a class="reference internal" href="../_modules/camply/config/search_config.html#SearchConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.config.SearchConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>File Path Storage Class</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.SearchConfig.POLLING_INTERVAL_MINIMUM">
+<span class="sig-name descname"><span class="pre">POLLING_INTERVAL_MINIMUM</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#camply.config.SearchConfig.POLLING_INTERVAL_MINIMUM" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.SearchConfig.RECOMMENDED_POLLING_INTERVAL">
+<span class="sig-name descname"><span class="pre">RECOMMENDED_POLLING_INTERVAL</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10</span></em><a class="headerlink" href="#camply.config.SearchConfig.RECOMMENDED_POLLING_INTERVAL" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.SearchConfig.ERROR_MESSAGE">
+<span class="sig-name descname"><span class="pre">ERROR_MESSAGE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'No</span> <span class="pre">search</span> <span class="pre">days</span> <span class="pre">configured.</span> <span class="pre">Exiting'</span></em><a class="headerlink" href="#camply.config.SearchConfig.ERROR_MESSAGE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.SearchConfig.MINIMUM_CAMPSITES_FIRST_NOTIFY">
+<span class="sig-name descname"><span class="pre">MINIMUM_CAMPSITES_FIRST_NOTIFY</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#camply.config.SearchConfig.MINIMUM_CAMPSITES_FIRST_NOTIFY" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.SearchConfig.MAXIMUM_NOTIFICATION_BATCH_SIZE">
+<span class="sig-name descname"><span class="pre">MAXIMUM_NOTIFICATION_BATCH_SIZE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">20</span></em><a class="headerlink" href="#camply.config.SearchConfig.MAXIMUM_NOTIFICATION_BATCH_SIZE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camply.config.</span></span><span class="sig-name descname"><span class="pre">YellowstoneConfig</span></span><a class="reference internal" href="../_modules/camply/config/yellowstone_config.html#YellowstoneConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camply.config.YellowstoneConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="camply.config.data_columns.html#camply.config.data_columns.DataColumns" title="camply.config.data_columns.DataColumns"><code class="xref py py-class docutils literal notranslate"><span class="pre">camply.config.data_columns.DataColumns</span></code></a></p>
+<p>Variable Storage Class</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.API_SCHEME">
+<span class="sig-name descname"><span class="pre">API_SCHEME</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'https'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.API_SCHEME" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.API_BASE_ENDPOINT">
+<span class="sig-name descname"><span class="pre">API_BASE_ENDPOINT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'webapi.xanterra.net'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.API_BASE_ENDPOINT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.API_BASE_PATH">
+<span class="sig-name descname"><span class="pre">API_BASE_PATH</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'v1/api'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.API_BASE_PATH" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.LODGING_PATH">
+<span class="sig-name descname"><span class="pre">LODGING_PATH</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'/v1/api/availability/hotels'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.LODGING_PATH" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.YELLOWSTONE_PARK_PATH">
+<span class="sig-name descname"><span class="pre">YELLOWSTONE_PARK_PATH</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'yellowstonenationalparklodges'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.YELLOWSTONE_PARK_PATH" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.YELLOWSTONE_LODGING_PATH">
+<span class="sig-name descname"><span class="pre">YELLOWSTONE_LODGING_PATH</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'/v1/api/availability/hotels/yellowstonenationalparklodges'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.YELLOWSTONE_LODGING_PATH" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.CAMPSITE_AVAILABILITY">
+<span class="sig-name descname"><span class="pre">CAMPSITE_AVAILABILITY</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'v1/api/availability/rooms'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.CAMPSITE_AVAILABILITY" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.YELLOWSTONE_CAMPSITE_AVAILABILITY">
+<span class="sig-name descname"><span class="pre">YELLOWSTONE_CAMPSITE_AVAILABILITY</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'v1/api/availability/rooms/yellowstonenationalparklodges'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.YELLOWSTONE_CAMPSITE_AVAILABILITY" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.YELLOWSTONE_PROPERTY_INFO">
+<span class="sig-name descname"><span class="pre">YELLOWSTONE_PROPERTY_INFO</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'v1/api/property/rooms/yellowstonenationalparklodges'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.YELLOWSTONE_PROPERTY_INFO" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.API_REFERRERS">
+<span class="sig-name descname"><span class="pre">API_REFERRERS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'Host':</span> <span class="pre">'webapi.xanterra.net',</span> <span class="pre">'Origin':</span> <span class="pre">'https://secure.yellowstonenationalparklodges.com',</span> <span class="pre">'Referer':</span> <span class="pre">'https://secure.yellowstonenationalparklodges.com/'}</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.API_REFERRERS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.LODGING_CAMPGROUND_QUALIFIER">
+<span class="sig-name descname"><span class="pre">LODGING_CAMPGROUND_QUALIFIER</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">':RV'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.LODGING_CAMPGROUND_QUALIFIER" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.BOOKING_AVAILABILITY">
+<span class="sig-name descname"><span class="pre">BOOKING_AVAILABILITY</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'availability'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.BOOKING_AVAILABILITY" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.FACILITY_ID">
+<span class="sig-name descname"><span class="pre">FACILITY_ID</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'facility_id'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.FACILITY_ID" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.FACILITY_STATUS">
+<span class="sig-name descname"><span class="pre">FACILITY_STATUS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'status'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.FACILITY_STATUS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.FACILITY_STATUS_QUALIFIER">
+<span class="sig-name descname"><span class="pre">FACILITY_STATUS_QUALIFIER</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'OPEN'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.FACILITY_STATUS_QUALIFIER" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.FACILITY_ROOMS">
+<span class="sig-name descname"><span class="pre">FACILITY_ROOMS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'rooms'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.FACILITY_ROOMS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.FACILITY_AVAILABLE_QUALIFIER">
+<span class="sig-name descname"><span class="pre">FACILITY_AVAILABLE_QUALIFIER</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'available'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.FACILITY_AVAILABLE_QUALIFIER" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.FACILITY_HOTEL_CODE">
+<span class="sig-name descname"><span class="pre">FACILITY_HOTEL_CODE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'hotelCode'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.FACILITY_HOTEL_CODE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.FACILITY_ROOM_CODE">
+<span class="sig-name descname"><span class="pre">FACILITY_ROOM_CODE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'roomCode'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.FACILITY_ROOM_CODE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.FACILITY_PRICE">
+<span class="sig-name descname"><span class="pre">FACILITY_PRICE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'price'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.FACILITY_PRICE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.FACILITY_TYPE">
+<span class="sig-name descname"><span class="pre">FACILITY_TYPE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'type'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.FACILITY_TYPE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.CAMPSITE_DATA_COLUMNS">
+<span class="sig-name descname"><span class="pre">CAMPSITE_DATA_COLUMNS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['facility_id',</span> <span class="pre">'facility_name',</span> <span class="pre">'booking_url']</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.CAMPSITE_DATA_COLUMNS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.RATE_CODE">
+<span class="sig-name descname"><span class="pre">RATE_CODE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'INTERNET'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.RATE_CODE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.LODGING_RATES">
+<span class="sig-name descname"><span class="pre">LODGING_RATES</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'rates'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.LODGING_RATES" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.LODGING_TITLE">
+<span class="sig-name descname"><span class="pre">LODGING_TITLE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'title'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.LODGING_TITLE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.LODGING_BASE_PRICES">
+<span class="sig-name descname"><span class="pre">LODGING_BASE_PRICES</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'mins'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.LODGING_BASE_PRICES" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.LODGING_OCCUPANCY_BASE">
+<span class="sig-name descname"><span class="pre">LODGING_OCCUPANCY_BASE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'occupancyBase'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.LODGING_OCCUPANCY_BASE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.LODGING_OCCUPANCY_MAX">
+<span class="sig-name descname"><span class="pre">LODGING_OCCUPANCY_MAX</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'occupancyMax'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.LODGING_OCCUPANCY_MAX" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.LODGING_ERROR_MESSAGE">
+<span class="sig-name descname"><span class="pre">LODGING_ERROR_MESSAGE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'message'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.LODGING_ERROR_MESSAGE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.MINIMUM_POLLING_INTERVAL">
+<span class="sig-name descname"><span class="pre">MINIMUM_POLLING_INTERVAL</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">45</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.MINIMUM_POLLING_INTERVAL" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.WEBUI_ALIAS_ENDPOINT">
+<span class="sig-name descname"><span class="pre">WEBUI_ALIAS_ENDPOINT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'yellowstonenationalparklodges.com'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.WEBUI_ALIAS_ENDPOINT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.WEBUI_BASE_ENDPOINT">
+<span class="sig-name descname"><span class="pre">WEBUI_BASE_ENDPOINT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'secure.yellowstonenationalparklodges.com'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.WEBUI_BASE_ENDPOINT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.WEBUI_BOOKING_PATH">
+<span class="sig-name descname"><span class="pre">WEBUI_BOOKING_PATH</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'booking/lodging-select'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.WEBUI_BOOKING_PATH" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.YELLOWSTONE_RECREATION_AREA_ID">
+<span class="sig-name descname"><span class="pre">YELLOWSTONE_RECREATION_AREA_ID</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.YELLOWSTONE_RECREATION_AREA_ID" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.YELLOWSTONE_RECREATION_AREA_NAME">
+<span class="sig-name descname"><span class="pre">YELLOWSTONE_RECREATION_AREA_NAME</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Yellowstone'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.YELLOWSTONE_RECREATION_AREA_NAME" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.YELLOWSTONE_RECREATION_AREA_FORMAL_NAME">
+<span class="sig-name descname"><span class="pre">YELLOWSTONE_RECREATION_AREA_FORMAL_NAME</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Yellowstone</span> <span class="pre">National</span> <span class="pre">Park,</span> <span class="pre">USA'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.YELLOWSTONE_RECREATION_AREA_FORMAL_NAME" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.YELLOWSTONE_LOOP_NAME">
+<span class="sig-name descname"><span class="pre">YELLOWSTONE_LOOP_NAME</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'N/A'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.YELLOWSTONE_LOOP_NAME" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.CAMPSITE_AVAILABILITY_STATUS">
+<span class="sig-name descname"><span class="pre">CAMPSITE_AVAILABILITY_STATUS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Available'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.CAMPSITE_AVAILABILITY_STATUS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.YELLOWSTONE_CAMPGROUND_NAME_REPLACE">
+<span class="sig-name descname"><span class="pre">YELLOWSTONE_CAMPGROUND_NAME_REPLACE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('CG</span> <span class="pre">Internet</span> <span class="pre">Rate',</span> <span class="pre">'Campground')</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.YELLOWSTONE_CAMPGROUND_NAME_REPLACE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.YELLOWSTONE_TIMEZONE">
+<span class="sig-name descname"><span class="pre">YELLOWSTONE_TIMEZONE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'America/Denver'</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.YELLOWSTONE_TIMEZONE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="camply.config.YellowstoneConfig.YELLOWSTONE_CAMPGROUNDS">
+<span class="sig-name descname"><span class="pre">YELLOWSTONE_CAMPGROUNDS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'YLYB:RV':</span> <span class="pre">'Bridge</span> <span class="pre">Bay</span> <span class="pre">Campground',</span> <span class="pre">'YLYC:RV':</span> <span class="pre">'Canyon</span> <span class="pre">Campground',</span> <span class="pre">'YLYF:RV':</span> <span class="pre">'Fishing</span> <span class="pre">Bridge</span> <span class="pre">RV</span> <span class="pre">Park',</span> <span class="pre">'YLYG:RV':</span> <span class="pre">'Grant</span> <span class="pre">Campground',</span> <span class="pre">'YLYM:RV':</span> <span class="pre">'Madison</span> <span class="pre">Campground'}</span></em><a class="headerlink" href="#camply.config.YellowstoneConfig.YELLOWSTONE_CAMPGROUNDS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="camply.html" class="btn btn-neutral float-left" title="camply package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="camply.config.api_config.html" class="btn btn-neutral float-right" title="camply.config.api_config module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Justin Flannery.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
