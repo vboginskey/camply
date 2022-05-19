@@ -88,7 +88,7 @@
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">getenv</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">click</span>
 <span class="kn">from</span> <span class="nn">rich.logging</span> <span class="kn">import</span> <span class="n">RichHandler</span>
@@ -330,7 +330,7 @@
               <span class="n">provider</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;RecreationDotGov&quot;</span><span class="p">,</span>
               <span class="n">continuous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
               <span class="n">polling_interval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">SearchConfig</span><span class="o">.</span><span class="n">RECOMMENDED_POLLING_INTERVAL</span><span class="p">,</span>
-              <span class="n">notifications</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;silent&quot;</span><span class="p">],</span>
+              <span class="n">notifications</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="s2">&quot;silent&quot;</span><span class="p">,</span>
               <span class="n">notify_first_try</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
               <span class="n">search_forever</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
               <span class="n">yml_config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -345,6 +345,7 @@
 <span class="sd">    functionality can be enabled with  `--continuous` and notifications can be enabled using</span>
 <span class="sd">    `--notifications`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">notifications</span> <span class="o">=</span> <span class="n">make_list</span><span class="p">(</span><span class="n">notifications</span><span class="p">)</span>
     <span class="n">_validate_campsites</span><span class="p">(</span><span class="n">rec_area</span><span class="o">=</span><span class="n">rec_area</span><span class="p">,</span> <span class="n">campground</span><span class="o">=</span><span class="n">campground</span><span class="p">,</span> <span class="n">campsite</span><span class="o">=</span><span class="n">campsite</span><span class="p">,</span>
                         <span class="n">start_date</span><span class="o">=</span><span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="o">=</span><span class="n">end_date</span><span class="p">,</span> <span class="n">weekends</span><span class="o">=</span><span class="n">weekends</span><span class="p">,</span>
                         <span class="n">nights</span><span class="o">=</span><span class="n">nights</span><span class="p">,</span> <span class="n">provider</span><span class="o">=</span><span class="n">provider</span><span class="p">,</span> <span class="n">continuous</span><span class="o">=</span><span class="n">continuous</span><span class="p">,</span>
@@ -378,7 +379,7 @@
 
 <div class="viewcode-block" id="cli"><a class="viewcode-back" href="../../api/camply.cli.html#camply.cli.cli">[docs]</a><span class="k">def</span> <span class="nf">cli</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    camply Command Line Utility Wrapper</span>
+<span class="sd">    Camply Command Line Utility Wrapper</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">logging_handler</span> <span class="o">=</span> <span class="n">RichHandler</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">getLevelName</span><span class="p">(</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;LOG_LEVEL&quot;</span><span class="p">,</span> <span class="s2">&quot;INFO&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()),</span>
                                   <span class="n">rich_tracebacks</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -391,7 +392,7 @@
                             <span class="n">logging_handler</span><span class="p">,</span>
                         <span class="p">])</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">camply</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;camply, the campsite finder ⛺️&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">camply</span><span class="p">(</span><span class="s2">&quot;camply, the campsite finder ⛺️&quot;</span><span class="p">)</span>
         <span class="n">camply_command_line</span><span class="p">()</span>
     <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Handling Exit Request&quot;</span><span class="p">)</span>

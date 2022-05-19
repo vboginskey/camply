@@ -86,29 +86,16 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">isfile</span>
 <span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
 
+<span class="kn">import</span> <span class="nn">rich</span>
+<span class="kn">from</span> <span class="nn">rich.prompt</span> <span class="kn">import</span> <span class="n">Confirm</span><span class="p">,</span> <span class="n">Prompt</span>
+
 <span class="kn">from</span> <span class="nn">camply.config</span> <span class="kn">import</span> <span class="n">FileConfig</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
-
-
-<div class="viewcode-block" id="get_log_input"><a class="viewcode-back" href="../../../api/camply.utils.configure_camply.html#camply.utils.configure_camply.get_log_input">[docs]</a><span class="k">def</span> <span class="nf">get_log_input</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Create a log message with a nice log format :)</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    message: str</span>
-<span class="sd">        The message you&#39;d like to print before getting input</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">datetime_string</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S,</span><span class="si">%f</span><span class="s1">&#39;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>
-    <span class="n">input_string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">datetime_string</span><span class="si">}</span><span class="s2"> [   INPUT]: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2"> : &quot;</span>
-    <span class="n">value</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="n">input_string</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">value</span></div>
 
 
 <div class="viewcode-block" id="double_check"><a class="viewcode-back" href="../../../api/camply.utils.configure_camply.html#camply.utils.configure_camply.double_check">[docs]</a><span class="k">def</span> <span class="nf">double_check</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
@@ -120,22 +107,13 @@
 <span class="sd">    message: str</span>
 <span class="sd">        Message to log in interactive shell</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">operation_eval</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="k">while</span> <span class="n">operation_eval</span><span class="p">:</span>
-        <span class="n">first_confirmation</span> <span class="o">=</span> <span class="n">get_log_input</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">first_confirmation</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span>
-            <span class="n">second_confirmation</span> <span class="o">=</span> <span class="n">get_log_input</span><span class="p">(</span><span class="s2">&quot;Are you sure? (y/n)&quot;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">second_confirmation</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Okay, skipping&quot;</span><span class="p">)</span>
-                <span class="k">return</span> <span class="kc">False</span>
-            <span class="k">elif</span> <span class="n">second_confirmation</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span>
-                <span class="k">return</span> <span class="kc">True</span>
-        <span class="k">elif</span> <span class="n">first_confirmation</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;n&quot;</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Okay, skipping&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Make sure to enter a &#39;y&#39; or &#39;n&#39;&quot;</span><span class="p">)</span>
-            <span class="n">operation_eval</span> <span class="o">=</span> <span class="kc">True</span></div>
+    <span class="n">first_confirmation</span> <span class="o">=</span> <span class="n">Confirm</span><span class="o">.</span><span class="n">ask</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="n">message</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">first_confirmation</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">second_confirmation</span> <span class="o">=</span> <span class="n">Confirm</span><span class="o">.</span><span class="n">ask</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s2">&quot;Are you sure?&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">second_confirmation</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Okay, skipping&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
 
 
 <div class="viewcode-block" id="check_dot_camply_file"><a class="viewcode-back" href="../../../api/camply.utils.configure_camply.html#camply.utils.configure_camply.check_dot_camply_file">[docs]</a><span class="k">def</span> <span class="nf">check_dot_camply_file</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
@@ -170,11 +148,12 @@
         <span class="n">default_value</span> <span class="o">=</span> <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;default&quot;</span><span class="p">]</span>
         <span class="n">field_note</span> <span class="o">=</span> <span class="n">field_dict</span><span class="p">[</span><span class="s1">&#39;notes&#39;</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">field_note</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">field</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">field_note</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Enter value for `</span><span class="si">{</span><span class="n">field</span><span class="si">}</span><span class="s2">`&quot;</span>
+            <span class="n">rich</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[bold blue]</span><span class="si">{</span><span class="n">field</span><span class="si">}</span><span class="s2">:[/bold blue] &quot;</span>
+                       <span class="sa">f</span><span class="s2">&quot;[bold green]</span><span class="si">{</span><span class="n">field_note</span><span class="si">}</span><span class="s2">[/bold green]&quot;</span><span class="p">)</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Enter value for [bold blue]</span><span class="si">{</span><span class="n">field</span><span class="si">}</span><span class="s2">[/bold blue]&quot;</span>
         <span class="k">if</span> <span class="n">default_value</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
-            <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; (default: `</span><span class="si">{</span><span class="n">default_value</span><span class="si">}</span><span class="s2">`)&quot;</span>
-        <span class="n">logged_input</span> <span class="o">=</span> <span class="n">get_log_input</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; (default: `[bold purple]</span><span class="si">{</span><span class="n">field</span><span class="si">}</span><span class="s2">[/bold purple]`)&quot;</span>
+        <span class="n">logged_input</span> <span class="o">=</span> <span class="n">Prompt</span><span class="o">.</span><span class="n">ask</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="n">message</span><span class="p">)</span>
         <span class="n">config_value</span> <span class="o">=</span> <span class="n">logged_input</span> <span class="k">if</span> <span class="n">logged_input</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="k">else</span> <span class="n">default_value</span>
         <span class="n">config_dict</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">=</span> <span class="n">config_value</span>
     <span class="k">return</span> <span class="n">config_dict</span></div>
@@ -214,12 +193,14 @@
     <span class="n">sleep</span><span class="p">(</span><span class="mf">1.5</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">isfile</span><span class="p">(</span><span class="n">FileConfig</span><span class="o">.</span><span class="n">DOT_CAMPLY_FILE</span><span class="p">):</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;.camply file already exists on this machine: </span><span class="si">{</span><span class="n">FileConfig</span><span class="o">.</span><span class="n">DOT_CAMPLY_FILE</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="n">overwrite</span> <span class="o">=</span> <span class="n">double_check</span><span class="p">(</span><span class="s2">&quot;Would you like to overwrite your `.camply` &quot;</span>
-                                 <span class="s2">&quot;configuration file? (y/n)&quot;</span><span class="p">)</span>
+        <span class="n">overwrite</span> <span class="o">=</span> <span class="n">double_check</span><span class="p">(</span><span class="s2">&quot;Would you like to overwrite your &quot;</span>
+                                 <span class="s2">&quot;[bold yellow].camply[/bold yellow] &quot;</span>
+                                 <span class="s2">&quot;configuration file?&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">overwrite</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">config</span> <span class="o">=</span> <span class="n">generate_configuration</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">double_check</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Are you ready to publish this to a file at </span><span class="si">{</span><span class="n">FileConfig</span><span class="o">.</span><span class="n">DOT_CAMPLY_FILE</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">double_check</span><span class="p">(</span><span class="s2">&quot;Are you ready to publish this to a file at &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;[bold yellow]</span><span class="si">{</span><span class="n">FileConfig</span><span class="o">.</span><span class="n">DOT_CAMPLY_FILE</span><span class="si">}</span><span class="s2">[/bold yellow]&quot;</span><span class="p">):</span>
         <span class="n">write_config_to_file</span><span class="p">(</span><span class="n">config_dict</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;`.camply` file written to machine: </span><span class="si">{</span><span class="n">FileConfig</span><span class="o">.</span><span class="n">DOT_CAMPLY_FILE</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 </pre></div>
